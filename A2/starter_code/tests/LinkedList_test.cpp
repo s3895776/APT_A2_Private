@@ -2,14 +2,14 @@
 #include "../LinkedList.h"
 #include <iostream>
 
-void RunTests();
+void LL_RunTests();
 
-void Test_Add();
-void Test_Count();
-void Test_Draw();
-void Test_Transfer();
+void LL_Test_Add();
+void LL_Test_Count();
+void LL_Test_Draw();
+//void Test_Transfer();
 
-void Test_Add(){
+void LL_Test_Add(){
     std::cout << "Test LinkedList_Add ";
 
     //create all tiles (from file?)
@@ -33,7 +33,7 @@ void Test_Add(){
     }
 }
 
-void Test_Count(){
+void LL_Test_Count(){
     std::cout << "Test LinkedList_Count \n";
 
     //create all tiles (from file?)
@@ -68,7 +68,7 @@ void Test_Count(){
     }
 }
 
-void Test_Draw(){
+void LL_Test_Draw(){
     std::cout << "Test LinkedList_Draw \n";
 
     //create all tiles (from file?)
@@ -136,9 +136,9 @@ void Test_Draw(){
 
 
 void LL_RunTests(){
-    Test_Add();
-    Test_Count();
-    Test_Draw();
+    LL_Test_Add();
+    LL_Test_Count();
+    LL_Test_Draw();
     //Test_Transfer();
 }
 
