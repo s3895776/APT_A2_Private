@@ -1,28 +1,56 @@
 #include "Player.h"
 
-std::string Player::loadGame(std::ifstream& loadFile) {
-    // I imagine it will be formatted for entering details 
-    // into the Game ADT and its Tile bag.
+Player::Player() {
+    this->game = Game();
+    this->hand = LinkedList();
 }
 
-std::string Player::saveGame(std::ifstream& loadFile) {
-    // Save details of Game ADT and its Tile bag. 
+Player::~Player() {
+    // the ADT's will delete themselves
+    // when the scope finishes. 
+}
 
+std::string Player::loadGame(std::ifstream& fileLoad) {
+    // TODO: fill in proper values to load the board state
+    // required values to fill: board 2d vector, LinkedList tileBag
+    std::string boardState = "";
+
+    // TODO: test loadGame function
+    game.loadGame(boardState);
+
+    // TODO: do something with hand 
+    std::string handState = "";
+    
+    return "Loaded game";
+}
+
+std::string Player::saveGame(std::ifstream& fileSave) {
+    // TODO: store game as text
+    std::string saveState = game.saveState();
+    // TODO: store hand as text 
+    std::string handState;
+    
+    return "Saved game";
 }
 
 std::string Player::placeTiles() {
-    // place Tiles from linkedList hand
-
+    // TODO: modify hand
+    // TODO: modify game
+    // game.modifyBoard();
+    return "Placed Tiles";
 }
 
 std::string Player::replaceTiles() {
-    // replace Tiles from linkedList hand
+    // TODO: modify hand
+    return "Replaced Tiles";
 }
 
 std::string Player::skip() {
-    // "end turn"
+    // TODO: skip turn
+    return "Skipped Turn";
 }
 
 std::string Player::quit() {
-    // quit the program?        
+    // TODO: delete all instances.
+    return "Quit game";
 }
