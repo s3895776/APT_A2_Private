@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 #include "LinkedList.h"
-#include "Game.h"
+// #include "Game.h"
 
 
 class Player {
@@ -36,9 +36,11 @@ class Player {
         */
         std::string quit();
 
+        std::string fillName(std::string name);
+
     private:
-        Game game;
         LinkedList hand;
+        std::string name;
 
 };
 
