@@ -1,13 +1,11 @@
 #include "Player.h"
 
 Player::Player() {
-    this->game = Game();
     this->hand = LinkedList();
 }
 
 Player::~Player() {
-    // the ADT's will delete themselves
-    // when the scope finishes. 
+
 }
 
 std::string Player::loadGame(std::ifstream& fileLoad) {
@@ -15,8 +13,7 @@ std::string Player::loadGame(std::ifstream& fileLoad) {
     // required values to fill: board 2d vector, LinkedList tileBag
     std::string boardState = "";
 
-    // TODO: test loadGame function
-    game.loadGame(boardState);
+    // TODO: loadGame function
 
     // TODO: do something with hand 
     std::string handState = "";
@@ -26,7 +23,7 @@ std::string Player::loadGame(std::ifstream& fileLoad) {
 
 std::string Player::saveGame(std::ifstream& fileSave) {
     // TODO: store game as text
-    std::string saveState = game.saveState();
+
     // TODO: store hand as text 
     std::string handState;
     
@@ -53,4 +50,8 @@ std::string Player::skip() {
 std::string Player::quit() {
     // TODO: delete all instances.
     return "Quit game";
+}
+
+std::string Player::fillName(std::string name) {
+    this->name = name;
 }
