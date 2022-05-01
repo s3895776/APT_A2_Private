@@ -41,7 +41,7 @@ class Game {
 
 
     private:
-        std::vector< std::vector<char> > board;
+        std::vector< std::vector<Tile> > board;
         LinkedList tileBag;
         std::vector<Player> players;
 

@@ -39,8 +39,14 @@ std::string Game::loadGame(std::iostream& saveFile) {
     // <Board State>
     // <tile bag contents>
     // <current player name>
-    // (For info on the assignment spec)
     // all fields are on newlines. 
+    // Format:
+    // • Name: ASCII text
+    // • Score: Integer
+    // • Player hand and tile bag: comma separated ordered list
+    // • Current board shape: Height, width
+    // • Board State: All tiles currently placed on the board should appear as a list of tile@position.
+    // example in spec 
     
     // TODO: initialise players' name, score and hand
 
@@ -85,6 +91,7 @@ std::string Game::newGame() {
     // tileBag.something();
 
     // TODO: initialise Players One and Two LinkedList values with Tiles.
+    // Tiles must be set one by one with fillHand command.
 
     // TODO: initialise 2d vector with starting values 
 
@@ -108,8 +115,14 @@ std::string Game::saveState() {
     // <Board State>
     // <tile bag contents>
     // <current player name>
-    // (For info on the assignment spec)
     // all fields are on newlines. 
+    // Format:
+    // • Name: ASCII text
+    // • Score: Integer
+    // • Player hand and tile bag: comma separated ordered list
+    // • Current board shape: Height, width
+    // • Board State: All tiles currently placed on the board should appear as a list of tile@position.
+    // example in spec 
 
     // TODO: put players information into gameState
 
@@ -137,16 +150,20 @@ std::string Game::gameInput(std::string currentPlayerName) {
     
     // TODO: implement turns within gameInput()
     // currentPlayer takes a turn, and the following 
-    // player in vector players will continue
-    // at the end, next player chosen will be the starting player
+    // player in vector players will continue.
+    // at the end of vector, next player chosen will be the starting player
 
     // TODO: choose inputs for making the player move.
 
     // TODO: implement player action: placement
     // syntax: place <tile1> at <grid location>
+    // question: what order do the Tiles return in if the move
+    // isn't legal?
 
     // TODO: implement player action: replace
     // syntax: replace <tile> (only one can be replaced)
+    // question: where does the replaced Tile end up in in player?
+    // at the back of the internal LinkedList or the same position?
 
     // TODO: implement player action: pass
     // syntax: pass
