@@ -8,36 +8,22 @@ Player::~Player() {
 
 }
 
-std::string Player::loadGame(std::ifstream& fileLoad) {
-    // TODO: fill in proper values to load the board state
-    // required values to fill: board 2d vector, LinkedList tileBag
-    std::string boardState = "";
 
-    // TODO: loadGame function
-
-    // TODO: do something with hand 
-    std::string handState = "";
-    
-    return "Loaded game";
-}
-
-std::string Player::saveGame(std::ifstream& fileSave) {
-    // TODO: store game as text
+std::string Player::saveGame() {
 
     // TODO: store hand as text 
     std::string handState;
     
-    return "Saved game";
+    return handState;
 }
 
-std::string Player::placeTiles() {
+std::string Player::placeTiles(LinkedList* tileBag) {
     // TODO: modify hand
     // TODO: modify game
-    // game.modifyBoard();
     return "Placed Tiles";
 }
 
-std::string Player::replaceTiles() {
+std::string Player::replaceTile(LinkedList* tileBag) {
     // TODO: modify hand
     return "Replaced Tiles";
 }
@@ -52,6 +38,28 @@ std::string Player::quit() {
     return "Quit game";
 }
 
-std::string Player::fillName(std::string name) {
+std::string Player::setName(std::string name) {
     this->name = name;
+    return "";
+}
+
+std::string Player::getHand() {
+    // TODO: Return all elements of LinkedList as strings 
+    // note: use Tile.getTileAsString(); to return 
+    // the Tile in the appropriate string format. 
+    // string format: Letter-Value
+
+    std::string playerHand;
+    return playerHand;
+}
+
+std::string Player::setHand(LinkedList* tileBag) {
+    // TODO: fill in player hand to predefined max 
+    // TODO: empty tileBag corresponding to the amount taken by player hand
+
+    return "";
+}
+
+std::string Player::getName() {
+    return name;
 }

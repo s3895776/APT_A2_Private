@@ -33,7 +33,7 @@ class Game {
 
         /* Wait for player input and call player methods in this state. 
         */
-        std::string gameInput();
+        std::string gameInput(std::string currentPlayerName);
 
         /* Quit game
         */  
@@ -43,8 +43,7 @@ class Game {
     private:
         std::vector< std::vector<char> > board;
         LinkedList tileBag;
-        Player playerOne;
-        Player playerTwo;
+        std::vector<Player> players;
 
         /*Award points to the player for a legal move.*/
         std::string awardPoints();
