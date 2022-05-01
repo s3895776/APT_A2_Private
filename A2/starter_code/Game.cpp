@@ -125,6 +125,7 @@ std::string Game::saveState() {
 }
 
 std::string Game::gameInput(std::string currentPlayerName) {
+    // TODO: search for the player beginning their turn
 
     // TODO: Special Operation: Ending a Game
     // Condition: 1. The tile bag is empty, and
