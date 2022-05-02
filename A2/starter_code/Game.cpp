@@ -96,6 +96,7 @@ std::string Game::newGame() {
     return currentPlayerName;
 }
 
+
 std::string Game::saveState() {
     std::string gameState;
     // gameState format:
