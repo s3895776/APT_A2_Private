@@ -6,19 +6,24 @@
 
 class Board {
 public:
-    /* Constructor */
-    Board(std::vector<std::vector<Tile>> board);
+    /* Constructor, Destructor, Copy Constructor */
+    Board();
     ~Board();
     Board(Board& other);
-    /* Destructor */
 
-    /* Place Tile */
+    /* Place Tile on the board, takes the coordinates in the format sent in by the player,
+       and converts it into the appropriate vector coordinates */
+    std::string placeTile(Tile tile, std::string coordinates);
 
-    /* Get Coordinates */
+    /* Remove Tile, to be used if move is invalid*/
+
+    std::string removeTile(Tile tile, std::string coordinates);
+    
+    /* Displays the board as a 2D grid */
+    std::string displayBoard();
+
 private:
     std::vector<std::vector<Tile>> board;
-
-    
 
 };
 
