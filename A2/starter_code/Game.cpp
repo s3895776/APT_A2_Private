@@ -189,3 +189,22 @@ std::string Game::quitGame() {
 
 }
 
+std::string Game::displayCredits() {
+
+    // ----------------------------------
+    // Name: <full name>
+    // Student ID: <student number>
+    // Email: <email address>
+    // Name: <full name>
+    // Student ID: <student number>
+    // Email: <email address>
+    // <Student 3, etc.>
+    // ----------------------------------
+    // <main menu>
+
+    // TODO: display credits 
+
+
+    // TODO: resume main menu (probably in main)
+    return "";
+}

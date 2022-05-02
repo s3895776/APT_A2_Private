@@ -50,6 +50,9 @@ class Game {
 
         /*Return the board to its original state.*/
         std::string invalidMove();
+
+        /* Display student names */
+        std::string displayCredits();
 };
 
 
