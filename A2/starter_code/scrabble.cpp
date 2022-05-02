@@ -1,15 +1,17 @@
-
-#include "LinkedList.h"
+#include "Game.h"
 
 #include <iostream>
 
 #define EXIT_SUCCESS    0
 
 int main(void) {
-   LinkedList* list = new LinkedList();
-   delete list;
 
    std::cout << "TODO: Implement Scrabble!" << std::endl;
+   Game* game = new Game();
+//    game->view_mainMenu();
+   //  std::cout << game << std::endl;
+    game->run_game();
+   //  game->view_mainMenu();
 
    return EXIT_SUCCESS;
 }
