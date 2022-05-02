@@ -1,8 +1,30 @@
-
 #include "Tile.h"
 
-// Empty... for now?
-Tile::Tile(Letter l, Value v){
-    letter = l;
-    value = v;
+Tile::Tile(char letter, int value):
+    letter(letter),
+    value(value)
+{}
+Tile::~Tile() {
+
+}
+
+Tile::Tile(Tile&other):
+    letter(other.letter),
+    value(other.value)
+{}
+
+std::string Tile::getTileAsString() {
+    std::string tileString;
+    tileString.push_back(this->getLetter());
+    tileString.push_back('-');
+    tileString.push_back(this->getValue());
+    return tileString;
+}
+
+Value Tile::getValue() {
+    return value;
+}
+
+Letter Tile::getLetter() {
+    return letter;
 }
