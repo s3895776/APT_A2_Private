@@ -1,16 +1,20 @@
 #ifndef GAME_H
 #define GAME_H
+
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <vector>
-// #include "LinkedList.h"
+#include "LinkedList.h"
 #include "Player.h"
 
 class Game {
 
     public:
 
-        /* Constructor, destructor, copy constructor
-        */
+        /*
+         * Constructor, destructor, copy constructor
+         */
         Game();
         ~Game();
         Game(Game& other);
@@ -25,14 +29,6 @@ class Game {
          */
         int view_mainMenu();
 
-        /*Modify the board */
-        // std::string modifyBoard(std::vector<Tile> tilesToPlace, std::vector<std::string> coordinates);
-
-        // /* Load a game from a saveFile
-        // param: take a saveFile TODO: determine saveFile type 
-        // */
-        // std::string loadGame(std::iostream& saveFile);
-
         /*
          * Create a new game 
          */
@@ -43,9 +39,21 @@ class Game {
          */
         std::string displayCredits();
 
-        // /* Save board information 
-        // */
-        // std::string saveState();
+        /*
+         * Save board information 
+         */
+        bool saveState(std::string filename);
+
+        /*
+         * Load game from a saved file
+         */
+        bool loadGame();
+        // std::iostream& saveFile
+
+        /*Modify the board */
+        // std::string modifyBoard(std::vector<Tile> tilesToPlace, std::vector<std::string> coordinates);
+
+        
 
         // /* Wait for player input and call player methods in this state. 
         // */

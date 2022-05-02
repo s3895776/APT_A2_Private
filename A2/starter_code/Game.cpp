@@ -19,6 +19,7 @@ void Game::run_game() {
             std::cout << this->newGame();
         }
         else if (choice == 2) {
+            this->loadGame();
             std::cout << "loading game" << std::endl;
         }
         else if (choice == 3) {
@@ -27,6 +28,12 @@ void Game::run_game() {
         else if (choice == 4) {
             std::cout << this->quitGame() << std::endl;
             game = false;
+        }
+        // TODO: save testing ground (delete after)
+        else if (choice == 5) {
+            std::string filename;
+            std::cin >> filename;
+            this->saveState(filename);
         }
         else {
             std::cout << "wrong choice" << std::endl;
@@ -150,59 +157,123 @@ std::string Game::displayCredits() {
 // }
 
 // std::string Game::loadGame(std::iostream& saveFile) {
-//     // saveFile format:
-//     // <player 1 name>
-//     // <player 1 score>
-//     // <player 1 hand>
-//     // <player 2 name>
-//     // <player 2 score>
-//     // <player 2 hand>
-//     // <Board State>
-//     // <tile bag contents>
-//     // <current player name>
-//     // (For info on the assignment spec)
-//     // all fields are on newlines. 
+    // saveFile format:
+    // <player 1 name>
+    // <player 1 score>
+    // <player 1 hand>
+    // <player 2 name>
+    // <player 2 score>
+    // <player 2 hand>
+    // <Board State>
+    // <tile bag contents>
+    // <current player name>
+    // (For info on the assignment spec)
+    // all fields are on newlines. 
     
-//     // TODO: initialise players' name, score and hand
+    // TODO: initialise players' name, score and hand
 
-//     // TODO: initialise 2d vector 
+    // TODO: initialise 2d vector 
 
-//     // TODO: initialise tileBag 
+    // TODO: initialise tileBag 
 
-//     // TODO: Store the name of the currentPlayer
-//     // std::string currentPlayerName;
+    // TODO: Store the name of the currentPlayer
+    // std::string currentPlayerName;
 
-//     // return currentPlayerName;
+    // return currentPlayerName;
 //     return std::string("loaded");
 // }
 
-// std::string Game::saveState() {
-//     std::string gameState;
-//     // gameState format:
-//     // <player 1 name>
-//     // <player 1 score>
-//     // <player 1 hand>
-//     // <player 2 name>
-//     // <player 2 score>
-//     // <player 2 hand>
-//     // <Board State>
-//     // <tile bag contents>
-//     // <current player name>
-//     // (For info on the assignment spec)
-//     // all fields are on newlines. 
+bool Game::loadGame() {
+    std::string filename;
+    std::cout << "Enter the filename to load game" << std::endl;
+    std::cout << "> ";
+    std::cin >> filename;
+    // return false if (filename does not exist)
 
-//     // TODO: put players information into gameState
+    // https://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring
+    std::ifstream fileLoaded("saves/" + filename);
+    std::stringstream buffer;
+    buffer << fileLoaded.rdbuf();
 
-//     // TODO: put 2d vector into gameState 
+    // std::cout << buffer.str() << std::endl;
 
-//     // TODO: put LinkedList tileBag as string into gameState
+    std::string rawString = buffer.str();
+    
+    // https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c
+    // split string with the following delimiter
+    std::string delimiter = "|";
+    std::string allPlayers = rawString.substr(0, buffer.str().find(delimiter));
 
-//     // TODO: fill in the file with gameState.
+    // size_t pos = 0;
+    // rawString = rawString.substr(pos + delimiter.length());
+    rawString.erase(0, rawString.find(delimiter) + delimiter.length());
+
+    std::string boardStatus = rawString.substr(0, buffer.str().find(delimiter));
+
+    rawString.erase(0, rawString.find(delimiter) + delimiter.length());
+
+    std::string currentPlayer = rawString.substr(0, buffer.str().find(delimiter));
+
+    std::cout << "starting now" << std::endl;
+    std::cout << allPlayers << std::endl;
+    std::cout << boardStatus << std::endl;
+    std::cout << currentPlayer << std::endl;
+
+    return true;
+}
+
+bool Game::saveState(std::string filename) {
+    std::string gameState;
+    // Suggested format
+    // Player | Board | Current Player index
+
+    // <player 1 name>, <player 1 score>, <player 1 hand>
+    // <player 2 name>, <player 2 score>, <player 2 hand>
+    // |
+    // <board state>, <tile bag contents>
+    // |
+    // <current player index in vector>
+
+    // TODO: 
+    // search for filename in dir
+    // return false (filename already exists)
+
+    std::ofstream fileToBeSaved;
+    fileToBeSaved.open("saves/" + filename);
+    fileToBeSaved << "PLAYER A, 100, ABCD\n";
+    fileToBeSaved << "PLAYER B, 200, EFGH\n";
+    fileToBeSaved << "|\n";
+    fileToBeSaved << "board state, tile bag content\n";
+    fileToBeSaved << "|\n";
+    fileToBeSaved << "0\n";
+    fileToBeSaved.close();
+
+
+    // gameState format:
+    // <player 1 name>
+    // <player 1 score>
+    // <player 1 hand>
+    // <player 2 name>
+    // <player 2 score>
+    // <player 2 hand>
+    // <Board State>
+    // <tile bag contents>
+    // <current player name>
+    // (For info on the assignment spec)
+    // all fields are on newlines. 
+
+    // TODO: put players information into gameState
+
+    // TODO: put 2d vector into gameState 
+
+    // TODO: put LinkedList tileBag as string into gameState
+
+    // TODO: fill in the file with gameState.
 
     
 
-//     return "";
-// }
+    return true;
+}
 
 // std::string Game::gameInput(std::string currentPlayerName) {
 //     // TODO: search for the player beginning their turn
