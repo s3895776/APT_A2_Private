@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.jte": "html",
+        "vector": "cpp"
+    }
+}
