@@ -6,7 +6,11 @@ Game::Game() {
 }
 
 Game::~Game() {
-
+    //clean up memory
+    for( int i=0; i < (int)players->size(); i++){
+        delete (*players)[i];
+    }
+    delete players;
 }
 
 void Game::run_game() {
@@ -118,7 +122,7 @@ std::string Game::displayCredits() {
     credits.append("\n");
     credits.append("-------------------------------------\n");
     credits.append("Name: Dan Podbury\n");
-    credits.append("Student ID: \n");
+    credits.append("Student ID: s3881206\n");
     credits.append("Email: \n");
     credits.append("\n");
     credits.append("Name: Guo An Liew\n");

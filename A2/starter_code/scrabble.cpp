@@ -7,10 +7,10 @@
 int main(void) {
 
    std::cout << "TODO: Implement Scrabble!" << std::endl;
-   Game* game = new Game();
-//    game->view_mainMenu();
+   Game game;
+   //    game->view_mainMenu();
    //  std::cout << game << std::endl;
-    game->run_game();
+   game.run_game();
    //  game->view_mainMenu();
 
    return EXIT_SUCCESS;
