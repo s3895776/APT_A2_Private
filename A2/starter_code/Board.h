@@ -1,8 +1,10 @@
 #ifndef ASSIGN2_BOARD_H
 #define ASSIGN2_BOARD_H
 
-#include "Tile.h"
+
 #include <vector>
+#include "Tile.h"
+
 
 class Board {
 public:
@@ -24,6 +26,7 @@ public:
 
 private:
     std::vector<std::vector<Tile>> board;
+    //Tile* empty;
 
 };
 
