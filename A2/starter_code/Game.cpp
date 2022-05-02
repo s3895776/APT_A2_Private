@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <fstream>
 
 Game::Game() {
     tileBag = LinkedList();
@@ -81,8 +82,7 @@ std::string Game::newGame() {
     }
 
     // 3. Create a new game of Scrabble
-    // TODO: initialise tileBag with starting values
-    // tileBag.something();
+    InitaliseBag(tileBag);
 
     // TODO: initialise Players One and Two LinkedList values with Tiles.
 
@@ -94,6 +94,44 @@ std::string Game::newGame() {
     // Let main call gameInput();
 
     return currentPlayerName;
+}
+
+void Game::InitaliseBag(LinkedList& bag){
+    srand(2);   //seed random number
+    int const num_tiles = 99;
+    int const shuffle_n = 200;
+
+    //import tiles from file into array
+    Tile tiles[num_tiles];
+    std::ifstream tileFile ("./ScrabbleTiles.txt");
+    char letter; int value; int index = 0;
+    while (tileFile.good() && index < num_tiles){
+        tileFile >> letter;
+        tileFile >> value;
+        tiles[index] = Tile(letter, value);
+        index++;
+    }
+
+    // shuffle tiles in array
+    for (int i=0; i < shuffle_n; i++){
+        int a = rand()%num_tiles;
+        int b = rand()%num_tiles;
+        //std::cout << "swapping tiles " << a << " <-> " << b << std::endl;
+        Tile temp = tiles[a];
+        tiles[a] = tiles[b];
+        tiles[b] = temp;
+    }
+
+    // debug print array contents.
+    //for (int i = 0; i < num_tiles; i++){
+    //    std::cout << "["<< i <<"]"<< tiles[i].letter << "-" << tiles[i].value << std::endl;
+    //}
+
+    // insert tiles into bag
+    for (int i = 0; i < 99; i++){
+        bag.AddTile(tiles[i]);
+    }
+
 }
 
 std::string Game::saveState() {

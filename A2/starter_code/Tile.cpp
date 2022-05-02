@@ -1,5 +1,9 @@
 #include "Tile.h"
 
+Tile::Tile():
+    letter('_'),
+    value(0)
+{}
 Tile::Tile(char letter, int value):
     letter(letter),
     value(value)

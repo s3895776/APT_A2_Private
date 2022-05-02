@@ -39,7 +39,7 @@ class Game {
         */  
         std::string quitGame();
 
-
+        
     private:
         std::vector< std::vector<char> > board;
         LinkedList tileBag;
@@ -50,6 +50,8 @@ class Game {
 
         /*Return the board to its original state.*/
         std::string invalidMove();
+
+        void InitaliseBag(LinkedList& bag);
 };
 
 

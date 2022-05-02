@@ -49,7 +49,7 @@ void LinkedList::AddTile(Tile& tile){
 Tile* LinkedList::DrawTile(){ //draw from front
    
    if (this->head == nullptr){
-      //std::cout << "\nERROR: Tried to draw from empty LinkedList!" << std::endl;
+      std::cout << "\nERROR: Tried to draw from empty LinkedList!" << std::endl;
       return nullptr;
    }
 
