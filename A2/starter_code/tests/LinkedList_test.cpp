@@ -66,6 +66,21 @@ void LL_Test_Count(){
         std::cout << "Expected: 3" << std::endl;
         std::cout << "Got: " << bag.Count() << std::endl; 
     }
+
+    //test 3: overdraw
+    bag.DrawTile();
+    bag.DrawTile();
+    bag.DrawTile();
+    bag.DrawTile();
+    std::cout << " test overdraw: ";
+    if (bag.Count() == 0)
+        std::cout << "passed!\n";
+    else{
+        std::cout << "failed!\n";
+        std::cout << "Expected: 0" << std::endl;
+        std::cout << "Got: " << bag.Count() << std::endl; 
+    }
+
 }
 
 void LL_Test_Draw(){
@@ -110,28 +125,28 @@ void LL_Test_Draw(){
     }
 
     //test 3:
-    bag.AddTile(tile1);
-    bag.AddTile(tile2);
-
-    std::cout << " test draw_specific_head ";
-    bag.DrawTile(tile1);
-    
-    if (bag.GetHead()->tile->letter == 'B' && bag.GetTail()->tile->letter == 'B' && bag.Count() == 1)
-        std::cout << "passed!\n";
-    else{
-        std::cout << "failed!\n";
-    }
-
-    //test 4:
-    bag.AddTile(tile1);
-    bag.DrawTile(tile2);
-    std::cout << " test draw_specific_tail ";
-
-    if (bag.GetHead()->tile->letter == 'A' && bag.GetTail()->tile->letter == 'A' && bag.Count() == 1)
-        std::cout << "passed!\n";
-    else{
-        std::cout << "failed!\n";
-    }
+    //bag.AddTile(tile1);
+    //bag.AddTile(tile2);
+//
+    //std::cout << " test draw_specific_head ";
+    //bag.DrawTile(tile1);
+    //
+    //if (bag.GetHead()->tile->letter == 'B' && bag.GetTail()->tile->letter == 'B' && bag.Count() == 1)
+    //    std::cout << "passed!\n";
+    //else{
+    //    std::cout << "failed!\n";
+    //}
+//
+    ////test 4:
+    //bag.AddTile(tile1);
+    //bag.DrawTile(tile2);
+    //std::cout << " test draw_specific_tail ";
+//
+    //if (bag.GetHead()->tile->letter == 'A' && bag.GetTail()->tile->letter == 'A' && bag.Count() == 1)
+    //    std::cout << "passed!\n";
+    //else{
+    //    std::cout << "failed!\n";
+    //}
 }
 
 

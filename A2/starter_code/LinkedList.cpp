@@ -4,6 +4,7 @@
 LinkedList::LinkedList() {
    head = nullptr;
    tail = nullptr;
+   size = 0;
 }
 
 LinkedList::~LinkedList() {
@@ -18,15 +19,10 @@ LinkedList::~LinkedList() {
    }
 }
 
-Node* LinkedList::GetHead(){
-   return head;
-}
-Node* LinkedList::GetTail(){
-   return tail;
-}
-
 // spec: adding a tile alway adds at the end
 void LinkedList::AddTile(Tile& tile){
+   size++;
+
    if (head == nullptr){ //empty list
       //create node
       Node* n = new Node(&tile, nullptr);
@@ -47,11 +43,12 @@ void LinkedList::AddTile(Tile& tile){
 }
 
 Tile* LinkedList::DrawTile(){ //draw from front
-   
    if (this->head == nullptr){
       std::cout << "\nERROR: Tried to draw from empty LinkedList!" << std::endl;
       return nullptr;
    }
+
+   size--;
 
    // extract tile from node
    Tile* t = this->head->tile;
@@ -63,14 +60,15 @@ Tile* LinkedList::DrawTile(){ //draw from front
 }
 
 Tile* LinkedList::DrawTile(Tile& tile){ //draw specific tile
-   Tile* outTile = nullptr;
-
    //search if tile exists
    if (!ContainsTile(tile)){
       std::cout << "\nERROR: Tried to draw tile that is not in LinkedList!" << std::endl;
       return nullptr;
    }
 
+   Tile* outTile = nullptr;
+   size--;
+   
    //remove and patch list
    Node* curr = this->head;
    Node* prev = nullptr;
@@ -121,17 +119,7 @@ bool LinkedList::ContainsTile(Tile& tile){
 }
 
 int LinkedList::Count(){
-   if (this->head == nullptr){return 0;}
-
-   int count = 0; 
-
-   Node* curr = this->head;
-   while (curr != nullptr){
-      curr = curr->next;
-      count++;
-   }
-
-   return count;
+   return size;
 }
 
 std::string LinkedList::ToString(){

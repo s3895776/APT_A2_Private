@@ -22,13 +22,10 @@ public:
 
    std::string ToString();
 
-   //for debuging
-   Node* GetHead();
-   Node* GetTail();
-
 private:
    Node* head;
    Node* tail;
+   int size;
 };
 
 #endif // ASSIGN2_LINKEDLIST_H
