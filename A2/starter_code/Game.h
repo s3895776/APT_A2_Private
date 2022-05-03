@@ -7,7 +7,7 @@
 #include <vector>
 #include "LinkedList.h"
 #include "Player.h"
-
+#include "Board.h"
 class Game {
 
     public:
@@ -78,6 +78,7 @@ class Game {
 
         LinkedList tileBag;
         void InitaliseBag(LinkedList& bag);
+        Board board;
 };
 
 

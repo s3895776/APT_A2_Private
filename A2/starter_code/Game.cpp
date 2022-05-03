@@ -5,6 +5,7 @@
 Game::Game() {
     tileBag = LinkedList();
     players = new std::vector<Player*>;
+    board = Board();
 }
 
 Game::~Game() {
