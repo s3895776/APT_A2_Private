@@ -47,12 +47,7 @@ class Game {
         /*
          * Load game from a saved file
          */
-        std::string loadGame();
-
-        /*Modify the board */
-        // std::string modifyBoard(std::vector<Tile> tilesToPlace, std::vector<std::string> coordinates);
-
-        
+        std::string loadGame();       
 
         /* Wait for player input and call player methods in this state. 
         */
@@ -68,12 +63,6 @@ class Game {
         // std::vector< std::vector<char> > board;
 
         std::vector<Player*> players;
-
-        // /*Award points to the player for a legal move.*/
-        // std::string awardPoints();
-
-        /*Return the board to its original state.*/
-        std::string invalidMove();
 
         LinkedList tileBag;
         void InitaliseBag(LinkedList& bag);

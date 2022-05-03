@@ -155,26 +155,6 @@ std::string Game::displayCredits() {
     return credits;
 }
 
-// std::string Game::modifyBoard(std::vector<Tile> tilesToPlace, std::vector<std::string> coordinates) {
-//     std::string boardState;
-//     // TODO: modify the 2d vector 
-
-//     // TODO: revert board if invalid move.
-
-//     // TODO: award points if successful move.
-//     return boardState;
-// }
-
-// std::string Game::awardPoints() {
-//     // TODO: award points 
-//     return "Points awarded";
-// }
-
-// std::string Game::invalidMove() {
-//     // TODO: revert board 
-//     return "Invalid move";
-// }
-
 
 std::string Game::loadGame() {
     // saveFile format:
