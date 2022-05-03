@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <fstream>
+#include <random>
 
 Game::Game() {
     tileBag = LinkedList();
@@ -56,7 +57,7 @@ int Game::view_mainMenu() {
     std::cout << "4. Quit" << std::endl;
     std::cout << std::endl;
 
-    int choice;
+    int choice = 0;
     std::cout << "> ";
     std::cin >> choice;
     
@@ -228,41 +229,47 @@ bool Game::loadGame() {
 
 
 void Game::InitaliseBag(LinkedList& bag){
-    srand(2);   //seed random number
-    int const num_tiles = 99;
-    int const shuffle_n = 200;
+    // TODO(dan): test no duplicates, shuffle correct, etc...
 
-    //import tiles from file into array
+    // Define consts
+    int const num_tiles = 98;
+    std::string const filename = "./ScrabbleTiles.txt";
+
+    // Mersenne Twister PRNG
+    std::random_device r;
+    std::mt19937 rng{r()};
+    
+    // Import tiles from file into array
     Tile tiles[num_tiles];
-    std::ifstream tileFile ("./ScrabbleTiles.txt");
+    std::ifstream tileFile (filename);
     char letter; int value; int index = 0;
-    while (tileFile.good() && index < num_tiles){
+    while (tileFile.good() && index <= num_tiles){
         tileFile >> letter;
         tileFile >> value;
         tiles[index] = Tile(letter, value);
         index++;
     }
 
-    // shuffle tiles in array
-    for (int i=0; i < shuffle_n; i++){
-        int a = rand()%num_tiles;
-        int b = rand()%num_tiles;
-        //std::cout << "swapping tiles " << a << " <-> " << b << std::endl;
-        Tile temp = tiles[a];
-        tiles[a] = tiles[b];
-        tiles[b] = temp;
+    // Fisher–Yates shuffle
+    int back = num_tiles - 1;
+    while (back > 0){
+        // Pick a random unshuffled elem
+        std::uniform_int_distribution<int> dist(0, back);
+        int index = dist(rng);
+
+        // Move to back of list
+        Tile temp = tiles[back];
+        tiles[back] = tiles[index];
+        tiles[index] = temp;
+
+        // Slide unshuffled window down
+        back--;
     }
 
-    // debug print array contents.
-    //for (int i = 0; i < num_tiles; i++){
-    //    std::cout << "["<< i <<"]"<< tiles[i].letter << "-" << tiles[i].value << std::endl;
-    //}
-
-    // insert tiles into bag
+    // Insert tiles into bag
     for (int i = 0; i < 99; i++){
         bag.AddTile(tiles[i]);
     }
-
 }
 
 bool Game::saveState(std::string filename) {
