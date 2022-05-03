@@ -5,6 +5,11 @@
 #include <vector>
 #include "Tile.h"
 
+// Define a Row type
+typedef int Row;
+
+// Define a Column type
+typedef int Column;
 
 class Board {
 public:
@@ -23,6 +28,9 @@ public:
     
     /* Displays the board as a 2D grid */
     std::string displayBoard();
+
+    Row row;
+    Column column;
 
 private:
     std::vector<std::vector<Tile>> board;

@@ -1,4 +1,6 @@
 #include "Board.h"
+#include <array>
+#include <iostream>
 
 Board::Board(){
 
@@ -19,6 +21,12 @@ Board::Board(Board& other){
 }
 
 std::string Board::placeTile(Tile tile, std::string coordinates){
+    /* convert the coordinates into rows and cols */ 
+    row = coordinates.back();
+    char c = coordinates.front();
+    // Make an array that has all of the letters
+    column = 0;
+    board[row][column] = tile;
     return "in progress";
 }
 std::string Board::removeTile(Tile tile, std::string coordinates){
