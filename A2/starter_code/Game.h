@@ -62,7 +62,7 @@ class Game {
     private:
         // std::vector< std::vector<char> > board;
 
-        std::vector<Player*> players;
+        std::vector<Player> players;
 
         LinkedList tileBag;
         void InitaliseBag(LinkedList& bag);

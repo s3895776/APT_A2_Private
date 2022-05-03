@@ -5,6 +5,7 @@
 Game::Game() {
     tileBag = LinkedList();
     // board = Board();
+    
 }
 
 Game::~Game() {
@@ -93,8 +94,10 @@ std::string Game::newGame() {
     // for each player, add pointer-to-player in players vector
     while (i < NUMBER_OF_PLAYERS) {
         Player player;
-        Player* playerPtr = &player;
-        this->players.push_back(playerPtr);
+        
+        // void push_back( const T& value );
+        this->players.push_back(player);
+
         ++i;
     }
 
@@ -107,8 +110,8 @@ std::string Game::newGame() {
         std::cin >> playerName;
         std::cout << std::endl;
         // TODO: check for uppercase only or ask again
-        this->players[i]->setName(playerName);
-        // this->(*players)[i]->setName(playerName);
+        this->players[i].setName(playerName);
+
         ++i;
     }
 
@@ -125,8 +128,9 @@ std::string Game::newGame() {
     // 4. Proceed with normal gameplay 
     // std::string currentPlayerName = (*players)[i]->getName();
     // Let main call gameInput();
-    std::cout << players[0]->getName() << std::endl;
-    std::cout << players[1]->getName() << std::endl;
+    std::cout << players[0].getName() << std::endl;
+    std::cout << players[1].getName() << std::endl;
+
 
     return "start new game";
     // return std::string("new Game");

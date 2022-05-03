@@ -19,7 +19,7 @@ LinkedList::~LinkedList() {
    }
 }
 
-LinkedList::LinkedList(LinkedList& other):
+LinkedList::LinkedList(const LinkedList& other):
    head(other.head),
    tail(other.tail),
    size(other.size)
