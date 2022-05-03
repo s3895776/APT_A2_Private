@@ -64,7 +64,7 @@ class Game {
          */  
         std::string quitGame();
 
-
+        
     private:
         // std::vector< std::vector<char> > board;
         // LinkedList tileBag;
@@ -73,8 +73,11 @@ class Game {
         // /*Award points to the player for a legal move.*/
         // std::string awardPoints();
 
-        // /*Return the board to its original state.*/
-        // std::string invalidMove();
+        /*Return the board to its original state.*/
+        std::string invalidMove();
+
+        LinkedList tileBag;
+        void InitaliseBag(LinkedList& bag);
 };
 
 

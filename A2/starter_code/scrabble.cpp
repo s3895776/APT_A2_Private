@@ -1,5 +1,4 @@
 #include "Game.h"
-
 #include <iostream>
 
 #define EXIT_SUCCESS    0

@@ -12,6 +12,7 @@ typedef int Value;
 
 class Tile {
 public:
+   Tile();
    Tile(char letter, int value);
    ~Tile();
    Tile(Tile& other);
