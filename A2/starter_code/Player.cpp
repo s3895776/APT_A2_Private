@@ -19,8 +19,8 @@ Player::Player(Player& other):
 Tile Player::dropTile(Letter letter) {
     // TODO: remove tile from hand if letter exists. 
 
-    // Tile droppedTile = ;
-    // return droppedTile;
+    Tile droppedTile;
+    return droppedTile;
 }
 
 std::string Player::setName(std::string name) {

@@ -66,8 +66,8 @@ class Game {
         
     private:
         // std::vector< std::vector<char> > board;
-        // LinkedList tileBag;
-        std::vector<Player> players;
+
+        std::vector<Player*> players;
 
         // /*Award points to the player for a legal move.*/
         // std::string awardPoints();
@@ -77,7 +77,7 @@ class Game {
 
         LinkedList tileBag;
         void InitaliseBag(LinkedList& bag);
-        Board board;
+        // Board board;
 };
 
 

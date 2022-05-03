@@ -2,7 +2,7 @@
 
 Tile::Tile():
     letter('_'),
-    value(0)
+    value(-1)
 {}
 Tile::Tile(char letter, int value):
     letter(letter),
