@@ -193,8 +193,14 @@ std::string Game::displayCredits() {
     // <Board State>
     // <tile bag contents>
     // <current player name>
-    // (For info on the assignment spec)
     // all fields are on newlines. 
+    // Format:
+    // • Name: ASCII text
+    // • Score: Integer
+    // • Player hand and tile bag: comma separated ordered list
+    // • Current board shape: Height, width
+    // • Board State: All tiles currently placed on the board should appear as a list of tile@position.
+    // example in spec 
     
     // TODO: initialise players' name, score and hand
 
@@ -330,8 +336,14 @@ bool Game::saveState(std::string filename) {
     // <Board State>
     // <tile bag contents>
     // <current player name>
-    // (For info on the assignment spec)
     // all fields are on newlines. 
+    // Format:
+    // • Name: ASCII text
+    // • Score: Integer
+    // • Player hand and tile bag: comma separated ordered list
+    // • Current board shape: Height, width
+    // • Board State: All tiles currently placed on the board should appear as a list of tile@position.
+    // example in spec 
 
     // TODO: put players information into gameState
 
@@ -370,12 +382,11 @@ bool Game::saveState(std::string filename) {
 //     // TODO: implement player action: replace
 //     // syntax: replace <tile> (only one can be replaced)
 
-//     // TODO: implement player action: pass
-//     // syntax: pass
+    // syntax: place <tile1> at <grid location>
+    // question: what order do the Tiles return in if the move
+    // isn't legal?
 
-//     // TODO: implement function: save
-//     // syntax: save saveFile
-
+    // TODO: implement player action: replace
 //     // TODO: implement function: quit
 //     // syntax: quit
 
@@ -393,3 +404,22 @@ std::string Game::quitGame() {
     return std::string("\nGoodbye\n");
 }
 
+std::string Game::displayCredits() {
+
+    // ----------------------------------
+    // Name: <full name>
+    // Student ID: <student number>
+    // Email: <email address>
+    // Name: <full name>
+    // Student ID: <student number>
+    // Email: <email address>
+    // <Student 3, etc.>
+    // ----------------------------------
+    // <main menu>
+
+    // TODO: display credits 
+
+
+    // TODO: resume main menu (probably in main)
+    return "";
+}
