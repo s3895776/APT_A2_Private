@@ -46,20 +46,40 @@ void Game::run_game() {
     }
 }
 
+/*
+ * Display prompt for main menu and return the user input choice (1 to 4)
+ */
 int Game::view_mainMenu() {
-    std::cout << std::endl;
-    std::cout << "Menu" << std::endl;
-    std::cout << "----" << std::endl;
-    std::cout << "1. New Game" << std::endl;
-    std::cout << "2. Load Game" << std::endl;
-    std::cout << "3. Credits (Show student information)" << std::endl;
-    std::cout << "4. Quit" << std::endl;
-    std::cout << std::endl;
-
     int choice;
-    std::cout << "> ";
-    std::cin >> choice;
-    
+    bool inputReceived = false;
+
+    // keep asking user for input until choice is initialised with a valid integer
+    while (!inputReceived) {
+        // prompt
+        std::cout << std::endl;
+        std::cout << "Menu" << std::endl;
+        std::cout << "----" << std::endl;
+        std::cout << "1. New Game" << std::endl;
+        std::cout << "2. Load Game" << std::endl;
+        std::cout << "3. Credits (Show student information)" << std::endl;
+        std::cout << "4. Quit" << std::endl;
+        std::cout << std::endl;
+
+        // get integer input
+        std::cout << "> ";
+
+        // reject invalid input which is not an integer between 1 and 4
+        if (!(std::cin >> choice) || choice > 4 || choice < 1) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << std::endl;
+            std::cout << "Input must be an integer between 1 and 4" << std::endl;
+        }
+        // accept valid input and end the loop
+        else {
+            inputReceived = true;
+        }
+    }
     return choice;
 }
 
