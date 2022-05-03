@@ -1,58 +1,85 @@
 #ifndef GAME_H
 #define GAME_H
+
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <vector>
 #include "LinkedList.h"
 #include "Player.h"
-
+#include "Board.h"
 class Game {
 
     public:
 
-        /* Constructor, destructor, copy constructor
-        */
+        /*
+         * Constructor, destructor, copy constructor
+         */
         Game();
         ~Game();
         Game(Game& other);
 
-        /*Modify the board */
-        std::string modifyBoard(std::vector<Tile> tilesToPlace, std::vector<std::string> coordinates);
+        /*
+         * Run game loop
+         */
+        void run_game();
 
-        /* Load a game from a saveFile
-        param: take a saveFile TODO: determine saveFile type 
-        */
-        std::string loadGame(std::iostream& saveFile);
+        /*
+         * Display prompt for main menu
+         */
+        int view_mainMenu();
 
-        /* Load a new game 
-        */
+        /*
+         * Create a new game 
+         */
         std::string newGame();
 
-        /* Save board information 
-        */
-        std::string saveState();
+        /*
+         * Display Credits
+         */
+        std::string displayCredits();
 
-        /* Wait for player input and call player methods in this state. 
-        */
-        std::string gameInput(std::string currentPlayerName);
+        /*
+         * Save board information 
+         */
+        bool saveState(std::string filename);
 
-        /* Quit game
-        */  
+        /*
+         * Load game from a saved file
+         */
+        bool loadGame();
+        // std::iostream& saveFile
+
+        /*Modify the board */
+        // std::string modifyBoard(std::vector<Tile> tilesToPlace, std::vector<std::string> coordinates);
+
+        
+
+        // /* Wait for player input and call player methods in this state. 
+        // */
+        // std::string gameInput(std::string currentPlayerName);
+
+        /*
+         * Quit game
+         */  
         std::string quitGame();
 
-
+        
     private:
-        std::vector< std::vector<Tile> > board;
-        LinkedList tileBag;
-        std::vector<Player> players;
+        // std::vector< std::vector<char> > board;
+        // LinkedList tileBag;
+        std::vector<Player*> *players;
+        // currentPlayer;
 
-        /*Award points to the player for a legal move.*/
-        std::string awardPoints();
+        // /*Award points to the player for a legal move.*/
+        // std::string awardPoints();
 
         /*Return the board to its original state.*/
         std::string invalidMove();
 
-        /* Display student names */
-        std::string displayCredits();
+        LinkedList tileBag;
+        void InitaliseBag(LinkedList& bag);
+        Board board;
 };
 
 
