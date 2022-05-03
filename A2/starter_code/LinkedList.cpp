@@ -19,6 +19,12 @@ LinkedList::~LinkedList() {
    }
 }
 
+LinkedList::LinkedList(LinkedList& other):
+   head(other.head),
+   tail(other.tail),
+   size(other.size)
+{}
+
 // spec: adding a tile alway adds at the end
 void LinkedList::AddTile(Tile& tile){
    size++;

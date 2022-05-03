@@ -22,7 +22,7 @@ class Game {
         /*
          * Run game loop
          */
-        void run_game();
+        void run_menu();
 
         /*
          * Display prompt for main menu
@@ -47,17 +47,16 @@ class Game {
         /*
          * Load game from a saved file
          */
-        bool loadGame();
-        // std::iostream& saveFile
+        std::string loadGame();
 
         /*Modify the board */
         // std::string modifyBoard(std::vector<Tile> tilesToPlace, std::vector<std::string> coordinates);
 
         
 
-        // /* Wait for player input and call player methods in this state. 
-        // */
-        // std::string gameInput(std::string currentPlayerName);
+        /* Wait for player input and call player methods in this state. 
+        */
+        std::string gameInput(std::string currentPlayerName);
 
         /*
          * Quit game
@@ -68,7 +67,7 @@ class Game {
     private:
         // std::vector< std::vector<char> > board;
         // LinkedList tileBag;
-        std::vector<Player*> *players;
+        std::vector<Player> players;
 
         // /*Award points to the player for a legal move.*/
         // std::string awardPoints();

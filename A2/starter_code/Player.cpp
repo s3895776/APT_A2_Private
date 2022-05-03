@@ -9,6 +9,13 @@ Player::~Player() {
 
 }
 
+Player::Player(Player& other): 
+    hand(other.hand),
+    name(other.name),
+    score(other.score)
+{}
+
+
 Tile Player::dropTile(Letter letter) {
     // TODO: remove tile from hand if letter exists. 
 

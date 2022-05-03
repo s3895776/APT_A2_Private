@@ -10,7 +10,9 @@ public:
 
    LinkedList();
    ~LinkedList();
-
+   /*Copy constructor*/
+   LinkedList(LinkedList& other);
+   
    void AddTile(Tile& tile);
 
    Tile* DrawTile();

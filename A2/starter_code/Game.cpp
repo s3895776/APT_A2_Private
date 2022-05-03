@@ -4,44 +4,36 @@
 
 Game::Game() {
     tileBag = LinkedList();
-    players = new std::vector<Player*>;
     board = Board();
 }
 
 Game::~Game() {
-    //clean up memory
-    for( int i=0; i < (int)players->size(); i++){
-        delete (*players)[i];
-    }
-    delete players;
 }
 
-void Game::run_game() {
-    bool game = true;
+void Game::run_menu() {
 
-    while (game) {
+    bool menu = true;
+
+    while (menu) {
         int choice = this->view_mainMenu();
 
         if (choice == 1) {
             std::cout << this->newGame();
+            menu = false;
         }
         else if (choice == 2) {
             this->loadGame();
             std::cout << "loading game" << std::endl;
+            menu = false;
         }
         else if (choice == 3) {
             std::cout << this->displayCredits() << std::endl;
         }
         else if (choice == 4) {
             std::cout << this->quitGame() << std::endl;
-            game = false;
+            menu = false;
         }
-        // TODO: save testing ground (delete after)
-        else if (choice == 5) {
-            std::string filename;
-            std::cin >> filename;
-            this->saveState(filename);
-        }
+
         else {
             std::cout << "wrong choice" << std::endl;
         }
@@ -101,8 +93,8 @@ std::string Game::newGame() {
     
     // for each player, add pointer-to-player in players vector
     while (i < NUMBER_OF_PLAYERS) {
-        Player* player = new Player();
-        players->push_back(player);
+        Player player;
+        this->players.push_back(player);
         ++i;
     }
 
@@ -115,7 +107,7 @@ std::string Game::newGame() {
         std::cin >> playerName;
         std::cout << std::endl;
         // TODO: check for uppercase only or ask again
-        (*players)[i]->setName(playerName);
+        this->players[i].setName(playerName);
         ++i;
     }
 
@@ -132,8 +124,8 @@ std::string Game::newGame() {
     // 4. Proceed with normal gameplay 
     // std::string currentPlayerName = (*players)[i]->getName();
     // Let main call gameInput();
-    std::cout << (*players)[0]->getName() << std::endl;
-    std::cout << (*players)[1]->getName() << std::endl;
+    std::cout << players[0].getName() << std::endl;
+    std::cout << players[1].getName() << std::endl;
 
     return "start new game";
     // return std::string("new Game");
@@ -182,7 +174,8 @@ std::string Game::displayCredits() {
 //     return "Invalid move";
 // }
 
-// std::string Game::loadGame(std::iostream& saveFile) {
+
+std::string Game::loadGame() {
     // saveFile format:
     // <player 1 name>
     // <player 1 score>
@@ -202,25 +195,13 @@ std::string Game::displayCredits() {
     // • Board State: All tiles currently placed on the board should appear as a list of tile@position.
     // example in spec 
     
-    // TODO: initialise players' name, score and hand
-
-    // TODO: initialise 2d vector 
-
-    // TODO: initialise tileBag 
-
-    // TODO: Store the name of the currentPlayer
-    // std::string currentPlayerName;
-
-    // return currentPlayerName;
-//     return std::string("loaded");
-// }
-
-bool Game::loadGame() {
     std::string filename;
     std::cout << "Enter the filename to load game" << std::endl;
     std::cout << "> ";
     std::cin >> filename;
     // return false if (filename does not exist)
+    // TODO: loop until valid file name
+    // return "Failed Load"
 
     // https://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring
     std::ifstream fileLoaded("saves/" + filename);
@@ -251,7 +232,8 @@ bool Game::loadGame() {
     std::cout << boardStatus << std::endl;
     std::cout << currentPlayer << std::endl;
 
-    return true;
+    // TODO: Store the name of the currentPlayer
+    return currentPlayer;
 }
 
 
@@ -358,68 +340,55 @@ bool Game::saveState(std::string filename) {
     return true;
 }
 
-// std::string Game::gameInput(std::string currentPlayerName) {
-//     // TODO: search for the player beginning their turn
+std::string Game::gameInput(std::string currentPlayerName) {
+    // TODO: search for the player beginning their turn
 
-//     // TODO: Special Operation: Ending a Game
-//     // Condition: 1. The tile bag is empty, and
-//     // 2. One player has no more tiles in their hand or passes his turn twice.
-//     // • Display the end game message
-//     // • Display the scores
-//     // • Display the name of the winning player
-//     // • Then quit, according to Section 2.2.4.
+    // TODO: Special Operation: Ending a Game
+    // Condition: 1. The tile bag is empty, and
+    // 2. One player has no more tiles in their hand or passes his turn twice.
+    // • Display the end game message
+    // • Display the scores
+    // • Display the name of the winning player
+    // • Then quit, according to Section 2.2.4.
     
-//     // TODO: implement turns within gameInput()
-//     // currentPlayer takes a turn, and the following 
-//     // player in vector players will continue
-//     // at the end, next player chosen will be the starting player
+    // TODO: implement turns within gameInput()
+    // currentPlayer takes a turn, and the following 
+    // player in vector players will continue
+    // at the end, next player chosen will be the starting player
 
-//     // TODO: choose inputs for making the player move.
+    // TODO: choose inputs for making the player move.
+    // std::cin >> string
+    // dissect the string into parts to get the right string. 
 
-//     // TODO: implement player action: placement
-//     // syntax: place <tile1> at <grid location>
+    // TODO: implement player action: placement
+    // syntax: place <tile1> at <grid location>
 
-//     // TODO: implement player action: replace
-//     // syntax: replace <tile> (only one can be replaced)
-
+    // TODO: implement player action: replace
+    // syntax: replace <tile> (only one can be replaced)
     // syntax: place <tile1> at <grid location>
     // question: what order do the Tiles return in if the move
     // isn't legal?
 
-    // TODO: implement player action: replace
-//     // TODO: implement function: quit
-//     // syntax: quit
+    // TODO: save testing ground (delete after)
+    // std::string filename;
+    // std::cin >> filename;
+    // this->saveState(filename);
+        
 
-//     // TODO: special character ^D
-//     // use the quit command.    
+    // TODO: implement function: quit
+    // syntax: quit
 
-//     // TODO: Invalid Input
-//     // syntax: any command not shown above
 
-//     // TODO: return an appropriate string 
-//     return std::string("Something");
-// }
+    // TODO: special character ^D
+    // use the quit command.    
+
+    // TODO: Invalid Input
+    // syntax: any command not shown above
+
+    // TODO: return an appropriate string 
+    return std::string("Something");
+}
 
 std::string Game::quitGame() {
     return std::string("\nGoodbye\n");
-}
-
-std::string Game::displayCredits() {
-
-    // ----------------------------------
-    // Name: <full name>
-    // Student ID: <student number>
-    // Email: <email address>
-    // Name: <full name>
-    // Student ID: <student number>
-    // Email: <email address>
-    // <Student 3, etc.>
-    // ----------------------------------
-    // <main menu>
-
-    // TODO: display credits 
-
-
-    // TODO: resume main menu (probably in main)
-    return "";
 }

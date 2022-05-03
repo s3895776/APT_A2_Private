@@ -7,7 +7,7 @@
 int main(void) {
 
    Game game;
-   game.run_game();   
+   game.run_menu();   
 
    return EXIT_SUCCESS;
 }
