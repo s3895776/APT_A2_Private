@@ -11,6 +11,7 @@ public:
    LinkedList();
    ~LinkedList();
    /*Copy constructor*/
+   LinkedList(LinkedList& other);
    LinkedList(const LinkedList& other);
    
    void AddTile(Tile& tile);

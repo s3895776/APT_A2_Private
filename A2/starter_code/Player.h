@@ -13,6 +13,7 @@ class Player {
         ~Player();
 
         /* Copy constructor (not sure if necessary) */
+        Player(Player& other);
         Player(const Player& other);
 
         /* drop a tile from linkedList hand and return it */

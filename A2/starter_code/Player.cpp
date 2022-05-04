@@ -9,6 +9,12 @@ Player::~Player() {
 
 }
 
+Player::Player(Player& other):
+    hand(other.hand),
+    name(other.name),
+    score(other.score)
+{}
+
 Player::Player(const Player& other): 
     hand(other.hand),
     name(other.name),

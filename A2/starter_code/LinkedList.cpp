@@ -18,6 +18,11 @@ LinkedList::~LinkedList() {
       delete temp;
    }
 }
+LinkedList::LinkedList(LinkedList& other):
+   head(other.head),
+   tail(other.tail),
+   size(other.size)
+{}
 
 LinkedList::LinkedList(const LinkedList& other):
    head(other.head),

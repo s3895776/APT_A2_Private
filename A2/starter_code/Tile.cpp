@@ -17,6 +17,11 @@ Tile::Tile(Tile&other):
     value(other.value)
 {}
 
+Tile::Tile(const Tile&other):
+    letter(other.letter),
+    value(other.value)
+{}
+
 std::string Tile::getTileAsString() {
     std::string tileString;
     tileString.push_back(this->getLetter());
