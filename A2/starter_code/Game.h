@@ -22,10 +22,10 @@ class Game {
         /*
          * Run game loop
          */
-        void run_menu();
+        std::string run_menu();
 
         /*
-         * Display prompt for main menu
+         * Display prompt for main menu and return the user input choice (1 to 4)
          */
         int view_mainMenu();
 
@@ -51,7 +51,7 @@ class Game {
 
         /* Wait for player input and call player methods in this state. 
         */
-        std::string gameInput(std::string currentPlayerName);
+        std::string gameInput(std::string firstPlayer);
 
         /*
          * Quit game
@@ -66,6 +66,7 @@ class Game {
 
         LinkedList tileBag;
         void InitaliseBag(LinkedList& bag);
+        
         // Board board;
 };
 

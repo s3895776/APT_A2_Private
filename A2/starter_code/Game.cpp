@@ -11,19 +11,20 @@ Game::Game() {
 Game::~Game() {
 }
 
-void Game::run_menu() {
-
+std::string Game::run_menu() {
+    std::string firstPlayer = "";
     bool menu = true;
 
     while (menu) {
         int choice = this->view_mainMenu();
 
         if (choice == 1) {
-            std::cout << this->newGame();
+            firstPlayer = this->newGame();
             menu = false;
+
         }
         else if (choice == 2) {
-            this->loadGame();
+            firstPlayer = this->loadGame();
             std::cout << "loading game" << std::endl;
             menu = false;
         }
@@ -31,19 +32,21 @@ void Game::run_menu() {
             std::cout << this->displayCredits() << std::endl;
         }
         else if (choice == 4) {
+            firstPlayer = "";
             std::cout << this->quitGame() << std::endl;
             menu = false;
         }
 
-        else {
-            std::cout << "wrong choice" << std::endl;
-        }
+        // This is uncessary considering view_mainMenu() validates input
+        // else {
+        //     std::cout << "wrong choice" << std::endl;
+        // }
     }
+
+    return firstPlayer;
+
 }
 
-/*
- * Display prompt for main menu and return the user input choice (1 to 4)
- */
 int Game::view_mainMenu() {
     int choice;
     bool inputReceived = false;
@@ -105,7 +108,8 @@ std::string Game::newGame() {
     std::string playerName;
 
     while (i < NUMBER_OF_PLAYERS) {
-        std::cout << "Enter a name for player " << i + 1 << " (uppercase characters only)" << std::endl;
+        std::cout << "Enter a name for player " << i + 1 << 
+        " (uppercase characters only)" << std::endl;
         std::cout << "> ";
         std::cin >> playerName;
         std::cout << std::endl;
@@ -118,22 +122,23 @@ std::string Game::newGame() {
     std::cout << "Let's Play!" << std::endl;
 
     // 3. Create a new game of Scrabble
-    InitaliseBag(tileBag);
+    // InitaliseBag(tileBag);
 
     // TODO: initialise Players One and Two LinkedList values with Tiles.
 
     // TODO: initialise 2d vector with starting values 
 
-
     // 4. Proceed with normal gameplay 
     // std::string currentPlayerName = (*players)[i]->getName();
     // Let main call gameInput();
-    std::cout << players[0].getName() << std::endl;
-    std::cout << players[1].getName() << std::endl;
+    
+    // i = 0;
+    // while (i < NUMBER_OF_PLAYERS) {
+    //     std::cout << players[i].getName() << std::endl;
+    //     ++i;
+    // }
 
-
-    return "start new game";
-    // return std::string("new Game");
+    return this->players[0].getName();
 }
 
 std::string Game::displayCredits() {
@@ -158,7 +163,6 @@ std::string Game::displayCredits() {
     credits.append("-------------------------------------\n");
     return credits;
 }
-
 
 std::string Game::loadGame() {
     // saveFile format:
@@ -220,7 +224,6 @@ std::string Game::loadGame() {
     // TODO: Store the name of the currentPlayer
     return currentPlayer;
 }
-
 
 void Game::InitaliseBag(LinkedList& bag){
     // TODO(dan): test no duplicates, shuffle correct, etc...
@@ -325,8 +328,43 @@ bool Game::saveState(std::string filename) {
     return true;
 }
 
-std::string Game::gameInput(std::string currentPlayerName) {
+std::string Game::gameInput(std::string firstPlayer) {
+
     // TODO: search for the player beginning their turn
+    const int NUMBER_OF_PLAYERS = 2;
+    int currentPlayerIndex = -1;
+
+    try {
+    int i = 0;
+
+        while (i < NUMBER_OF_PLAYERS) {
+
+            if ((this->players[i].getName() == firstPlayer) &
+            (currentPlayerIndex == -1) ) {
+                currentPlayerIndex = i;
+            }
+
+            ++i;
+        }    
+        // // TEST: if the error prevents the rest of the code from executing
+        // firstPlayerIndex = -1; 
+
+        // if no modifications are made to firstPlayerIndex, 
+        // a fatal error has occured. 
+        if (currentPlayerIndex == -1) {
+            throw currentPlayerIndex;
+        }
+
+    }
+    catch (int x) {
+        std::string Error = "Fatal error has occured: unable to find ";
+        Error += "first player. Aborting gameInput.";
+        std::cout << Error << std::endl;
+        return "Goodbye\n";
+    }
+
+    // // try block will return Error message and end input for faulty
+    // input. std::cout << "Success" << std::endl;
 
     // TODO: Special Operation: Ending a Game
     // Condition: 1. The tile bag is empty, and
@@ -335,6 +373,23 @@ std::string Game::gameInput(std::string currentPlayerName) {
     // • Display the scores
     // • Display the name of the winning player
     // • Then quit, according to Section 2.2.4.
+    std::string currPlayerName;
+    std::string currHand;
+    currPlayerName = players[currentPlayerIndex].getName();
+    currHand = players[currentPlayerIndex].getHand(); 
+
+    std::cout << currPlayerName << ", it's your turn" << std::endl;
+
+    for (Player& player : players) {
+        std::cout << "Score for " << player.getName();
+        std::cout << ": " << player.getScore() << std::endl;
+    }
+    // TODO: print the board
+
+    std::cout << "Your hand is: " << std::endl;
+    std::cout << currHand << std::endl;
+
+    std::cout << std::endl;
     
     // TODO: implement turns within gameInput()
     // currentPlayer takes a turn, and the following 
@@ -371,9 +426,9 @@ std::string Game::gameInput(std::string currentPlayerName) {
     // syntax: any command not shown above
 
     // TODO: return an appropriate string 
-    return std::string("Something");
+    return ("Something");
 }
 
 std::string Game::quitGame() {
-    return std::string("\nGoodbye\n");
+    return "\nGoodbye\n";
 }
