@@ -3,6 +3,7 @@
 Player::Player() {
     this->hand = LinkedList();
     score = 0;
+    turnsSkipped = 0;
 }
 
 Player::~Player() {
@@ -61,4 +62,42 @@ std::string Player::addScore(int score) {
 
 int Player::getScore() {
     return this->score;
+}
+
+bool Player::handEmpty() {
+    // TODO:: determine if hand is empty
+    bool handIsEmpty = false;
+
+    // hard to determine if this is the right method
+    if (hand.Count() == 0) {
+        handIsEmpty = true;
+    }
+
+    return handIsEmpty;
+}
+
+std::string Player::skippedTurn() {
+    turnsSkipped += 1;
+    return "";
+}
+
+std::string Player::turnNotSkipped() {
+    turnsSkipped = 0;
+    return "";
+}
+
+bool Player::skippedTwoTurns() {
+    bool twoOrMoreTurns = false;
+
+    if (turnsSkipped >= 2) {
+        twoOrMoreTurns = true;
+    }
+
+    return twoOrMoreTurns;
+}
+
+std::string Player::printScore() {
+    std::cout << "Score for " << this->getName();
+    std::cout << ": " << this->getScore() << std::endl;
+    return "";
 }

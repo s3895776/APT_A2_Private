@@ -66,7 +66,9 @@ class Game {
 
         LinkedList tileBag;
         void InitaliseBag(LinkedList& bag);
-        
+
+        /* Display the end of the game information */
+        std::string gameEnd();
         // Board board;
 };
 

@@ -37,10 +37,26 @@ class Player {
         /* get the score of the player */
         int getScore();
 
+        /* Return true if hand is empty, else false.*/
+        bool handEmpty();
+
+        /* increment skipped turned if player skips a turn  */
+        std::string skippedTurn();
+
+        /* reset skipped turn count to zero if player does not skip the turn */
+        std::string turnNotSkipped();
+
+        /* Return true if the turns skipped are equal or above two*/
+        bool skippedTwoTurns();
+
+        /* Print the users score in the format. */
+        std::string printScore();
+
     private:
         LinkedList hand;
         std::string name;
         int score;
+        int turnsSkipped;
 
 };
 

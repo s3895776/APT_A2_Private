@@ -97,8 +97,7 @@ std::string Game::newGame() {
     // for each player, add pointer-to-player in players vector
     while (i < NUMBER_OF_PLAYERS) {
         Player player;
-        
-        // void push_back( const T& value );
+
         this->players.push_back(player);
 
         ++i;
@@ -365,70 +364,140 @@ std::string Game::gameInput(std::string firstPlayer) {
 
     // // try block will return Error message and end input for faulty
     // input. std::cout << "Success" << std::endl;
-
-    // TODO: Special Operation: Ending a Game
-    // Condition: 1. The tile bag is empty, and
-    // 2. One player has no more tiles in their hand or passes his turn twice.
-    // • Display the end game message
-    // • Display the scores
-    // • Display the name of the winning player
-    // • Then quit, according to Section 2.2.4.
-    std::string currPlayerName;
-    std::string currHand;
-    currPlayerName = players[currentPlayerIndex].getName();
-    currHand = players[currentPlayerIndex].getHand(); 
-
-    std::cout << currPlayerName << ", it's your turn" << std::endl;
-
-    for (Player& player : players) {
-        std::cout << "Score for " << player.getName();
-        std::cout << ": " << player.getScore() << std::endl;
-    }
-    // TODO: print the board
-
-    std::cout << "Your hand is: " << std::endl;
-    std::cout << currHand << std::endl;
-
-    std::cout << std::endl;
     
     // TODO: implement turns within gameInput()
     // currentPlayer takes a turn, and the following 
     // player in vector players will continue
     // at the end, next player chosen will be the starting player
+    bool gameLoop = true;
 
-    // TODO: choose inputs for making the player move.
-    // std::cin >> string
-    // dissect the string into parts to get the right string. 
+    while (gameLoop) {
+        // TODO: Special Operation: Ending a Game
+        // Condition: 1. The tile bag is empty, and
+        // 2. One player has no more tiles in their hand or passes his turn twice.
+        // • Display the end game message
+        // • Display the scores
+        // • Display the name of the winning player
+        // • Then quit, according to Section 2.2.4.
 
-    // TODO: implement player action: placement
-    // syntax: place <tile1> at <grid location>
+        if (tileBag.Count() == 0) {
+            // stop conditions if the game has already ended
 
-    // TODO: implement player action: replace
-    // syntax: replace <tile> (only one can be replaced)
-    // syntax: place <tile1> at <grid location>
-    // question: what order do the Tiles return in if the move
-    // isn't legal?
+            for (Player& player : players) {
 
-    // TODO: save testing ground (delete after)
-    // std::string filename;
-    // std::cin >> filename;
-    // this->saveState(filename);
-        
+                if (gameLoop) {
+                    // check players hand is empty
+                    if (player.handEmpty()) {
+                        // TODO: call method to display the end of the game. 
+                        this->gameEnd();
+                        gameLoop = false;
+                    }
 
-    // TODO: implement function: quit
-    // syntax: quit
+                    else if (player.skippedTwoTurns()) {
+                        // TODO: call method to display the end of the game. 
+                        this->gameEnd(); 
+                        gameLoop = false;
+                    }
 
+                }
 
-    // TODO: special character ^D
-    // use the quit command.    
+            }
 
-    // TODO: Invalid Input
-    // syntax: any command not shown above
+        }
+
+        // necessary if game ends in previous condition. 
+        if (gameLoop) {
+            std::string currPlayerName;
+            std::string currHand;
+            currPlayerName = players[currentPlayerIndex].getName();
+            currHand = players[currentPlayerIndex].getHand(); 
+
+            std::cout << currPlayerName << ", it's your turn" << std::endl;
+
+            for (Player& player : players) {
+                player.printScore();
+            }
+            // TODO: print the board
+
+            std::cout << "Your hand is: " << std::endl;
+            std::cout << currHand << std::endl;
+            std::cout << std::endl;
+
+            bool inputNotReceived = true;
+
+            while (inputNotReceived) {
+                std::cout << ">";
+
+                // TODO: choose inputs for making the player move.
+                // std::cin >> string
+                // dissect the string into parts to get the right string. 
+                std::string playerAction;
+                std::cin >> playerAction;
+                
+                // TODO: remove after testing
+                std::cout << playerAction << std::endl;
+
+                // TODO: implement player action: placement
+                // syntax: place <tile1> at <grid location>
+
+                // TODO: implement player action: replace
+                // syntax: replace <tile> (only one can be replaced)
+                // syntax: place <tile1> at <grid location>
+                // question: what order do the Tiles return in if the move
+                // isn't legal?
+
+                // TODO: save testing ground (delete after)
+                // std::string filename;
+                // std::cin >> filename;
+                // this->saveState(filename);
+                    
+                // TODO: implement function: quit
+                // syntax: quit
+
+                // TODO: special character ^D
+                // use the quit command.    
+
+                // TODO: Invalid Input
+                // syntax: any command not shown above
+
+                // remove at the end of testing
+                inputNotReceived = false;
+            }
+            
+            // remove at the end of testing. 
+            gameLoop = false;
+        }
+
+    }
 
     // TODO: return an appropriate string 
-    return ("Something");
+    std::cout << quitGame();
+    return ("");
 }
 
 std::string Game::quitGame() {
     return "\nGoodbye\n";
+}
+
+std::string Game::gameEnd() {
+    // Game over
+    // Score for <player 1 name>: 000
+    // Score for <player 2 name>: 000
+    // Player <winner player name> won!
+    std::cout << "Game over" << std::endl;
+    Player playerHighestScore = players[0];
+
+    for (Player& player : players) {
+        player.printScore();
+
+        if (playerHighestScore.getScore() < player.getScore()) {
+            playerHighestScore = player;
+        }
+
+    }
+
+    std::cout << "Player " << playerHighestScore.getName() << " won!" 
+    << std::endl;
+
+    return "";
 }
