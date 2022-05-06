@@ -1,55 +1,75 @@
 #ifndef GAME_H
 #define GAME_H
+
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <vector>
 #include "LinkedList.h"
 #include "Player.h"
-
+#include "Board.h"
 class Game {
 
     public:
 
-        /* Constructor, destructor, copy constructor
-        */
+        /*
+         * Constructor, destructor, copy constructor
+         */
         Game();
         ~Game();
         Game(Game& other);
 
-        /*Modify the board */
-        std::string modifyBoard(std::vector<Tile> tilesToPlace, std::vector<std::string> coordinates);
+        /*
+         * Run game loop
+         */
+        std::string run_menu();
 
-        /* Load a game from a saveFile
-        param: take a saveFile TODO: determine saveFile type 
-        */
-        std::string loadGame(std::iostream& saveFile);
+        /*
+         * Display prompt for main menu and return the user input choice (1 to 4)
+         */
+        int view_mainMenu();
 
-        /* Load a new game 
-        */
+        /*
+         * Create a new game 
+         */
         std::string newGame();
 
-        /* Save board information 
-        */
-        std::string saveState();
+        /*
+         * Display Credits
+         */
+        std::string displayCredits();
+
+        /*
+         * Save board information 
+         */
+        bool saveState(std::string filename);
+
+        /*
+         * Load game from a saved file
+         */
+        std::string loadGame();       
 
         /* Wait for player input and call player methods in this state. 
         */
-        std::string gameInput(std::string currentPlayerName);
+        std::string gameInput(std::string firstPlayer);
 
-        /* Quit game
-        */  
+        /*
+         * Quit game
+         */  
         std::string quitGame();
 
-
+        
     private:
-        std::vector< std::vector<char> > board;
-        LinkedList tileBag;
+        // std::vector< std::vector<char> > board;
+
         std::vector<Player> players;
 
-        /*Award points to the player for a legal move.*/
-        std::string awardPoints();
+        LinkedList tileBag;
+        void InitaliseBag(LinkedList& bag);
 
-        /*Return the board to its original state.*/
-        std::string invalidMove();
+        /* Display the end of the game information */
+        std::string gameEnd();
+        // Board board;
 };
 
 

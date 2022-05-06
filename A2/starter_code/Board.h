@@ -1,5 +1,4 @@
-#ifndef ASSIGN2_BOARD_H
-#define ASSIGN2_BOARD_H
+#ifndef ASSIGN2_BOARD_Hß
 
 
 #include <vector>
@@ -28,6 +27,10 @@ public:
     
     /* Displays the board as a 2D grid */
     std::string displayBoard();
+
+    /* For saving purposes: saves the board state */
+
+    std::string saveBoard();
 
     Row row;
     Column column;

@@ -12,52 +12,51 @@ class Player {
         Player();
         ~Player();
 
-        /*Copy constructor (not sure if necessary) */
+        /* Copy constructor (not sure if necessary) */
         Player(Player& other);
+        Player(const Player& other);
 
-        /* Just pass on the name and hand
-        as 
-        */
-        std::string saveGame();
+        /* drop a tile from linkedList hand and return it */
+        Tile dropTile(Letter letter);
 
-        /* place Tiles from linkedList hand
-        */
+        /* set a tile in the hand */
+        std::string fillHand(Tile tile);
 
-        std::string placeTiles(LinkedList* tileBag);
-        /* replace Tiles from linkedList hand
-        */
-
-        std::string replaceTile(LinkedList* tileBag);
-        /* "end turn"
-        */
-
-        std::string skip();
-        /*  quit the program
-        */
-
-        std::string quit();
-
-        /* Fill in the players name
-        */
-
-        std::string setName(std::string name);
-
-        /* return the hand to display  
-        */
+        /* return the hand as a comma separated ordered list */
         std::string getHand();
 
-        /* Fill in the players hand to full]
-        remember to empty the tile bag for tiles 
-        that are taken
-        */
-        std::string setHand(LinkedList* tileBag);
+        /* Fill in the players name */
+        std::string setName(std::string name);
 
         /*        return the players name         */
         std::string getName();
+        
+        /* append score to the player score */
+        std::string addScore(int score);
+
+        /* get the score of the player */
+        int getScore();
+
+        /* Return true if hand is empty, else false.*/
+        bool handEmpty();
+
+        /* increment skipped turned if player skips a turn  */
+        std::string skippedTurn();
+
+        /* reset skipped turn count to zero if player does not skip the turn */
+        std::string turnNotSkipped();
+
+        /* Return true if the turns skipped are equal or above two*/
+        bool skippedTwoTurns();
+
+        /* Print the users score in the format. */
+        std::string printScore();
 
     private:
         LinkedList hand;
         std::string name;
+        int score;
+        int turnsSkipped;
 
 };
 

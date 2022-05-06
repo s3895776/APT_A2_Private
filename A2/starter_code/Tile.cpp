@@ -1,6 +1,13 @@
 #include "Tile.h"
 
+<<<<<<< HEAD
 
+=======
+Tile::Tile():
+    letter('_'),
+    value(-1)
+{}
+>>>>>>> main
 Tile::Tile(char letter, int value):
     letter(letter),
     value(value)
@@ -10,6 +17,11 @@ Tile::~Tile() {
 }
 
 Tile::Tile(Tile&other):
+    letter(other.letter),
+    value(other.value)
+{}
+
+Tile::Tile(const Tile&other):
     letter(other.letter),
     value(other.value)
 {}
