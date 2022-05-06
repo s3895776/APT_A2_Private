@@ -19,31 +19,30 @@ public:
     ~Board();
     Board(Board& other);
 
+    /* returns the board for testing purposes*/
+    std::vector<std::vector<Tile*>> getBoard();
+
     /* Place Tile on the board, takes the coordinates in the format sent in by the player,
        and converts it into the appropriate vector coordinates */
     std::string placeTile(Tile* tile, std::string coordinates);
 
     /* Remove Tile, to be used if move is invalid*/
+    std::string removeTile(std::string coordinates);
 
-    std::string removeTile(Tile* tile, std::string coordinates);
-    
+    /* Utility method to get the face of the tile */
+    std::string displayTile(int row, int col);
+    /* Prints the rows of the board */
+    void printRow(int row, std::string colLetter);
     /* Displays the board as a 2D grid */
     void displayBoard();
+    
+    
 
-    std::string displayTile(int row, int col);
-    void printRow(int row, std::string colLetter);
-
-    /* For saving purposes: saves the board state */
+    /* For saving purposes: saves the board state - NOT YET IMPLEMENTED */
 
     std::string saveBoard();
 
-    std::vector<std::vector<Tile*>> getBoard();
-
-    void putTile(int row, int col){
-
-    }
-
-    
+   
 
 private:
     std::vector<std::vector<Tile*>> board;

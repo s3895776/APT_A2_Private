@@ -1,6 +1,4 @@
 #include "Board.h"
-#include <array>
-#include <iostream>
 
 Board::Board(){
     rows = ROW;
@@ -38,9 +36,23 @@ std::string Board::placeTile(Tile* tile, std::string coordinates){
     board[row][col] = tile;
     return "in progress";
 }
-std::string Board::removeTile(Tile* tile, std::string coordinates){
+
+std::string Board::removeTile(std::string coordinates){
+    Column col = coordinates.back();
+    char r = coordinates.back();
+    Row row = 0;
+    char row_letters[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'};
+    for (int i = 0; i < ROW; ++i) {
+        if (r == row_letters[i]){
+            row = i;
+        }
+    }
+    board[row][col] = nullptr;
+    // TODO: NOTE
+    // whose property is the tile? do i need to clean it up?
     return "in progress";
 }
+
 std::string Board::displayTile(int row, int col){
     std::string tile = " ";
     if (board[row][col] != nullptr) {
@@ -100,6 +112,4 @@ void Board::displayBoard(){
     printRow(12,"M");
     printRow(13,"N");
     printRow(14,"O");
-
-
 }
