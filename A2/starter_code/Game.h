@@ -61,7 +61,7 @@ class Game {
         
     private:
         // std::vector< std::vector<char> > board;
-
+        // Board* board;
         std::vector<Player> players;
 
         LinkedList tileBag;
