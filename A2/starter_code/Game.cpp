@@ -4,7 +4,7 @@
 
 Game::Game() {
     tileBag = LinkedList();
-    // board = Board();
+    // board = new Board();
     
 }
 
@@ -153,8 +153,8 @@ std::string Game::displayCredits() {
     credits.append("Email: \n");
     credits.append("\n");
     credits.append("Name: Kerubo Ndubi\n");
-    credits.append("Student ID: \n");
-    credits.append("Email: \n");
+    credits.append("Student ID: s3844734\n");
+    credits.append("Email: s3844734@student.rmit.edu.au\n");
     credits.append("\n");
     credits.append("Name: Min Min Oo\n");
     credits.append("Student ID: s3860838\n");

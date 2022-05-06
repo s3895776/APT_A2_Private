@@ -1,13 +1,9 @@
 #include "Tile.h"
 
-<<<<<<< HEAD
-
-=======
 Tile::Tile():
     letter('_'),
     value(-1)
 {}
->>>>>>> main
 Tile::Tile(char letter, int value):
     letter(letter),
     value(value)
