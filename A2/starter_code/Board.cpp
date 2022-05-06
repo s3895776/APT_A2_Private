@@ -24,7 +24,7 @@ std::string Board::placeTile(Tile tile, std::string coordinates){
     /* convert the coordinates into rows and cols */ 
     row = coordinates.back();
     char c = coordinates.front();
-    // Make an array that has all of the letters
+    // Make an array or list that has all of the letters and check if the 
     column = 0;
     board[row][column] = tile;
     return "in progress";
