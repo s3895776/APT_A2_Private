@@ -95,12 +95,14 @@ void LL_Test_Draw(){
 
     //test 1: empty list returns nullptr
     std::cout << " test emptylist: ";
-    if (bag.DrawTile() == nullptr)
+    char bagDraw = bag.DrawTile().getLetter();
+    if (bagDraw == ' ') {
         std::cout << "passed!\n";
-    else{
+    }
+    else {
         std::cout << "failed!\n";
-        std::cout << "  Expected: 'nullptr'" << std::endl;
-        std::cout << "  Got: '" << bag.DrawTile() << "'" << std::endl; 
+        std::cout << "  Expected: ' '" << std::endl;
+        std::cout << "  Got: '" << bagDraw << "'" << std::endl; 
     }
 
     //Add tiles to bag
@@ -108,9 +110,9 @@ void LL_Test_Draw(){
     bag.AddTile(tile2);
 
     //std::cout << bag.ToString() << std::endl;
-    Tile t1 = *(bag.DrawTile());
+    Tile t1 = (bag.DrawTile());
     //std::cout << bag.ToString() << std::endl;
-    Tile t2 = *(bag.DrawTile());
+    Tile t2 = (bag.DrawTile());
     //std::cout << bag.ToString() << std::endl;
 
     //test 2:

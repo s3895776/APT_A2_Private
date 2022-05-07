@@ -8,7 +8,8 @@ LinkedList::LinkedList() {
 }
 
 LinkedList::~LinkedList() {
-   if (head == nullptr) { return; }
+   // if (head == nullptr) { return; }
+   // unnecessary since Node* curr will be nullptr if head is nullptr
 
    // Walk list, remove nodes
    Node* curr = this->head;
@@ -36,14 +37,14 @@ void LinkedList::AddTile(Tile& tile){
 
    if (head == nullptr){ //empty list
       //create node
-      Node* n = new Node(&tile, nullptr);
+      Node* n = new Node(tile, nullptr);
 
       //point head and tail to new node
       this->head = n;
       this->tail = n;
    } else {
       //create node
-      Node* n = new Node(&tile, nullptr);
+      Node* n = new Node(tile, nullptr);
 
       //set tail.next to new node
       this->tail->next = n;
@@ -53,16 +54,17 @@ void LinkedList::AddTile(Tile& tile){
    }
 }
 
-Tile* LinkedList::DrawTile(){ //draw from front
+Tile LinkedList::DrawTile(){ //draw from front
    if (this->head == nullptr){
       std::cout << "\nERROR: Tried to draw from empty LinkedList!" << std::endl;
-      return nullptr;
+      // Maybe an issue if returning a constructed Tile. 
+      return Tile();
    }
 
    size--;
 
    // extract tile from node
-   Tile* t = this->head->tile;
+   Tile t = this->head->tile;
    Node* temp = this->head;
    this->head = this->head->next;
    delete temp;
@@ -70,79 +72,125 @@ Tile* LinkedList::DrawTile(){ //draw from front
    return t;
 }
 
-Tile* LinkedList::DrawTile(Tile& tile){ //draw specific tile
+Tile LinkedList::DrawTile(Tile& tile){ //draw specific tile
    //search if tile exists
-   if (!ContainsTile(tile)){
-      std::cout << "\nERROR: Tried to draw tile that is not in LinkedList!" << std::endl;
-      return nullptr;
-   }
+   // if (!ContainsTile(tile)) {
+   //    std::cout << "\nERROR: Tried to draw tile that is not in LinkedList!" << std::endl;
+   //    return Tile();
+   // }
 
-   Tile* outTile = nullptr;
-   size--;
-   
-   //remove and patch list
+   // --size;
+   // Tile* outTile = nullptr;
+
+   // //remove and patch list
+   // Node* curr = this->head;
+
+   // while (curr != nullptr){
+   //    if (curr->tile->getLetter() == tile.getLetter()){
+   //       //tile found
+   //       if (prev == nullptr){
+   //          head = curr->next;
+   //       } else {
+   //          prev->next = curr->next;
+   //       }
+   //       if (curr == tail){
+   //          tail = prev;
+   //          tail->next = nullptr;
+   //       }
+
+   //       //extract tile
+   //       outTile = curr->tile;
+   //       delete curr;
+   //       break;
+   //    }
+
+   //    prev = curr;
+   //    curr = curr->next;
+   // }
+
+   // return outTile;
+
+
    Node* curr = this->head;
    Node* prev = nullptr;
+   Tile outTile = Tile();
+   bool result = false;
 
-   while (curr != nullptr){
-      if (curr->tile->getLetter() == tile.getLetter()){
-         //tile found
-         if (prev == nullptr){
-            head = curr->next;
-         } else {
-            prev->next = curr->next;
-         }
-         if (curr == tail){
-            tail = prev;
-            tail->next = nullptr;
-         }
+   while ( (curr != nullptr) & !(result) ) {
 
-         //extract tile
+      if (curr->tile.getLetter() == tile.getLetter() ) {
+         result = true;
          outTile = curr->tile;
-         delete curr;
-         break;
       }
 
-      prev = curr;
-      curr = curr->next;
+      else {
+         prev = curr;
+         curr = curr->next;
+      }
+
+   }
+   
+   if (result) {
+      --size;
+
+      if (prev == nullptr) {
+         Node* deletedNode = head;
+         head = head->next;
+         delete deletedNode;
+      } 
+      
+      else {
+         Node* deletedNode = curr;
+         prev->next = curr->next;
+         delete deletedNode;
+      }
+
+      if (curr == tail) {
+         Node* deletedNode = tail;
+         tail = prev;
+         tail->next = nullptr;
+         delete deletedNode;
+      }
+
    }
 
    return outTile;
 }
 
-bool LinkedList::ContainsTile(Tile& tile){
-   if (this->head == nullptr){return false;}
+// bool LinkedList::ContainsTile(Tile& tile){
+//    // if (this->head == nullptr){return false;}
 
-   bool result = false;
+//    bool result = false;
 
-   Node* curr = this->head;
-   while (curr != nullptr){
-      if (curr->tile->getLetter() == tile.getLetter()){
-         result = true;
-      }
-      curr = curr->next;
-   }
+//    Node* curr = this->head;
+//    while (curr != nullptr) {
+//       if (curr->tile.getLetter() == tile.getLetter()){
+//          result = true;
+//       }
+//       curr = curr->next;
+//    }
 
-   return result;
-}
+//    return result;
+// }
 
-int LinkedList::Count(){
-   return size;
-}
+// int LinkedList::Count(){
+//    return size;
+// }
 
 std::string LinkedList::ToString(){
+   std::string s = "";
+
    if (this->head == nullptr) {
-      return "EMPTY";
+      s = "EMPTY";
    }
 
-   std::string s = "";
 
    Node* curr = this->head;
    while (curr != nullptr){
       // s += curr->tile->getLetter();
       // s += "-";
       // s += std::to_string(curr->tile->getValue());
-      s += curr->tile->getTileAsString();
+      s += curr->tile.getTileAsString();
 
       curr = curr->next;
       if (curr != nullptr){
@@ -151,4 +199,8 @@ std::string LinkedList::ToString(){
    }
    
    return s;
+}
+
+int LinkedList::Count() {
+   return size;
 }
