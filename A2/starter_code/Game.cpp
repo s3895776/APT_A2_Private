@@ -268,34 +268,7 @@ void Game::InitaliseBag(LinkedList& bag){
     }
 }
 
-bool Game::saveState(std::string filename) {
-    std::string gameState;
-    // Suggested format
-    // Player | Board | Current Player index
-
-    // <player 1 name>, <player 1 score>, <player 1 hand>
-    // <player 2 name>, <player 2 score>, <player 2 hand>
-    // |
-    // <board state>, <tile bag contents>
-    // |
-    // <current player index in vector>
-
-    // TODO: 
-    // search for filename in dir
-    // return false (filename already exists)
-
-    std::ofstream fileToBeSaved;
-    fileToBeSaved.open("saves/" + filename);
-    fileToBeSaved << "PLAYER A, 100, ABCD\n";
-    fileToBeSaved << "PLAYER B, 200, EFGH\n";
-    fileToBeSaved << "|\n";
-    fileToBeSaved << "board state, tile bag content\n";
-    fileToBeSaved << "|\n";
-    fileToBeSaved << "0\n";
-    fileToBeSaved.close();
-
-
-    // gameState format:
+// gameState format:
     // <player 1 name>
     // <player 1 score>
     // <player 1 hand>
@@ -312,18 +285,46 @@ bool Game::saveState(std::string filename) {
     // • Player hand and tile bag: comma separated ordered list
     // • Current board shape: Height, width
     // • Board State: All tiles currently placed on the board should appear as a list of tile@position.
-    // example in spec 
 
-    // TODO: put players information into gameState
+/**
+ * Save the stat of game in the specified format:
+ *      <player 1 name>
+        <player 1 score>
+        <player 1 hand>
+        <player 2 name>
+        <player 2 score>
+        <player 2 hand>
+        <Board State>
+        <tile bag contents>
+        <current player name>
+    all fields are on newlines. 
+        Format:
+    • Name: ASCII text
+    • Score: Integer
+    • Player hand and tile bag: comma separated ordered list
+    • Current board shape: Height, width
+    • Board State: All tiles currently placed on the board should appear as a list of tile@position.
+ */
+bool Game::saveState(std::string filename) {
+    std::string gameState;
+    std::string path = "saves/";
+    path.append(filename);
+    path.append(".txt");
 
-    // TODO: put 2d vector into gameState 
-
-    // TODO: put LinkedList tileBag as string into gameState
-
-    // TODO: fill in the file with gameState.
-
+    std::ofstream file(path);
     
-
+    // save name, score and hand of each player
+    for (int i=0; i < this->players.size(); ++i) {
+        file << this->players[i].getName() << "\n";
+        file << this->players[i].getScore() << "\n";
+        file << this->players[i].getHand() << "\n";
+    }
+    // TODO: resolve - save board state
+    // file << this->board.getBoard() << "\n";
+    // TODO: resolve - save tile bag content
+    // file << this->board.getTileContents() << "\n";
+    // TODO: save cuurent player name
+    // file << this->currentPlayer() << "\n";
     return true;
 }
 
