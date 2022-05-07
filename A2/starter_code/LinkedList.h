@@ -16,8 +16,8 @@ public:
    
    void AddTile(Tile& tile);
 
-   Tile* DrawTile();
-   Tile* DrawTile(Tile& tile);
+   Tile DrawTile();
+   Tile DrawTile(Tile& tile);
 
    int Count();
 
