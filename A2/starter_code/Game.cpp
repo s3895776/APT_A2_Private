@@ -191,7 +191,8 @@ bool Game::saveState(std::string filename) {
     std::ofstream file(path);
     
     // save name, score and hand of each player
-    for (int i=0; i < this->players.size(); ++i) {
+    int playersSize = this->players.size();
+    for (int i = 0; i < playersSize; ++i) {
         file << this->players[i].getName() << "\n";
         file << this->players[i].getScore() << "\n";
         file << this->players[i].getHand() << "\n";
