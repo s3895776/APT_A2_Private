@@ -1,8 +1,8 @@
 #include "Tile.h"
 
 Tile::Tile():
-    letter('_'),
-    value(-1)
+    letter(' '),
+    value(0)
 {}
 Tile::Tile(char letter, int value):
     letter(letter),
@@ -26,7 +26,7 @@ std::string Tile::getTileAsString() {
     std::string tileString;
     tileString.push_back(this->getLetter());
     tileString.push_back('-');
-    tileString.push_back(this->getValue());
+    tileString += std::to_string(this->getValue());
     return tileString;
 }
 

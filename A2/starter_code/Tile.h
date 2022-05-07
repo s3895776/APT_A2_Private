@@ -17,15 +17,14 @@ public:
    ~Tile();
    Tile(Tile& other);
    Tile(const Tile& other);
-
-   std::string getTileAsString();  
-   Letter letter;
-   Value  value;
-
-private:
    Value getValue();
    Letter getLetter();
+   std::string getTileAsString();  
    
+
+private:
+   Letter letter;
+   Value  value;
 };
 
 #endif // ASSIGN2_TILE_H

@@ -11,7 +11,6 @@ typedef int Row;
 
 // Define a Column type
 typedef int Column;
-
 class Board {
 public:
     /* Constructor, Destructor, Copy Constructor */
@@ -20,11 +19,11 @@ public:
     Board(Board& other);
 
     /* returns the board for testing purposes*/
-    std::vector<std::vector<Tile*>> getBoard();
+    std::vector<std::vector<Tile>> getBoard();
 
     /* Place Tile on the board, takes the coordinates in the format sent in by the player,
        and converts it into the appropriate vector coordinates */
-    std::string placeTile(Tile* tile, std::string coordinates);
+    std::string placeTile(Tile tile, std::string coordinates);
 
     /* Remove Tile, to be used if move is invalid*/
     std::string removeTile(std::string coordinates);
@@ -45,7 +44,7 @@ public:
    
 
 private:
-    std::vector<std::vector<Tile*>> board;
+    std::vector<std::vector<Tile>> board;
     Row rows;
     Column columns;
     //Tile* empty;

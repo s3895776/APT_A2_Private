@@ -16,7 +16,7 @@ void LL_Test_Add(){
     Tile tile1('A', 1);
     Tile tile2('B', 2);
     //...
-
+    
     //create tilebag
     LinkedList bag;
 
@@ -108,20 +108,20 @@ void LL_Test_Draw(){
     bag.AddTile(tile2);
 
     //std::cout << bag.ToString() << std::endl;
-    Tile* t1 = bag.DrawTile();
+    Tile t1 = *(bag.DrawTile());
     //std::cout << bag.ToString() << std::endl;
-    Tile* t2 = bag.DrawTile();
+    Tile t2 = *(bag.DrawTile());
     //std::cout << bag.ToString() << std::endl;
 
     //test 2:
     std::cout << " test draw_order ";
-    if (t1->letter == 'A' && t2->letter == 'B')
+    if (t1.getLetter() == 'A' && t2.getLetter() == 'B')
         std::cout << "passed!\n";
     else{
         std::cout << "failed!\n";
         std::cout << "Expected: 'A-1, B-2'" << std::endl;
-        std::cout << "Got: '" << t1->letter << "-" << t1->value << ",";
-        std::cout << t2->letter << "-" << t2->value << "'" << std::endl; 
+        std::cout << "Got: '" << t1.getLetter() << "-" << t1.getValue() << ",";
+        std::cout << t2.getLetter() << "-" << t2.getValue() << "'" << std::endl; 
     }
 
     //test 3:

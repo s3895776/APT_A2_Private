@@ -85,7 +85,7 @@ Tile* LinkedList::DrawTile(Tile& tile){ //draw specific tile
    Node* prev = nullptr;
 
    while (curr != nullptr){
-      if (curr->tile->letter == tile.letter){
+      if (curr->tile->getLetter() == tile.getLetter()){
          //tile found
          if (prev == nullptr){
             head = curr->next;
@@ -108,9 +108,6 @@ Tile* LinkedList::DrawTile(Tile& tile){ //draw specific tile
    }
 
    return outTile;
-
-   //order of other tiles must remain the same
-   return nullptr;
 }
 
 bool LinkedList::ContainsTile(Tile& tile){
@@ -120,7 +117,7 @@ bool LinkedList::ContainsTile(Tile& tile){
 
    Node* curr = this->head;
    while (curr != nullptr){
-      if (curr->tile->letter == tile.letter){
+      if (curr->tile->getLetter() == tile.getLetter()){
          result = true;
       }
       curr = curr->next;
@@ -134,15 +131,19 @@ int LinkedList::Count(){
 }
 
 std::string LinkedList::ToString(){
-   if (this->head == nullptr){return "EMPTY";}
+   if (this->head == nullptr) {
+      return "EMPTY";
+   }
 
    std::string s = "";
 
    Node* curr = this->head;
    while (curr != nullptr){
-      s += curr->tile->letter;
-      s += "-";
-      s += std::to_string(curr->tile->value);
+      // s += curr->tile->getLetter();
+      // s += "-";
+      // s += std::to_string(curr->tile->getValue());
+      s += curr->tile->getTileAsString();
+
       curr = curr->next;
       if (curr != nullptr){
          s += ", ";

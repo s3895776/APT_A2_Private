@@ -3,10 +3,10 @@
 Board::Board(){
     rows = ROW;
     columns = COLUMN;
-    std::vector<std::vector<Tile*>> b(rows, std::vector<Tile*> (columns, nullptr));
-    
+    std::vector<std::vector<Tile>> b(rows, std::vector<Tile>(columns, Tile()));
     this->board = b;
 }
+
 Board::~Board(){
 
 }
@@ -15,20 +15,21 @@ Board::Board(Board& other){
     rows = other.rows;
     columns = other.columns;
 }
-std::vector<std::vector<Tile*>> Board::getBoard(){
+std::vector<std::vector<Tile>> Board::getBoard(){
     return board;
 }
 
 
-std::string Board::placeTile(Tile* tile, std::string coordinates){
+std::string Board::placeTile(Tile tile, std::string coordinates){
     /* convert the coordinates into rows and cols */ 
-    Column col = coordinates.back();
-    char r = coordinates.back();
+    // TODO: maybe find a better way to do this, or just leave it as it is
+    Column col = coordinates[0] - '0';
+    char r = coordinates[1];
     Row row = 0;
     
     char row_letters[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'};
     for (int i = 0; i < ROW; ++i) {
-        if (r == row_letters[i]){
+        if (r == row_letters[i]) {
             row = i;
         }
     }
@@ -38,8 +39,10 @@ std::string Board::placeTile(Tile* tile, std::string coordinates){
 }
 
 std::string Board::removeTile(std::string coordinates){
-    Column col = coordinates.back();
-    char r = coordinates.back();
+    
+    // TODO: maybe find a better way to do this, or just leave it as it is
+    Column col = coordinates[0] - '0';
+    char r = coordinates[1];
     Row row = 0;
     char row_letters[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'};
     for (int i = 0; i < ROW; ++i) {
@@ -47,29 +50,35 @@ std::string Board::removeTile(std::string coordinates){
             row = i;
         }
     }
-    board[row][col] = nullptr;
-    // TODO: NOTE
-    // whose property is the tile? do i need to clean it up?
+
+    board[row][col] = Tile();
+    // no need to clean up if it ain't a pointer kekw
+
     return "in progress";
 }
 
 std::string Board::displayTile(int row, int col){
     std::string tile = " ";
-    if (board[row][col] != nullptr) {
-        char letter = board[row][col]->letter;
-        tile += letter;
-        tile += " ";
-    } else {
-        tile = "   ";
-    }  
+    // if (board[row][col] != nullptr) {
+    //     char letter = board[row][col]->letter;
+    //     tile += letter;
+    //     tile += " ";
+    // } else {
+    //     tile = "   ";
+    // }
+
+    // Guan: If i am correct this should equate to 
+    tile += board[row][col].getLetter();
+    tile += " ";
+
     return tile;
 }
 void Board::printRow(int row, std::string colLetter){
     std::cout << colLetter+" |";
     for (int i = 0; i < COLUMN; ++i){
-        std::cout << displayTile(row, i)+"|";
+        std::cout << displayTile(row, i) + "|";
     }
-    std::cout<<std::endl;
+    std::cout << std::endl;
 }
 void Board::displayBoard(){
 
