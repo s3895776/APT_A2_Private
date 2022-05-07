@@ -163,65 +163,107 @@ std::string Game::displayCredits() {
     return credits;
 }
 
-std::string Game::loadGame() {
-    // saveFile format:
-    // <player 1 name>
-    // <player 1 score>
-    // <player 1 hand>
-    // <player 2 name>
-    // <player 2 score>
-    // <player 2 hand>
-    // <Board State>
-    // <tile bag contents>
-    // <current player name>
-    // all fields are on newlines. 
-    // Format:
-    // • Name: ASCII text
-    // • Score: Integer
-    // • Player hand and tile bag: comma separated ordered list
-    // • Current board shape: Height, width
-    // • Board State: All tiles currently placed on the board should appear as a list of tile@position.
-    // example in spec 
+/**
+ * Save the state of game in the specified format:
+ *      <player 1 name>
+        <player 1 score>
+        <player 1 hand>
+        <player 2 name>
+        <player 2 score>
+        <player 2 hand>
+        <Board State>
+        <tile bag contents>
+        <current player name>
+    all fields are on newlines. 
+        Format:
+    • Name: ASCII text
+    • Score: Integer
+    • Player hand and tile bag: comma separated ordered list
+    • Current board shape: Height, width
+    • Board State: All tiles currently placed on the board should appear as a list of tile@position.
+ */
+bool Game::saveState(std::string filename) {
+    std::string gameState;
+    std::string path = "saves/";
+    path.append(filename);
+    path.append(".txt");
+
+    std::ofstream file(path);
     
-    std::string filename;
+    // save name, score and hand of each player
+    for (int i=0; i < this->players.size(); ++i) {
+        file << this->players[i].getName() << "\n";
+        file << this->players[i].getScore() << "\n";
+        file << this->players[i].getHand() << "\n";
+    }
+    // TODO: resolve - save board state
+    // file << this->board.getBoard() << "\n";
+    // TODO: resolve - save tile bag content
+    // file << this->board.getTileContents() << "\n";
+    // TODO: save cuurent player name
+    // file << this->currentPlayer() << "\n";
+    return true;
+}
+
+/**
+ * Load the state of game in the specified format:
+ *      <player 1 name>
+        <player 1 score>
+        <player 1 hand>
+        <player 2 name>
+        <player 2 score>
+        <player 2 hand>
+        <Board State>
+        <tile bag contents>
+        <current player name>
+ */
+std::string Game::loadGame() {  
+    // get the filename to load
+    std::string file;
     std::cout << "Enter the filename to load game" << std::endl;
     std::cout << "> ";
-    std::cin >> filename;
-    // return false if (filename does not exist)
-    // TODO: loop until valid file name
-    // return "Failed Load"
+    std::cin >> file;
 
-    // https://stackoverflow.com/questions/2602013/read-whole-ascii-file-into-c-stdstring
-    std::ifstream fileLoaded("saves/" + filename);
-    std::stringstream buffer;
-    buffer << fileLoaded.rdbuf();
+    std::string path = "saves/";
+    path.append(file);
+    path.append(".txt");
 
-    // std::cout << buffer.str() << std::endl;
+    std::ifstream fileLoaded(path);
 
-    std::string rawString = buffer.str();
-    
-    // https://stackoverflow.com/questions/14265581/parse-split-a-string-in-c-using-string-delimiter-standard-c
-    // split string with the following delimiter
-    std::string delimiter = "|";
-    std::string allPlayers = rawString.substr(0, buffer.str().find(delimiter));
-
-    // size_t pos = 0;
-    // rawString = rawString.substr(pos + delimiter.length());
-    rawString.erase(0, rawString.find(delimiter) + delimiter.length());
-
-    std::string boardStatus = rawString.substr(0, buffer.str().find(delimiter));
-
-    rawString.erase(0, rawString.find(delimiter) + delimiter.length());
-
-    std::string currentPlayer = rawString.substr(0, buffer.str().find(delimiter));
-
-    std::cout << "starting now" << std::endl;
-    std::cout << allPlayers << std::endl;
-    std::cout << boardStatus << std::endl;
-    std::cout << currentPlayer << std::endl;
-
-    // TODO: Store the name of the currentPlayer
-    return currentPlayer;
+    // file does not exist
+    if (fileLoaded.fail()) {
+        return "Failed Load / False";
+    }
+    // file successfully read
+    else {
+        const int NO_OF_PLAYERS = 2;
+        // add players into vector
+        for (int i=0; i < NO_OF_PLAYERS; ++i) {
+            Player player;
+            this->players.push_back(player);
+        }
+        // load name, score and hand of each player
+        std::string name, hand;
+        int score;
+        for (int i=0; i < NO_OF_PLAYERS; ++i) {
+            fileLoaded >> name;
+            fileLoaded >> score;
+            fileLoaded >> hand;
+            this->players[i].setName(name);
+            this->players[i].addScore(score);
+            // TODO: resolve - set player hand
+            // this->players[i].fillHand(hand);
+        }
+        // TODO: resolve - load board state
+        // fileLoaded >> this->board.loadBoard();
+        // TODO: resolve - save tile bag content
+        // fileLoaded >> this->board.loadTileContents();
+        // TODO: load cuurent player name
+        // std::string currentPlayer;
+        // fileLoaded >> currentPlayer;
+        // this->setCurrentPlayer(currentPlayer);
+        return "Game Loaded / True";
+    }
 }
 
 void Game::InitaliseBag(LinkedList& bag){
@@ -266,66 +308,6 @@ void Game::InitaliseBag(LinkedList& bag){
     for (int i = 0; i < 99; i++){
         bag.AddTile(tiles[i]);
     }
-}
-
-// gameState format:
-    // <player 1 name>
-    // <player 1 score>
-    // <player 1 hand>
-    // <player 2 name>
-    // <player 2 score>
-    // <player 2 hand>
-    // <Board State>
-    // <tile bag contents>
-    // <current player name>
-    // all fields are on newlines. 
-    // Format:
-    // • Name: ASCII text
-    // • Score: Integer
-    // • Player hand and tile bag: comma separated ordered list
-    // • Current board shape: Height, width
-    // • Board State: All tiles currently placed on the board should appear as a list of tile@position.
-
-/**
- * Save the stat of game in the specified format:
- *      <player 1 name>
-        <player 1 score>
-        <player 1 hand>
-        <player 2 name>
-        <player 2 score>
-        <player 2 hand>
-        <Board State>
-        <tile bag contents>
-        <current player name>
-    all fields are on newlines. 
-        Format:
-    • Name: ASCII text
-    • Score: Integer
-    • Player hand and tile bag: comma separated ordered list
-    • Current board shape: Height, width
-    • Board State: All tiles currently placed on the board should appear as a list of tile@position.
- */
-bool Game::saveState(std::string filename) {
-    std::string gameState;
-    std::string path = "saves/";
-    path.append(filename);
-    path.append(".txt");
-
-    std::ofstream file(path);
-    
-    // save name, score and hand of each player
-    for (int i=0; i < this->players.size(); ++i) {
-        file << this->players[i].getName() << "\n";
-        file << this->players[i].getScore() << "\n";
-        file << this->players[i].getHand() << "\n";
-    }
-    // TODO: resolve - save board state
-    // file << this->board.getBoard() << "\n";
-    // TODO: resolve - save tile bag content
-    // file << this->board.getTileContents() << "\n";
-    // TODO: save cuurent player name
-    // file << this->currentPlayer() << "\n";
-    return true;
 }
 
 std::string Game::gameInput(std::string firstPlayer) {
