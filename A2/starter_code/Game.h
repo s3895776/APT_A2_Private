@@ -60,8 +60,6 @@ class Game {
 
         
     private:
-        // std::vector< std::vector<char> > board;
-        // Board* board;
         std::vector<Player> players;
 
         LinkedList tileBag;
@@ -69,7 +67,7 @@ class Game {
 
         /* Display the end of the game information */
         std::string gameEnd();
-        // Board board;
+        Board board;
 };
 
 

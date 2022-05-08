@@ -10,15 +10,16 @@ Board::Board(){
 Board::~Board(){
 
 }
+
 Board::Board(Board& other){
     board = other.board;
     rows = other.rows;
     columns = other.columns;
 }
+
 std::vector<std::vector<Tile>> Board::getBoard(){
     return board;
 }
-
 
 std::string Board::placeTile(Tile tile, std::string coordinates){
     /* convert the coordinates into rows and cols */ 
@@ -73,6 +74,7 @@ std::string Board::displayTile(int row, int col){
 
     return tile;
 }
+
 void Board::printRow(int row, std::string colLetter){
     std::cout << colLetter+" |";
     for (int i = 0; i < COLUMN; ++i){
@@ -80,6 +82,7 @@ void Board::printRow(int row, std::string colLetter){
     }
     std::cout << std::endl;
 }
+
 void Board::displayBoard(){
 
     /* BOARD OUTPUT VISUALISATION

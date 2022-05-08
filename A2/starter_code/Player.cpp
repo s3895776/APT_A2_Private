@@ -47,7 +47,9 @@ std::string Player::getHand() {
 
 std::string Player::fillHand(Tile tile) {
     // TODO: fill a tile in the internal LinkedList player hand.
-
+    // just copy the tile and let LinkedList manage pointers to tile
+    this->hand.AddTile(tile);
+    
     return "";
 }
 

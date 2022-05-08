@@ -121,16 +121,30 @@ std::string Game::newGame() {
     std::cout << "Let's Play!" << std::endl;
 
     // 3. Create a new game of Scrabble
-    // InitaliseBag(tileBag);
-
+    InitaliseBag(tileBag);
+    
     // TODO: initialise Players One and Two LinkedList values with Tiles.
+    i = 0;
+    const int INITIAL_HAND = 10;
+    int drawnHand = INITIAL_HAND - NUMBER_OF_PLAYERS;
+
+    while (i < NUMBER_OF_PLAYERS) {
+        // remember that number of players correlate to hand size 
+        int j = 0;
+        while (j < drawnHand) {
+            this->players[i].fillHand(tileBag.DrawTile());
+            j += 1;
+        }
+        ++i;
+    }
 
     // TODO: initialise 2d vector with starting values 
+    board = Board();
 
     // 4. Proceed with normal gameplay 
-    // std::string currentPlayerName = (*players)[i]->getName();
     // Let main call gameInput();
     
+    // // Test players vector.
     // i = 0;
     // while (i < NUMBER_OF_PLAYERS) {
     //     std::cout << players[i].getName() << std::endl;
@@ -356,6 +370,7 @@ std::string Game::gameInput(std::string firstPlayer) {
     bool gameLoop = true;
 
     while (gameLoop) {
+
         // TODO: Special Operation: Ending a Game
         // Condition: 1. The tile bag is empty, and
         // 2. One player has no more tiles in their hand or passes his turn twice.
@@ -402,6 +417,7 @@ std::string Game::gameInput(std::string firstPlayer) {
                 player.printScore();
             }
             // TODO: print the board
+            this->board.displayBoard();
 
             std::cout << "Your hand is: " << std::endl;
             std::cout << currHand << std::endl;
