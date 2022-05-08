@@ -26,7 +26,7 @@ public:
    std::string ToString();
 
 private:
-   Node*  head;
+   Node* head;
    Node* tail;
    int size;
 };

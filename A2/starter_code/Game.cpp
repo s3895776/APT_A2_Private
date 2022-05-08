@@ -382,6 +382,7 @@ std::string Game::gameInput(std::string firstPlayer) {
         if (tileBag.Count() == 0) {
             // stop conditions if the game has already ended
 
+            // check every player in the vector. 
             for (Player& player : players) {
 
                 if (gameLoop) {
