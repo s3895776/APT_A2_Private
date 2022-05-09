@@ -58,7 +58,11 @@ class Game {
          */  
         std::string quitGame();
 
-        
+        /*
+         * Check if name contains all uppercase characters and at least one characer long
+         */
+        bool validName(std::string name);
+
     private:
         std::vector<Player> players;
 

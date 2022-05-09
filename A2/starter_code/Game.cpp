@@ -81,6 +81,21 @@ int Game::view_mainMenu() {
     return choice;
 }
 
+bool Game::validName(std::string name) {
+    bool validName = true;
+    // check if name is at least a single character long
+    if (name.size() == 0) {
+        validName = false;
+    }
+    // check if there is lowercase character
+    for (char& c: name) {
+        if (islower(c)) {
+            validName = false;
+        }
+    }
+    return validName;
+}
+
 std::string Game::newGame() {
     // 1. Print a message for starting a new game
     std::cout << std::endl;
@@ -106,17 +121,22 @@ std::string Game::newGame() {
     i = 0;
     std::string playerName;
 
-    while (i < NUMBER_OF_PLAYERS) {
-        std::cout << "Enter a name for player " << i + 1 << 
-        " (uppercase characters only)" << std::endl;
-        std::cout << "> ";
-        std::cin >> playerName;
-        std::cout << std::endl;
-        // TODO: check for uppercase only or ask again
+    while (i < NUMBER_OF_PLAYERS) {   
+        // keep asking for player name until it is valid
+        std::cin.ignore();
+        do {
+            std::cout << "Enter a name for player " << i + 1 << " (uppercase characters only)" << std::endl;
+            std::cout << "> ";
+            std::getline(std::cin, playerName);
+            std::cout << std::endl;
+        } while (!validName(playerName));
+        // set the player's name
         this->players[i].setName(playerName);
-
         ++i;
     }
+
+    std::cout << this->players[0].getName() << std::endl;
+    std::cout << this->players[1].getName() << std::endl;
 
     std::cout << "Let's Play!" << std::endl;
 
