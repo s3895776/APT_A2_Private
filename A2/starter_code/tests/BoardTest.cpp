@@ -1,5 +1,6 @@
 #include "../Board.h"
 #include <iostream>
+#include <fstream>
 
 
 
@@ -11,15 +12,15 @@ void runTests();
 
 void Board_TestPlaceTile(Board& board) {
     Tile tile1 = Tile('A', 60);
-    board.placeTile(tile1, "6A");
-    board.placeTile(tile1, "6B");
-    board.placeTile(tile1, "6C");
-    board.placeTile(tile1, "6D");
-    board.placeTile(tile1, "6E");
-    board.placeTile(tile1, "6O");
+    board.placeTile(tile1, "A6");
+    board.placeTile(tile1, "B6");
+    board.placeTile(tile1, "C6");
+    board.placeTile(tile1, "D6");
+    board.placeTile(tile1, "E6");
+    board.placeTile(tile1, "F6");
 }
 void Board_TestRemoveTile(Board& board){
-    board.removeTile("6A");
+    board.removeTile("A6");
 }
 
 
@@ -38,5 +39,10 @@ void runTests(){
     board.displayBoard();
     Board_TestRemoveTile(board);
     board.displayBoard();
+    std::string gameState;
+    std::string path = "tests/boardtest.txt";
+
+    std::ofstream file(path);
+    board.saveBoard(file);
     
 }

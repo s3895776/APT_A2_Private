@@ -1,7 +1,6 @@
 #include "Game.h"
 #include <fstream>
 #include <random>
-#include <iostream>
 
 Game::Game() {
     tileBag = LinkedList();
@@ -153,7 +152,8 @@ std::string Game::newGame() {
     // 3. Create a new game of Scrabble
     this->InitaliseBag(tileBag);
 
-    std::cout << "Bag Initialised" << std::endl;
+    // Kerubo: this does not run on my machine atm
+    // std::cout << "Bag Initialised" << std::endl;
     // TODO: initialise Players One and Two LinkedList values with Tiles.
     i = 0;
     const int INITIAL_HAND = 10;
@@ -353,7 +353,8 @@ void Game::InitaliseBag(LinkedList& bag){
     for (int i = 0; i < 99; i++){
         bag.AddTile(tiles[i]);
     }
-    std::cout << "TileBag Initialised" <<std::endl;
+    // Kerubo: this runs on my machine, dont yet know what causes the abort
+    // std::cout << "TileBag Initialised" <<std::endl;
 }
 
 std::string Game::gameInput(std::string firstPlayer) {

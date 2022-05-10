@@ -7,6 +7,9 @@ Board::Board(){
     columns = COLUMN;
     std::vector<std::vector<Tile>> b(rows, std::vector<Tile>(columns, Tile()));
     this->board = b;
+    Tile* tile = new Tile('A', 4);
+    board[0][0] = *tile;
+    placeTile(*tile, "B10");
 }
 
 Board::~Board(){
@@ -27,10 +30,13 @@ std::string Board::placeTile(Tile tile, std::string coordinates){
     /* convert the coordinates into rows and cols */ 
     // TODO: maybe find a better way to do this, or just leave it as it is
     // B10
-    Column col = coordinates[1] - '0';
+
+    std::string c = coordinates.substr(1);
+    Column col = std::stoi(c);
+    // Column col = coordinates[1] - '0';
     char r = coordinates[0];
     Row row = 0;
-    
+    // TODO: add validation for the string, that its in the right order
     char row_letters[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'};
     for (int i = 0; i < ROW; ++i) {
         if (r == row_letters[i]) {
@@ -44,9 +50,10 @@ std::string Board::placeTile(Tile tile, std::string coordinates){
 }
 
 std::string Board::removeTile(std::string coordinates){
-    
     // TODO: maybe find a better way to do this, or just leave it as it is
-    Column col = coordinates[0] - '0';
+    // Column col = coordinates[0] - '0';
+    std::string c = coordinates.substr(1);
+    Column col = std::stoi(c);
     char r = coordinates[1];
     Row row = 0;
     char row_letters[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'};
@@ -73,6 +80,7 @@ std::string Board::displayTile(int row, int col){
     // }
 
     // Guan: If i am correct this should equate to 
+    
     tile += board[row][col].getLetter();
     tile += " ";
 
@@ -86,6 +94,7 @@ std::string Board::printRow(int row, std::string colLetter){
         result += "|";
     }
     return result;
+   
 }
 
 void Board::displayBoard(){
