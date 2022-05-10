@@ -8,5 +8,6 @@ int main(){
     numFailures += LL_RunTests();
 
     std::cout << "Total failures: " << numFailures << std::endl;
-    return numFailures;
+
+    return (int)(bool)numFailures; //blame jake
 }

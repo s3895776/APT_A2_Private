@@ -22,26 +22,28 @@ void Board_TestRemoveTile(Board& board){
 
 
 int Board_RunTests(){
-    int numFailures = 5;
+    int numFailures = 0;
 
     Board board;
     board = Board();
 
-    std::cout << "Is board vector empty " << std::endl;
+    //std::cout << "Is board vector empty " << std::endl;
+
+    std::cout << "Test Board_InitalisedEmpty ";
     if (board.getBoard().empty() == 0){
-        std::cout << "yes" << std::endl;
+        std::cout << "PASSED!" << std::endl;
     } else {
-        std::cout << "no" << std::endl;
+        std::cout << "FAILED!" << std::endl;
         numFailures++;
     }
-    board.displayBoard();
+    //board.displayBoard();
 
     Board_TestPlaceTile(board);
-    board.displayBoard();
+    //board.displayBoard();
 
     Board_TestRemoveTile(board);
-    board.displayBoard();
+    //board.displayBoard();
 
-    std::cout << "Board failures: " << numFailures << std::endl;
+    std::cout << "Board failures: " << numFailures << std::endl << std::endl;
     return numFailures;
 }
