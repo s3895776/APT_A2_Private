@@ -34,9 +34,45 @@ std::string Board::placeTile(Tile tile, std::string coordinates){
             row = i;
         }
     }
-    
-    board[row][col] = tile;
-    return "in progress";
+
+    // parse and validate column
+    std::string columnString = coordinates.substr(0, breakOff);
+    // cast columnString into int i.e '6' -> 6
+    int col = std::stoi(columnString);
+    // reject if column is not between 0 and 14
+    if (col < 0 || col > 14) {
+        tilePlaced = false;
+    }
+
+    // parse and validate row
+    std::string rowString = coordinates.substr(breakOff);
+    // get character from rowString
+    char rowChar = rowString[0];    
+    if (rowChar < 'A' || rowChar > 'O') {
+        tilePlaced = false;
+    }
+
+    // place tile if rowChar and col is valid
+    if (tilePlaced) {
+        char row_letters[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'};
+        int row;
+        // iterate through row_letters to locate the rowChar and get its index
+        for (int i = 0; i < ROW; ++i) {
+            if (row_letters[i] == rowChar) {
+                row = i;
+            }
+        }
+        // add tile to board if the tile is not empty
+        if (board[row][col].isEmpty()) {
+            board[row][col] = tile;
+        }
+        // do nothing if tile is occupied
+        else {
+            tilePlaced = false;
+        }
+    }
+
+    return tilePlaced;
 }
 
 std::string Board::removeTile(std::string coordinates){
