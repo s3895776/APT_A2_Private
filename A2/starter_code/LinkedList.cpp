@@ -56,7 +56,7 @@ void LinkedList::AddTile(Tile& tile){
 
 Tile LinkedList::DrawTile(){ //draw from front
    if (this->head == nullptr){
-      std::cout << "\nERROR: Tried to draw from empty LinkedList!" << std::endl;
+      //std::cerr << "\nERROR: Tried to draw from empty LinkedList!" << std::endl;
       // Maybe an issue if returning a constructed Tile. 
       return Tile();
    }
