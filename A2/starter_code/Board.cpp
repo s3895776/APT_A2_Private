@@ -71,7 +71,7 @@ bool Board::placeTile(Tile tile, std::string coordinates) {
     // place tile if rowChar and col is valid
     if (tilePlaced) {
         char row_letters[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'};
-        int row;
+        int row = -1;
         // iterate through row_letters to locate the rowChar and get its index
         for (int i = 0; i < ROW; ++i) {
             if (row_letters[i] == rowChar) {
@@ -79,7 +79,7 @@ bool Board::placeTile(Tile tile, std::string coordinates) {
             }
         }
         // add tile to board if the tile is not empty
-        if (board[row][col].isEmpty()) {
+        if ( (board[row][col].isEmpty()) & (row != -1)) {
             board[row][col] = tile;
         }
         // do nothing if tile is occupied
