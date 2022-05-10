@@ -34,6 +34,7 @@ jobs:
         run: |
           echo "Running Unit Tests"
           cd A2/starter_code/
+          chmod a+x ./Testing
           ./Testing
 
       - name: Run Integration Tests
