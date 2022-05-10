@@ -16,6 +16,12 @@ int Board_TestPlaceTile(Board& board) {
     board.placeTile(tile1, "D6");
     board.placeTile(tile1, "E6");
     board.placeTile(tile1, "F6");
+    board.placeTile(tile1, "6A");
+    board.placeTile(tile1, "6B");
+    board.placeTile(tile1, "6C");
+    board.placeTile(tile1, "6D");
+    board.placeTile(tile1, "6E");
+    board.placeTile(tile1, "6F");
 
     bool pass = true;
     for (int i=0; i < 6; i++){
