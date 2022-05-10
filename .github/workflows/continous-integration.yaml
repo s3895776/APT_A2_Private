@@ -30,15 +30,18 @@ jobs:
           cd A2/starter_code/
           make
 
-      # Runs a single command using the runners shell
-      - name: Run Tests
+      - name: Run Unit Tests
         run: |
+          echo "Running Unit Tests"
+          cd A2/starter_code/
+          Testing
+
+      - name: Run Integration Tests
+        run: |
+          echo "Running Integration Tests"
           cd A2/starter_code/
           chmod a+x tests/runTests.bash
           tests/runTests.bash
 
-      # Runs a set of commands using the runners shell
-      ##- name: Run a multi-line script
-      ##  run: |
-      ##    echo Add other actions to build,
-      ##    echo test, and deploy your project.
+
+

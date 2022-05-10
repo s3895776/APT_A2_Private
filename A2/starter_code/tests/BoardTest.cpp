@@ -23,7 +23,7 @@ void Board_TestRemoveTile(Board& board){
 }
 
 
-void runTests(){
+void Board_RunTests(){
     Board board;
 
     board = Board();
