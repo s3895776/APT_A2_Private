@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Unit-Tests
 
 # Controls when the workflow will run
 on:
@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  run-tests:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -36,9 +36,3 @@ jobs:
           cd A2/starter_code/
           chmod a+x ./Testing
           ./Testing
-
-      - name: Run Integration Tests
-        run: |
-          cd A2/starter_code/
-          chmod a+x tests/runTests.bash
-          tests/runTests.bash
