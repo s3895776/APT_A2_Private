@@ -34,7 +34,7 @@ jobs:
         run: |
           echo "Running Unit Tests"
           cd A2/starter_code/
-          Testing
+          ./Testing
 
       - name: Run Integration Tests
         run: |
