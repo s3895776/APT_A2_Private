@@ -319,8 +319,9 @@ void Game::InitaliseBag(LinkedList& bag){
     std::string const filename = "./ScrabbleTiles.txt";
 
     // Mersenne Twister PRNG
-    std::random_device r;
-    std::mt19937 rng{r()};
+    //std::random_device r;
+    //std::mt19937 rng(1);
+    //TODO(dan): fix
     
     // Import tiles from file into array
     Tile tiles[num_tiles];
@@ -337,8 +338,8 @@ void Game::InitaliseBag(LinkedList& bag){
     int back = num_tiles - 1;
     while (back > 0){
         // Pick a random unshuffled elem
-        std::uniform_int_distribution<int> dist(0, back);
-        int index = dist(rng);
+        //std::uniform_int_distribution<int> dist(0, back);
+        int index = rand() % num_tiles;//dist(rand());
 
         // Move to back of list
         Tile temp = tiles[back];
