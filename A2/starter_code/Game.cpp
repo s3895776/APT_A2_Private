@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <fstream>
 #include <random>
+#include <iostream>
 
 Game::Game() {
     tileBag = LinkedList();
@@ -66,6 +67,11 @@ int Game::view_mainMenu() {
         // get integer input
         std::cout << "> ";
 
+        if (std::cin.eof()){
+            this->quitGame();
+            return 1;
+        }
+
         // reject invalid input which is not an integer between 1 and 4
         if (!(std::cin >> choice) || choice > 4 || choice < 1) {
             std::cin.clear();
@@ -125,6 +131,10 @@ std::string Game::newGame() {
         // keep asking for player name until it is valid
         std::cin.ignore();
         do {
+            if (std::cin.eof()){
+                this->quitGame();
+                return "";
+            }
             std::cout << "Enter a name for player " << i + 1 << " (uppercase characters only)" << std::endl;
             std::cout << "> ";
             std::getline(std::cin, playerName);
@@ -232,6 +242,7 @@ bool Game::saveState(std::string filename) {
         file << this->players[i].getScore() << "\n";
         file << this->players[i].getHand() << "\n";
     }
+    board.saveBoard(file);
     
     // TODO: resolve - save board state
     // file << this->board.getBoard() << "\n";
@@ -309,10 +320,10 @@ void Game::InitaliseBag(LinkedList& bag){
     int const num_tiles = 98;
     std::string const filename = "./ScrabbleTiles.txt";
     // Mersenne Twister PRNG
-
-    // this is probably the issue: see if it helps when fixed
-    std::random_device r;
-    std::mt19937 rng{r()};
+    //std::random_device r;
+    //std::mt19937 rng(1);
+    //TODO(dan): fix
+    
     // Import tiles from file into array
     Tile tiles[num_tiles];
     std::ifstream tileFile (filename);
@@ -327,8 +338,8 @@ void Game::InitaliseBag(LinkedList& bag){
     int back = num_tiles - 1;
     while (back > 0){
         // Pick a random unshuffled elem
-        std::uniform_int_distribution<int> dist(0, back);
-        int index = dist(rng);
+        //std::uniform_int_distribution<int> dist(0, back);
+        int index = rand() % num_tiles;//dist(rand());
 
         // Move to back of list
         Tile temp = tiles[back];
