@@ -1,11 +1,12 @@
 #include "tests/BoardTest.cpp"
 #include "tests/LinkedList_test.cpp"
 
-
 int main(){
-    
-    Board_RunTests();
-    LL_RunTests();
+    int numFailures = 0;
 
-    return 0;
+    numFailures += Board_RunTests();
+    numFailures += LL_RunTests();
+
+    std::cout << "Total failures: " << numFailures << std::endl;
+    return numFailures;
 }

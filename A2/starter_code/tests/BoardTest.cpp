@@ -1,13 +1,11 @@
 #include "../Board.h"
 #include <iostream>
 
-
+int Board_RunTests();
 
 void Board_TestRemoveTile();
 void Board_TestPlaceTile();
 void Board_TestDisplayBoard();
-void runTests();
-
 
 void Board_TestPlaceTile(Board& board) {
     Tile tile1 = Tile('A', 60);
@@ -23,20 +21,27 @@ void Board_TestRemoveTile(Board& board){
 }
 
 
-void Board_RunTests(){
-    Board board;
+int Board_RunTests(){
+    int numFailures = 0;
 
+    Board board;
     board = Board();
+
     std::cout << "Is board vector empty " << std::endl;
     if (board.getBoard().empty() == 0){
         std::cout << "yes" << std::endl;
     } else {
         std::cout << "no" << std::endl;
+        numFailures++;
     }
     board.displayBoard();
+
     Board_TestPlaceTile(board);
     board.displayBoard();
+
     Board_TestRemoveTile(board);
     board.displayBoard();
-    
+
+    std::cout << "Board failures: " << numFailures << std::endl;
+    return numFailures;
 }

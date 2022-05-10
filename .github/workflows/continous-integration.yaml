@@ -32,14 +32,12 @@ jobs:
 
       - name: Run Unit Tests
         run: |
-          echo "Running Unit Tests"
           cd A2/starter_code/
           chmod a+x ./Testing
           ./Testing
 
       - name: Run Integration Tests
         run: |
-          echo "Running Integration Tests"
           cd A2/starter_code/
           chmod a+x tests/runTests.bash
           tests/runTests.bash
