@@ -2,17 +2,14 @@
 #include "../LinkedList.h"
 #include <iostream>
 
+void LL_RunTests();
 
-int LL_RunTests();
-
-int LL_Test_Add();
-int LL_Test_Count();
-int LL_Test_Draw();
+void LL_Test_Add();
+void LL_Test_Count();
+void LL_Test_Draw();
 //void Test_Transfer();
 
-int LL_Test_Add(){
-    int numFailures = 0;
-
+void LL_Test_Add(){
     std::cout << "Test LinkedList_Add ";
 
     //create all tiles (from file?)
@@ -28,21 +25,16 @@ int LL_Test_Add(){
     bag.AddTile(tile2);
 
     if (bag.ToString()== "A-1, B-2")
-        std::cout << "PASSED!\n";
+        std::cout << "passed!\n";
     else{
-        numFailures++;
-        std::cout << "FAILED!\n";
+        std::cout << "failed!\n";
         std::cout << "Expected: 'A-1, B-2'" << std::endl;
         std::cout << "Got: '" << bag.ToString() << "'" << std::endl; 
     }
-
-    return numFailures;
 }
 
-int LL_Test_Count(){
-    int numFailures = 0;
-
-    //std::cout << "Test LinkedList_Count \n";
+void LL_Test_Count(){
+    std::cout << "Test LinkedList_Count \n";
 
     //create all tiles (from file?)
     Tile tile1('A', 0);
@@ -51,12 +43,11 @@ int LL_Test_Count(){
     LinkedList bag;
 
     //test 1
-    std::cout << "Test LinkedList_Count(0) ";
+    std::cout << " test empty: ";
     if (bag.Count() == 0)
-        std::cout << "PASSED!\n";
+        std::cout << "passed!\n";
     else{
-        numFailures++;
-        std::cout << "FAILED!\n ";
+        std::cout << "failed!\n";
         std::cout << "Expected: 0" << std::endl;
         std::cout << "Got: " << bag.Count() << std::endl; 
     }
@@ -67,12 +58,11 @@ int LL_Test_Count(){
     bag.AddTile(tile1);
 
     //test 2
-    std::cout << "Test LinkedList_Count(3) ";
+    std::cout << " test (3): ";
     if (bag.Count() == 3)
-        std::cout << "PASSED!\n";
+        std::cout << "passed!\n";
     else{
-        numFailures++;
-        std::cout << "FAILED!\n";
+        std::cout << "failed!\n";
         std::cout << "Expected: 3" << std::endl;
         std::cout << "Got: " << bag.Count() << std::endl; 
     }
@@ -82,23 +72,19 @@ int LL_Test_Count(){
     bag.DrawTile();
     bag.DrawTile();
     bag.DrawTile();
-    std::cout << "Test LinkedList_Count_NoNeg ";
+    std::cout << " test overdraw: ";
     if (bag.Count() == 0)
-        std::cout << "PASSED!\n";
+        std::cout << "passed!\n";
     else{
-        numFailures++;
-        std::cout << "FAILED!\n";
+        std::cout << "failed!\n";
         std::cout << "Expected: 0" << std::endl;
         std::cout << "Got: " << bag.Count() << std::endl; 
     }
 
-    return numFailures;
 }
 
-int LL_Test_Draw(){
-    int numFailures = 0;
-
-    //std::cout << "Test LinkedList_Draw \n";
+void LL_Test_Draw(){
+    std::cout << "Test LinkedList_Draw \n";
 
     //create all tiles (from file?)
     Tile tile1('A', 1);
@@ -108,15 +94,13 @@ int LL_Test_Draw(){
     LinkedList bag;
 
     //test 1: empty list returns nullptr
-    
+    std::cout << " test emptylist: ";
     char bagDraw = bag.DrawTile().getLetter();
-
-    std::cout << "Test LinkedList_Draw(empty) ";
     if (bagDraw == ' ') {
-        std::cout << "PASSED!\n";
-    } else {
-        numFailures++;
-        std::cout << "FAILED!\n";
+        std::cout << "passed!\n";
+    }
+    else {
+        std::cout << "failed!\n";
         std::cout << "  Expected: ' '" << std::endl;
         std::cout << "  Got: '" << bagDraw << "'" << std::endl; 
     }
@@ -132,12 +116,11 @@ int LL_Test_Draw(){
     //std::cout << bag.ToString() << std::endl;
 
     //test 2:
-    std::cout << "Test LinkedList_DrawOrder ";
+    std::cout << " test draw_order ";
     if (t1.getLetter() == 'A' && t2.getLetter() == 'B')
-        std::cout << "PASSED!\n";
+        std::cout << "passed!\n";
     else{
-        numFailures++;
-        std::cout << "FAILED!\n";
+        std::cout << "failed!\n";
         std::cout << "Expected: 'A-1, B-2'" << std::endl;
         std::cout << "Got: '" << t1.getLetter() << "-" << t1.getValue() << ",";
         std::cout << t2.getLetter() << "-" << t2.getValue() << "'" << std::endl; 
@@ -166,20 +149,13 @@ int LL_Test_Draw(){
     //else{
     //    std::cout << "failed!\n";
     //}
-
-    return numFailures;
 }
 
 
-int LL_RunTests(){
-    int numFailures = 0;
-
-    numFailures += LL_Test_Add();
-    numFailures += LL_Test_Count();
-    numFailures += LL_Test_Draw();
+void LL_RunTests(){
+    LL_Test_Add();
+    LL_Test_Count();
+    LL_Test_Draw();
     //Test_Transfer();
-
-    std::cout << "LinkedList failures: " << numFailures << std::endl << std::endl;
-    return numFailures;
 }
 

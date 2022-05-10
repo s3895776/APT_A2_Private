@@ -1,6 +1,5 @@
 {
     "files.associations": {
-        "*.jte": "html",
         "__bit_reference": "cpp",
         "__config": "cpp",
         "__debug": "cpp",
@@ -68,18 +67,6 @@
         "unordered_map": "cpp",
         "utility": "cpp",
         "vector": "cpp",
-        "filesystem": "cpp",
-        "compare": "cpp",
-        "concepts": "cpp",
-        "xfacet": "cpp",
-        "xiosbase": "cpp",
-        "xlocale": "cpp",
-        "xlocinfo": "cpp",
-        "xlocnum": "cpp",
-        "xmemory": "cpp",
-        "xstddef": "cpp",
-        "xstring": "cpp",
-        "xtr1common": "cpp",
-        "xutility": "cpp"
+        "filesystem": "cpp"
     }
 }
