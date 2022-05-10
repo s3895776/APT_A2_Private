@@ -31,7 +31,7 @@ public:
     /* Utility method to get the face of the tile */
     std::string displayTile(int row, int col);
     /* Prints the rows of the board */
-    std::string printRow(int row, std::string colLetter);
+    void printRow(int row, std::string colLetter);
     /* Displays the board as a 2D grid */
     void displayBoard();
     
@@ -39,7 +39,7 @@ public:
 
     /* For saving purposes: saves the board state - NOT YET IMPLEMENTED */
 
-    void saveBoard(std::ofstream& file);
+    std::string saveBoard();
 
    
 

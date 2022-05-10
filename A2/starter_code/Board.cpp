@@ -1,15 +1,10 @@
 #include "Board.h"
-#include <fstream>
-#include <iostream>
 
 Board::Board(){
     rows = ROW;
     columns = COLUMN;
     std::vector<std::vector<Tile>> b(rows, std::vector<Tile>(columns, Tile()));
     this->board = b;
-    Tile* tile = new Tile('A', 4);
-    board[0][0] = *tile;
-    placeTile(*tile, "B10");
 }
 
 Board::~Board(){
@@ -29,14 +24,10 @@ std::vector<std::vector<Tile>> Board::getBoard(){
 std::string Board::placeTile(Tile tile, std::string coordinates){
     /* convert the coordinates into rows and cols */ 
     // TODO: maybe find a better way to do this, or just leave it as it is
-    // B10
-
-    std::string c = coordinates.substr(1);
-    Column col = std::stoi(c);
-    // Column col = coordinates[1] - '0';
-    char r = coordinates[0];
+    Column col = coordinates[0] - '0';
+    char r = coordinates[1];
     Row row = 0;
-    // TODO: add validation for the string, that its in the right order
+    
     char row_letters[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'};
     for (int i = 0; i < ROW; ++i) {
         if (r == row_letters[i]) {
@@ -45,15 +36,13 @@ std::string Board::placeTile(Tile tile, std::string coordinates){
     }
     
     board[row][col] = tile;
-    //do we need a return? cause this could theoretically be a void method
     return "in progress";
 }
 
 std::string Board::removeTile(std::string coordinates){
+    
     // TODO: maybe find a better way to do this, or just leave it as it is
-    // Column col = coordinates[0] - '0';
-    std::string c = coordinates.substr(1);
-    Column col = std::stoi(c);
+    Column col = coordinates[0] - '0';
     char r = coordinates[1];
     Row row = 0;
     char row_letters[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'};
@@ -65,7 +54,7 @@ std::string Board::removeTile(std::string coordinates){
 
     board[row][col] = Tile();
     // no need to clean up if it ain't a pointer kekw
-    //do we need a return? cause this could theoretically be a void method
+
     return "in progress";
 }
 
@@ -80,21 +69,18 @@ std::string Board::displayTile(int row, int col){
     // }
 
     // Guan: If i am correct this should equate to 
-    
     tile += board[row][col].getLetter();
     tile += " ";
 
     return tile;
 }
 
-std::string Board::printRow(int row, std::string colLetter){
-    std::string result = colLetter+" |";
+void Board::printRow(int row, std::string colLetter){
+    std::cout << colLetter+" |";
     for (int i = 0; i < COLUMN; ++i){
-        result += displayTile(row, i); 
-        result += "|";
+        std::cout << displayTile(row, i) + "|";
     }
-    return result;
-   
+    std::cout << std::endl;
 }
 
 void Board::displayBoard(){
@@ -123,40 +109,19 @@ void Board::displayBoard(){
 
     std::cout << "    0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 " << std::endl;
     std::cout << "  -------------------------------------------------------------" << std::endl;
-    std::cout << printRow(0,"A") << std::endl;
-    std::cout << printRow(1,"B") << std::endl;
-    std::cout << printRow(2,"C") << std::endl;
-    std::cout << printRow(3,"D") << std::endl;
-    std::cout << printRow(4,"E") << std::endl;
-    std::cout << printRow(5,"F") << std::endl;
-    std::cout << printRow(6,"G") << std::endl;
-    std::cout << printRow(7,"H") << std::endl;
-    std::cout << printRow(8,"I") << std::endl;
-    std::cout << printRow(9,"J") << std::endl;
-    std::cout << printRow(10,"K") << std::endl;
-    std::cout << printRow(11,"L") << std::endl;
-    std::cout << printRow(12,"M") << std::endl;
-    std::cout << printRow(13,"N") << std::endl;
-    std::cout << printRow(14,"O") << std::endl;
-}
-
-void Board::saveBoard(std::ofstream& file){
-    file << "    0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 " << std::endl;
-    file << "  -------------------------------------------------------------" << std::endl;
-    file << printRow(0,"A") << std::endl;
-    file << printRow(1,"B") << std::endl;
-    file << printRow(2,"C") << std::endl;
-    file << printRow(3,"D") << std::endl;
-    file << printRow(4,"E") << std::endl;
-    file << printRow(5,"F") << std::endl;
-    file << printRow(6,"G") << std::endl;
-    file << printRow(7,"H") << std::endl;
-    file << printRow(8,"I") << std::endl;
-    file << printRow(9,"J") << std::endl;
-    file << printRow(10,"K") << std::endl;
-    file << printRow(11,"L") << std::endl;
-    file << printRow(12,"M") << std::endl;
-    file << printRow(13,"N") << std::endl;
-    file << printRow(14,"O") << std::endl;
- 
+    printRow(0,"A");
+    printRow(1,"B");
+    printRow(2,"C");
+    printRow(3,"D");
+    printRow(4,"E");
+    printRow(5,"F");
+    printRow(6,"G");
+    printRow(7,"H");
+    printRow(8,"I");
+    printRow(9,"J");
+    printRow(10,"K");
+    printRow(11,"L");
+    printRow(12,"M");
+    printRow(13,"N");
+    printRow(14,"O");
 }
