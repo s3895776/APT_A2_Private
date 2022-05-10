@@ -19,7 +19,8 @@ public:
    Tile(const Tile& other);
    Value getValue();
    Letter getLetter();
-   std::string getTileAsString();  
+   std::string getTileAsString();
+   bool isEmpty();
    
 
 private:
