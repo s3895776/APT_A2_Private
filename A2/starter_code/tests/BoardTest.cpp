@@ -22,7 +22,7 @@ void Board_TestRemoveTile(Board& board){
 
 
 int Board_RunTests(){
-    int numFailures = 0;
+    int numFailures = 5;
 
     Board board;
     board = Board();
