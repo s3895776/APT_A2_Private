@@ -42,7 +42,6 @@ int Board_TestRemoveTile(Board& board){
     int numFailures = 0;
 
     board.removeTile("A6");
-
     std::cout << "Test Board_TestRemoveTile ";
 
     // after the tile is removed displayTile should return an empty string
