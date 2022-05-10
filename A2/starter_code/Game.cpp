@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <fstream>
 #include <random>
+#include <iostream>
 
 Game::Game() {
     tileBag = LinkedList();
@@ -66,6 +67,11 @@ int Game::view_mainMenu() {
         // get integer input
         std::cout << "> ";
 
+        if (std::cin.eof()){
+            this->quitGame();
+            return 1;
+        }
+
         // reject invalid input which is not an integer between 1 and 4
         if (!(std::cin >> choice) || choice > 4 || choice < 1) {
             std::cin.clear();
@@ -125,6 +131,10 @@ std::string Game::newGame() {
         // keep asking for player name until it is valid
         std::cin.ignore();
         do {
+            if (std::cin.eof()){
+                this->quitGame();
+                return "";
+            }
             std::cout << "Enter a name for player " << i + 1 << " (uppercase characters only)" << std::endl;
             std::cout << "> ";
             std::getline(std::cin, playerName);
