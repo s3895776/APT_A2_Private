@@ -48,7 +48,7 @@ int Board_TestPlaceTile(Board& board) {
 int Board_TestRemoveTile(Board& board){
     int numFailures = 0;
 
-    board.removeTile("A6");
+    board.removeTile("6A");
 
     std::cout << "Test Board_TestRemoveTile ";
 
