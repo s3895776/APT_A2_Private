@@ -17,34 +17,9 @@ Enter a name for player 1 (uppercase characters only)
 > 
 Enter a name for player 1 (uppercase characters only)
 > 
-Enter a name for player 2 (uppercase characters only)
-> 
-ALMOST1
-ALID
-Let's Play!
-ALMOST1, it's your turn
-Score for ALMOST1: 0
-Score for ALID: 0
-    0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
-  -------------------------------------------------------------
-A |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-B |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-C |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-D |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-E |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-F |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-G |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-H |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-I |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-J |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-K |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-L |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-Your hand is: 
-
-
->
+Game over
+Score for VALID: 0
+Score for : 0
+Player VALID won!
 
 Goodbye
