@@ -141,8 +141,9 @@ std::string Game::newGame() {
     std::cout << "Let's Play!" << std::endl;
 
     // 3. Create a new game of Scrabble
-    InitaliseBag(tileBag);
-    
+    this->InitaliseBag(tileBag);
+
+    std::cout << "Bag Initialised" << std::endl;
     // TODO: initialise Players One and Two LinkedList values with Tiles.
     i = 0;
     const int INITIAL_HAND = 10;
@@ -153,7 +154,7 @@ std::string Game::newGame() {
         int j = 0;
         while (j < drawnHand) {
             this->players[i].fillHand(tileBag.DrawTile());
-            j += 1;
+            ++j;
         }
         ++i;
     }
@@ -231,6 +232,7 @@ bool Game::saveState(std::string filename) {
         file << this->players[i].getScore() << "\n";
         file << this->players[i].getHand() << "\n";
     }
+    
     // TODO: resolve - save board state
     // file << this->board.getBoard() << "\n";
     // TODO: resolve - save tile bag content
@@ -303,15 +305,14 @@ std::string Game::loadGame() {
 
 void Game::InitaliseBag(LinkedList& bag){
     // TODO(dan): test no duplicates, shuffle correct, etc...
-
     // Define consts
     int const num_tiles = 98;
     std::string const filename = "./ScrabbleTiles.txt";
-
     // Mersenne Twister PRNG
+
+    // this is probably the issue: see if it helps when fixed
     std::random_device r;
     std::mt19937 rng{r()};
-    
     // Import tiles from file into array
     Tile tiles[num_tiles];
     std::ifstream tileFile (filename);
@@ -322,7 +323,6 @@ void Game::InitaliseBag(LinkedList& bag){
         tiles[index] = Tile(letter, value);
         index++;
     }
-
     // Fisher–Yates shuffle
     int back = num_tiles - 1;
     while (back > 0){
@@ -338,11 +338,11 @@ void Game::InitaliseBag(LinkedList& bag){
         // Slide unshuffled window down
         back--;
     }
-
     // Insert tiles into bag
     for (int i = 0; i < 99; i++){
         bag.AddTile(tiles[i]);
     }
+    std::cout << "TileBag Initialised" <<std::endl;
 }
 
 std::string Game::gameInput(std::string firstPlayer) {

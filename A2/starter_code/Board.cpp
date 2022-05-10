@@ -24,8 +24,9 @@ std::vector<std::vector<Tile>> Board::getBoard(){
 std::string Board::placeTile(Tile tile, std::string coordinates){
     /* convert the coordinates into rows and cols */ 
     // TODO: maybe find a better way to do this, or just leave it as it is
-    Column col = coordinates[0] - '0';
-    char r = coordinates[1];
+    // B10
+    Column col = coordinates[1] - '0';
+    char r = coordinates[0];
     Row row = 0;
     
     char row_letters[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'};
@@ -36,14 +37,15 @@ std::string Board::placeTile(Tile tile, std::string coordinates){
     }
     
     board[row][col] = tile;
+    //do we need a return? cause this could theoretically be a void method
     return "in progress";
 }
 
 std::string Board::removeTile(std::string coordinates){
     
     // TODO: maybe find a better way to do this, or just leave it as it is
-    Column col = coordinates[0] - '0';
-    char r = coordinates[1];
+    Column col = coordinates[1] - '0';
+    char r = coordinates[0];
     Row row = 0;
     char row_letters[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'};
     for (int i = 0; i < ROW; ++i) {
@@ -54,7 +56,7 @@ std::string Board::removeTile(std::string coordinates){
 
     board[row][col] = Tile();
     // no need to clean up if it ain't a pointer kekw
-
+    //do we need a return? cause this could theoretically be a void method
     return "in progress";
 }
 
@@ -124,4 +126,8 @@ void Board::displayBoard(){
     printRow(12,"M");
     printRow(13,"N");
     printRow(14,"O");
+}
+
+std::string saveBoard(std::ofstream file()){
+    return "in progress";
 }

@@ -39,7 +39,7 @@ public:
 
     /* For saving purposes: saves the board state - NOT YET IMPLEMENTED */
 
-    std::string saveBoard();
+    std::string saveBoard(std::ofstream file);
 
    
 
