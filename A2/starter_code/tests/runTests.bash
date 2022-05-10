@@ -1,20 +1,40 @@
 #!/bin/bash
 # NOTE : Run this script from the /tests/ directory, or it won't work
 
-echo "Running Tests"
+FILES="./tests/*.input"
 
-FILES="*.input"
-for f in $FILES
-do
-    E=${f%.*}
-    echo "test: $f"
+if [ -e "./scrabble"  ] 
+then
+    echo "=========================="
+    echo "Running Tests"
+    for f in $FILES
+    do
+        echo "---------------------------"
+        E=${f%.*}
+        #echo "test: $f"
+        ./scrabble < $f > "$E.gameout"
+        #echo "Writing results to $E.gameout"
 
-    ../scrabble < $f > "$E.gameout"
-    #echo "Writing results to $E.gameout"
+        differences=`diff -w $E.output $E.gameout`
 
-    differences=`diff -w $E.output $E.gameout`
-    echo "Differences: ${#differences}"
+        #echo ${#differences}
 
-    # take action on each file. $f store current file name
-    #cat "$f"
-done
+        if [ ${#differences} == "0" ]
+        then
+            echo -e "\e[32;5m$E PASSED!\e[0m"
+        else
+            echo -e "\e[31m$E FAILED!\e[0m"
+            #echo "!     Differences: ${#differences}     !"
+            diff -w --color $E.output $E.gameout
+            
+        fi
+        echo ""   
+
+        # take action on each file. $f store current file name
+        #cat "$f"
+    done
+    
+else
+    echo -e "\e[31mTests FAILED to run!\e[0m"
+    echo "Scrabble.exe not found"
+fi
