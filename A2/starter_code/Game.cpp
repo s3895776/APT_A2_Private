@@ -129,7 +129,7 @@ std::string Game::newGame() {
 
     while (i < NUMBER_OF_PLAYERS) {   
         // keep asking for player name until it is valid
-        std::cin.ignore();
+        // std::cin.ignore();
         do {
             if (std::cin.eof()){
                 this->quitGame();
