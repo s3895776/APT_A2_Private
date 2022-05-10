@@ -1,9 +1,10 @@
 .default: all
 
-all: scrabble
+all: scrabble tests
 
 clean:
 	rm -rf scrabble *.o *.dSYM
+	rm -rf Testing *.o *.dSYM
 
 scrabble: scrabble.o Node.o Tile.o Game.o Player.o LinkedList.o Board.o 
 	g++ -Wall -Werror -std=c++14 -g -O -o $@ $^
