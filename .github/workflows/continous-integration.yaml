@@ -6,9 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ continous-integration ]
+    branches: [ main, continous-integration ]
   pull_request:
-    branches: [ continous-integration ]
+    branches: [ main, continous-integration ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -29,16 +29,16 @@ jobs:
         run: |
           cd A2/starter_code/
           make
+          make tests
 
-      # Runs a single command using the runners shell
-      - name: Run Tests
+      - name: Run Unit Tests
+        run: |
+          cd A2/starter_code/
+          chmod a+x ./Testing
+          ./Testing
+
+      - name: Run Integration Tests
         run: |
           cd A2/starter_code/
           chmod a+x tests/runTests.bash
           tests/runTests.bash
-
-      # Runs a set of commands using the runners shell
-      ##- name: Run a multi-line script
-      ##  run: |
-      ##    echo Add other actions to build,
-      ##    echo test, and deploy your project.
