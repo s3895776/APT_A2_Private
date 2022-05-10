@@ -42,6 +42,3 @@ jobs:
           cd A2/starter_code/
           chmod a+x tests/runTests.bash
           tests/runTests.bash
-
-
-
