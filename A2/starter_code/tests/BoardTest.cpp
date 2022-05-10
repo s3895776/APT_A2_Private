@@ -3,23 +3,58 @@
 
 int Board_RunTests();
 
-void Board_TestRemoveTile();
-void Board_TestPlaceTile();
+int Board_TestRemoveTile();
+int Board_TestPlaceTile();
 void Board_TestDisplayBoard();
 
-void Board_TestPlaceTile(Board& board) {
+int Board_TestPlaceTile(Board& board) {
+    int numFailures = 0;
+
     Tile tile1 = Tile('A', 60);
     board.placeTile(tile1, "6A");
     board.placeTile(tile1, "6B");
     board.placeTile(tile1, "6C");
     board.placeTile(tile1, "6D");
     board.placeTile(tile1, "6E");
-    board.placeTile(tile1, "6O");
-}
-void Board_TestRemoveTile(Board& board){
-    board.removeTile("6A");
-}
+    board.placeTile(tile1, "6F");
 
+    bool pass = true;
+    for (int i=0; i < 6; i++){
+        if (board.getBoard()[i][6].getLetter() != 'A'){
+            std::cout << "Expected 'A'" << std::endl;
+            std::cout << "Returned: -"<< board.getBoard()[i][6].getLetter() << "-" << std::endl;
+            
+            pass = false;
+        }
+    }
+
+    std::cout << "Test Board_TestPlaceTile ";
+    if (pass){
+        std::cout << "PASSED!" << std::endl;
+    } else {
+        std::cout << "FAILED!" << std::endl;
+        numFailures++;
+    }
+
+    return numFailures;
+}
+int Board_TestRemoveTile(Board& board){
+    int numFailures = 0;
+
+    board.removeTile("6A");
+
+    std::cout << "Test Board_TestRemoveTile ";
+
+    // after the tile is removed displayTile should return an empty string
+    if (board.getBoard()[0][6].getLetter() == ' '){
+        std::cout << "PASSED!" << std::endl;
+    } else {
+        std::cout << "FAILED!" << std::endl;
+        numFailures++;
+    }
+
+    return numFailures;
+}
 
 int Board_RunTests(){
     int numFailures = 0;
@@ -38,10 +73,10 @@ int Board_RunTests(){
     }
     //board.displayBoard();
 
-    Board_TestPlaceTile(board);
+    numFailures += Board_TestPlaceTile(board);
     //board.displayBoard();
 
-    Board_TestRemoveTile(board);
+    numFailures += Board_TestRemoveTile(board);
     //board.displayBoard();
 
     std::cout << "Board failures: " << numFailures << std::endl << std::endl;
