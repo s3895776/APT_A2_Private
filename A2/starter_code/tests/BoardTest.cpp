@@ -10,14 +10,13 @@ void Board_TestDisplayBoard();
 
 int Board_TestPlaceTile(Board& board) {
     int numFailures = 0;
-
     Tile tile1 = Tile('A', 60);
-    board.placeTile(tile1, "6A");
-    board.placeTile(tile1, "6B");
-    board.placeTile(tile1, "6C");
-    board.placeTile(tile1, "6D");
-    board.placeTile(tile1, "6E");
-    board.placeTile(tile1, "6F");
+    board.placeTile(tile1, "A6");
+    board.placeTile(tile1, "B6");
+    board.placeTile(tile1, "C6");
+    board.placeTile(tile1, "D6");
+    board.placeTile(tile1, "E6");
+    board.placeTile(tile1, "F6");
 
     bool pass = true;
     for (int i=0; i < 6; i++){
@@ -39,11 +38,11 @@ int Board_TestPlaceTile(Board& board) {
 
     return numFailures;
 }
+
 int Board_TestRemoveTile(Board& board){
     int numFailures = 0;
 
-    board.removeTile("6A");
-
+    board.removeTile("A6");
     std::cout << "Test Board_TestRemoveTile ";
 
     // after the tile is removed displayTile should return an empty string
