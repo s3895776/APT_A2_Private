@@ -29,6 +29,7 @@ jobs:
         run: |
           cd A2/starter_code/
           make
+          make tests
 
       - name: Run Unit Tests
         run: |
