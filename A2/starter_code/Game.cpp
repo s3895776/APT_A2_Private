@@ -69,7 +69,7 @@ int Game::view_mainMenu() {
 
         if (std::cin.eof()){
             this->quitGame();
-            return 1;
+            return 4;
         }
 
         // reject invalid input which is not an integer between 1 and 4
@@ -125,21 +125,39 @@ std::string Game::newGame() {
     }
 
     i = 0;
-    std::string playerName;
 
+    // fixed some printing errors with this method
+    // I assume this flushes out std::cin? 
+    std::cin.ignore();
     while (i < NUMBER_OF_PLAYERS) {   
+        std::string playerName;
         // keep asking for player name until it is valid
-        // std::cin.ignore();
-        do {
-            if (std::cin.eof()){
-                this->quitGame();
+        
+        // do {
+        //     std::cout << "Enter a name for player " << i + 1 << " (uppercase characters only)" << std::endl;
+        //     std::cout << "> ";
+        //     std::getline(std::cin, playerName);
+        //     // std::cout << playerName << std::endl;
+        //     std::cout << std::endl;
+        //     if (std::cin.eof()) {
+        //         this->quitGame();
+        //         return "";
+        //     }
+        // } while (!validName(playerName));
+
+        while (!validName(playerName)) {
+            if (std::cin.eof()) {
+                std::cout << this->quitGame();
                 return "";
             }
             std::cout << "Enter a name for player " << i + 1 << " (uppercase characters only)" << std::endl;
             std::cout << "> ";
             std::getline(std::cin, playerName);
+            // std::cout << playerName << std::endl;
             std::cout << std::endl;
-        } while (!validName(playerName));
+
+        }
+
         // set the player's name
         this->players[i].setName(playerName);
         ++i;
@@ -358,8 +376,10 @@ void Game::InitaliseBag(LinkedList& bag){
 
 std::string Game::gameInput(std::string firstPlayer) {
 
-    // TODO: search for the player beginning their turn
-    const int NUMBER_OF_PLAYERS = 2;
+    // search for the player beginning their turn
+
+    // use vector size to determine number of players at the start. 
+    const int NUMBER_OF_PLAYERS = players.size();
     int currentPlayerIndex = -1;
 
     try {
@@ -448,7 +468,8 @@ std::string Game::gameInput(std::string firstPlayer) {
             for (Player& player : players) {
                 player.printScore();
             }
-            // TODO: print the board
+
+            // print the board
             this->board.displayBoard();
 
             std::cout << "Your hand is: " << std::endl;
