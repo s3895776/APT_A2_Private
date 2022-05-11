@@ -7,6 +7,9 @@ Board::Board(){
     columns = COLUMN;
     std::vector<std::vector<Tile>> b(rows, std::vector<Tile>(columns, Tile()));
     this->board = b;
+    Tile* tile = new Tile('A', 4);
+    board[0][0] = *tile;
+    placeTile(*tile, "B10");
 }
 Board::~Board(){
 }
@@ -20,76 +23,27 @@ std::vector<std::vector<Tile>> Board::getBoard(){
     return board;
 }
 
-bool Board::placeTile(Tile tile, std::string coordinates) {
-    // tilePlaced remains true unless rejected
-    bool tilePlaced = true;
+std::string Board::placeTile(Tile tile, std::string coordinates){
+    /* convert the coordinates into rows and cols */ 
+    // TODO: maybe find a better way to do this, or just leave it as it is
+    // B10
 
-    // validate the length of coordinates and find the index for breakoff
-    int breakOff = 1;
-    // Kerubo: Don't need this if the letter is always first, therefore the number always starts at index 1
-    // // check if the string coordinates has the appropriate length of 2 i.e. 'A6'
-    // if (coordinates.size() == 2) {
-    //     breakOff = 1;
-    // }
-    // // check if the string coordinates has the appropriate length of 3 i.e. 'A11'
-    // else if (coordinates.size() == 3) {   
-    //     breakOff = 2;
-    // } else {
-    //     tilePlaced = false;
-    // }
+    std::string c = coordinates.substr(1);
+    Column col = std::stoi(c);
+    // Column col = coordinates[1] - '0';
+    char r = coordinates[0];
+    Row row = 0;
+    // TODO: add validation for the string, that its in the right order
+    char row_letters[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'};
+    for (int i = 0; i < ROW; ++i) {
+        if (r == row_letters[i]) {
+            row = i;
+        }
+    }
     
-    // reject if string coordinates has the length of 3 but has two letters i.e. 'AA4'
-    if (coordinates.size() == 3) {
-        int countAlphabet = 0;
-        for (char c: coordinates) {
-            if (isalpha(c)) {
-                ++countAlphabet;
-            }
-        }
-        // coorindates can only contain one alphabet
-        if (countAlphabet != 1) {
-            tilePlaced = false;
-        }
-    }
-
-    // parse and validate column
-    std::string columnString = coordinates.substr(1);
-    // cast columnString into int i.e '6' -> 6
-    int col = std::stoi(columnString);
-    // reject if column is not between 0 and 14
-    if (col < 0 || col > 14) {
-        tilePlaced = false;
-    }
-
-    // parse and validate row
-    std::string rowString = coordinates.substr(breakOff);
-    // get character from rowString
-    char rowChar = rowString[0];    
-    if (rowChar < 'A' || rowChar > 'O') {
-        tilePlaced = false;
-    }
-
-    // place tile if rowChar and col is valid
-    if (tilePlaced) {
-        char row_letters[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'};
-        int row;
-        // iterate through row_letters to locate the rowChar and get its index
-        for (int i = 0; i < ROW; ++i) {
-            if (row_letters[i] == rowChar) {
-                row = i;
-            }
-        }
-        // add tile to board if the tile is not empty
-        if (board[row][col].isEmpty()) {
-            board[row][col] = tile;
-        }
-        // do nothing if tile is occupied
-        else {
-            tilePlaced = false;
-        }
-    }
-
-    return tilePlaced;
+    board[row][col] = tile;
+    //do we need a return? cause this could theoretically be a void method
+    return "in progress";
 }
 
 std::string Board::removeTile(std::string coordinates){
@@ -122,6 +76,7 @@ std::string Board::displayTile(int row, int col){
     // }
 
     // Guan: If i am correct this should equate to 
+    
     tile += board[row][col].getLetter();
     tile += " ";
     return tile;
@@ -134,6 +89,7 @@ std::string Board::printRow(int row, std::string colLetter){
         result += "|";
     }
     return result;
+   
 }
 
 void Board::displayBoard(){
@@ -194,4 +150,5 @@ void Board::saveBoard(std::ofstream& file){
     file << printRow(12,"M") << std::endl;
     file << printRow(13,"N") << std::endl;
     file << printRow(14,"O") << std::endl;
+ 
 }
