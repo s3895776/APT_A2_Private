@@ -30,6 +30,9 @@ std::string Board::placeTile(Tile tile, std::string coordinates){
 
     std::string c = coordinates.substr(1);
     Column col = std::stoi(c);
+    // Check the coordinates 
+    // check that there is no tile at the coordinates
+    // this method probably needs to be boolean
     // Column col = coordinates[1] - '0';
     char r = coordinates[0];
     Row row = 0;
