@@ -2,7 +2,6 @@
 #define BOARD_H
 
 #include <vector>
-#include <regex>
 #include "Tile.h"
 
 // Define a Row type
@@ -22,13 +21,9 @@ public:
     /* returns the board for testing purposes*/
     std::vector<std::vector<Tile>> getBoard();
 
-    /*
-     * Place Tile on the board: parse coordinates from the player into row and column, convert it into an appropriate vector coordinates
-     * Returns false if another tile already exists in place
-     * Returns false if coordinates is in invalid format
-     * Returns true if tile is successfully placed
-     */
-    bool placeTile(Tile tile, std::string coordinates);
+    /* Place Tile on the board, takes the coordinates in the format sent in by the player,
+       and converts it into the appropriate vector coordinates */
+    std::string placeTile(Tile tile, std::string coordinates);
 
     /* Remove Tile, to be used if move is invalid*/
     std::string removeTile(std::string coordinates);
@@ -44,7 +39,7 @@ public:
 
     /* For saving purposes: saves the board state - NOT YET IMPLEMENTED */
 
-    std::string saveBoard();
+    void saveBoard(std::ofstream& file);
 
    
 

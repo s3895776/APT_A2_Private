@@ -37,7 +37,3 @@ Value Tile::getValue() {
 Letter Tile::getLetter() {
     return letter;
 }
-
-bool Tile::isEmpty() {
-    return value == 0 && letter == ' ';
-}
