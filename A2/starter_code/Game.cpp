@@ -180,11 +180,11 @@ std::string Game::displayCredits() {
     credits.append("-------------------------------------\n");
     credits.append("Name: Dan Podbury\n");
     credits.append("Student ID: s3881206\n");
-    credits.append("Email: \n");
+    credits.append("Email: s3881206@student.rmit.edu.au\n");
     credits.append("\n");
     credits.append("Name: Guo An Liew\n");
-    credits.append("Student ID: \n");
-    credits.append("Email: \n");
+    credits.append("Student ID: s3895776\n");
+    credits.append("Email: s3895776@student.rmit.edu.au\n");
     credits.append("\n");
     credits.append("Name: Kerubo Ndubi\n");
     credits.append("Student ID: s3844734\n");
