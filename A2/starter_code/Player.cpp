@@ -23,16 +23,19 @@ Player::Player(const Player& other):
 {}
 
 bool Player::hasTile(Letter letter){
-    return this->hand.ContainsTile(letter);
+    return this->hand.ContainsLetter(letter);
 }
 
-Tile Player::dropTile(Letter letter) {
-    Tile dummyTile = Tile(letter, 0);
-    Tile& dummyTileRef = dummyTile;
-    // get the first letter in hand to do things with
+// Tile Player::dropTile(Letter letter) {
+//     Tile dummyTile = Tile(letter, 0);
+//     Tile& dummyTileRef = dummyTile;
+//     // get the first letter in hand to do things with
 
-    Tile droppedTile = hand.DrawTile( dummyTileRef );
-    return droppedTile;
+//     Tile droppedTile = hand.DrawTile( dummyTileRef );
+//     return droppedTile;
+// }
+Tile Player::dropTile(Letter letter) {
+    return this->hand.RemoveTile(letter);
 }
 
 std::string Player::setName(std::string name) {
@@ -50,6 +53,10 @@ std::string Player::fillHand(Tile tile) {
     this->hand.AddTile(tile);
     
     return "";
+}
+
+void Player::addTile(Tile tile) {
+    this->hand.AddTile(tile);
 }
 
 std::string Player::getName() {

@@ -23,10 +23,18 @@ class Player {
             If there is no tile in hand with the same letter, 
             the returned Tile will be Tiles' default constructor.
         */
+
+        /*
+         * Remove tile with the first occurence of letter from the hand
+         * and returns the removed tile
+         */
         Tile dropTile(Letter letter);
 
         /* set a tile in the hand */
         std::string fillHand(Tile tile);
+
+        /* add new tile to the hand */
+        void addTile(Tile tile);
 
         /* return the hand as a comma separated ordered list */
         std::string getHand();

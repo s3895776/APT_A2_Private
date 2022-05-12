@@ -26,7 +26,16 @@ public:
    int Count();
 
    bool ContainsTile(Tile& tile);
-   bool ContainsTile(Letter letter);
+   /*
+    * Check if letter is among the tiles
+    */
+   bool ContainsLetter(Letter letter);
+
+   /*
+    * Remove tile by letter and returns the removed tile
+    */
+   Tile RemoveTile(Letter letter);
+
    int GetTileValue(Letter letter);
 
    std::string ToString();

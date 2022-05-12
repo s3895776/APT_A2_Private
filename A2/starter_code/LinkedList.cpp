@@ -120,6 +120,49 @@ Tile LinkedList::DrawTile(Tile& tile){
    return outTile;
 }
 
+bool LinkedList::ContainsLetter(Letter letter) {
+   bool containsLetter = false;
+
+   Node* curr = this->head;
+   while (curr != nullptr) {
+      if (curr->tile.getLetter() == letter) {
+         containsLetter = true;
+      }
+      curr = curr->next;
+   }
+
+   return containsLetter;
+}
+
+Tile LinkedList::RemoveTile(Letter letter) {
+   Node* node_removedTile;
+   
+   Node* curr = this->head;
+
+   // head node has the letter
+   if (curr->tile.getLetter() == letter) {
+      node_removedTile = curr;
+      // reassign head to next node
+      this->head = curr->next;
+   }
+   // non-head node has the letter
+   else {
+      while (curr->next != nullptr) {
+         // next node of current has the letter
+         if (curr->next->tile.getLetter() == letter) {
+            // assign the node to the next node withthe letter
+            node_removedTile = curr->next;
+            // ignore the next node
+            curr->next = curr->next->next;
+         } else {
+            curr = curr->next;
+         }
+      }
+   }
+
+   return node_removedTile->tile;
+}
+
 // bool LinkedList::ContainsTile(Tile& tile){
 //    // if (this->head == nullptr){return false;}
 //    bool result = false;

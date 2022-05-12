@@ -440,7 +440,7 @@ std::string Game::gameInput(std::string firstPlayer) {
             std::string currHand;
             currPlayerName = players[currentPlayerIndex].getName();
             currHand = players[currentPlayerIndex].getHand(); 
-
+            
             std::cout << currPlayerName << ", it's your turn" << std::endl;
 
             for (Player& player : players) {
@@ -483,6 +483,56 @@ std::string Game::gameInput(std::string firstPlayer) {
                     std::cout << "4. save [filename]" << std::endl;
                     std::cout << "5. quit" << std::endl;
                     std::cout << std::endl;
+                }
+                // replace tile
+                else if (!(command.compare("replace"))) {
+                    // reject replacement if arguments is not in the format `replace [tile letter]`
+                    if (arguments.size() != 2) {
+                        std::cout << "Failed to replace tile. Use `replace [tile letter]` to save (Note: filename must not contain whitespaces)." << std::endl;
+                        std::cout << std::endl;
+                    }
+                    // proceed if player input has 2 arguments
+                    else {
+                        // extract char and letter from the second argument
+                        std::string secondArg = arguments[1];
+                        char l = arguments[1][0];
+                        Letter letter = Letter(l);
+                        // reject replacement if second argument is not a char OR letter is not between A and Z
+                        if (secondArg.size() != 1 || l < 'A' || l > 'Z') {
+                            std::cout << "Failed to replace tile. Letter must be a single uppercase alphabet." << std::endl;
+                            std::cout << std::endl;
+                        }
+                        // reject replacement if player does not have the tile
+                        else if (!(players[currentPlayerIndex].hasTile(letter))) {
+                            std::cout << "Failed to replace tile. Tile with letter provided does not exist." << std::endl;
+                            std::cout << std::endl;
+                        }
+                        // proceed to replace tile with provided letter
+                        else {
+                            std::cout << "letter: " << letter << std::endl;
+                            std::cout << "good: " << (l >= 'A' && l <= 'Z') << std::endl;
+                            std::cout << "init: " << players[currentPlayerIndex].hasTile(letter) << std::endl;
+
+                            if (players[currentPlayerIndex].hasTile(letter)) {
+                                // remove and retrieve tile from player's hand
+                                Tile removedTile = players[currentPlayerIndex].dropTile(letter);
+                                // draw a tile from bag
+                                // TODO: (drawing the same tile from the bag across all games, a need for shuffle?)
+                                Tile drawnTile = tileBag.DrawTile();
+                                // add the new tile to player's hand
+                                players[currentPlayerIndex].fillHand(drawnTile);
+                                // add the removed tile back to the bag
+                                tileBag.AddTile(removedTile);
+                                // success message
+                                std::cout << "Your new hand:" << std::endl;
+                                std::cout << players[currentPlayerIndex].getHand() << std::endl;
+                                std::cout << std::endl;
+
+                                switchPlayer(&currentPlayerIndex, players.size());
+                                inputNotReceived = false;
+                            }
+                        }
+                    }
                 }
                 // skip turn
                 else if (!(command.compare("pass"))) {
