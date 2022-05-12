@@ -27,11 +27,12 @@ bool Player::hasTile(Letter letter){
 }
 
 Tile Player::dropTile(Letter letter) {
-    // create temp tile from letter
-    Tile tileToDraw = Tile(letter, this->hand.GetTileValue(letter));
+    Tile dummyTile = Tile(letter, 0);
+    Tile& dummyTileRef = dummyTile;
+    // get the first letter in hand to do things with
 
-    //remove from hand
-    return this->hand.DrawTile(tileToDraw);
+    Tile droppedTile = hand.DrawTile( dummyTileRef );
+    return droppedTile;
 }
 
 std::string Player::setName(std::string name) {

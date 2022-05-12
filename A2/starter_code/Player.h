@@ -19,7 +19,10 @@ class Player {
         /* Return true if player has this tile in hand */
         bool hasTile(Letter letter);
 
-        /* drop a tile from linkedList hand and return it */
+        /* Delete a tile from the LinkedList hand and return it.
+            If there is no tile in hand with the same letter, 
+            the returned Tile will be Tiles' default constructor.
+        */
         Tile dropTile(Letter letter);
 
         /* set a tile in the hand */
