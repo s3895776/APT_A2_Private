@@ -310,6 +310,7 @@ std::string Game::loadGame() {
 void Game::InitaliseBag(LinkedList& bag){
     // TODO(dan): test no duplicates, shuffle correct, etc...
 
+
     // Define consts
     int const num_tiles = 98;
     std::string const filename = "./ScrabbleTiles.txt";
@@ -318,30 +319,29 @@ void Game::InitaliseBag(LinkedList& bag){
     //std::random_device r;
     //std::mt19937 rng(1);
     //TODO(dan): fix
-    
+
     // Import tiles from file into array
     Tile tiles[num_tiles];
     std::ifstream tileFile (filename);
     char letter; int value; int index = 0;
-    while (tileFile.good() && index <= num_tiles){
-        tileFile >> letter;
-        tileFile >> value;
+    // read letter and value per row
+    while (tileFile >> letter >> value) {
         tiles[index] = Tile(letter, value);
-        index++;
+        ++index;
     }
+    // close tile file
+    tileFile.close();
 
     // Fisher–Yates shuffle
     int back = num_tiles - 1;
-    while (back > 0){
+    while (back > 0) {
         // Pick a random unshuffled elem
-        //std::uniform_int_distribution<int> dist(0, back);
+        // std::uniform_int_distribution<int> dist(0, back);
         int index = rand() % num_tiles;//dist(rand());
-
         // Move to back of list
         Tile temp = tiles[back];
         tiles[back] = tiles[index];
         tiles[index] = temp;
-
         // Slide unshuffled window down
         back--;
     }
