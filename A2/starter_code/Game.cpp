@@ -150,7 +150,7 @@ std::string Game::newGame() {
 
     // 3. Create a new game of Scrabble
     InitaliseBag(tileBag);
-    // DEBUG: print the TileBag after initialising.
+    // // DEBUG: print the TileBag after initialising.
     // std::cout<< this->tileBag.ToString() << std::endl;
 
 
@@ -358,7 +358,7 @@ void Game::InitaliseBag(LinkedList& bag){
     }
 
     // Insert tiles into bag
-    for (int i = 0; i < 99; i++){
+    for (int i = 0; i < num_tiles; i++){
         bag.AddTile(tiles[i]);
     }
 }
