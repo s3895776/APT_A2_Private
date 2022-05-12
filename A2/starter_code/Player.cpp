@@ -24,9 +24,11 @@ Player::Player(const Player& other):
 
 
 Tile Player::dropTile(Letter letter) {
-    // TODO: remove tile from hand if letter exists. 
+    Tile dummyTile = Tile(letter, 0);
+    Tile& dummyTileRef = dummyTile;
+    // get the first letter in hand to do things with
 
-    Tile droppedTile;
+    Tile droppedTile = hand.DrawTile( dummyTileRef );
     return droppedTile;
 }
 
@@ -41,8 +43,7 @@ std::string Player::getHand() {
     // the Tile in the appropriate string format. 
     // string format: Letter-Value
 
-    std::string playerHand = "TODO:Player.getHand()";
-    return playerHand;
+    return this->hand.ToString();
 }
 
 std::string Player::fillHand(Tile tile) {

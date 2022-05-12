@@ -181,6 +181,7 @@ std::string LinkedList::ToString(){
    std::string s = "";
 
    if (this->head == nullptr) {
+      // this is the reason the test fails. Which string is preferable?
       s = "EMPTY";
    }
 
