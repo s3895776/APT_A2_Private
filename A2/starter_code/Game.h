@@ -63,6 +63,16 @@ class Game {
          */
         bool validName(std::string name);
 
+        /*
+         * Parse inputs into a vector of string
+         */
+        std::vector<std::string> parseArguments(std::string input);
+
+        /*
+         * Switch player 
+         */
+        void switchPlayer(int* ptr_currentPlayerIndex, int totalPlayers);
+
         // I made this public for testing puposes
         void InitaliseBag(LinkedList& bag);
         void AddPlayer(Player player);

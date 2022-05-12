@@ -457,16 +457,67 @@ std::string Game::gameInput(std::string firstPlayer) {
             bool inputNotReceived = true;
 
             while (inputNotReceived) {
-                std::cout << ">";
+                // store all arguments from user input
+                std::vector<std::string> arguments;
+                // help command as navigator
+                std::cout << "Type help for commands:\n" << std::endl;
+                std::cout << "> ";
 
-                // TODO: choose inputs for making the player move.
-                // std::cin >> string
-                // dissect the string into parts to get the right string. 
+                // store user input
                 std::string playerAction;
-                std::cin >> playerAction;
+                // retrieve input from player as playerAction
+                std::getline(std::cin, playerAction);
+
+                // parse player's commands into arguments
+                arguments = parseArguments(playerAction);
+                // get command from input
+                std::string command = arguments[0];
+                std::cout << std::endl;
+
+                // player requests help
+                if (!(command.compare("help"))) {
+                    std::cout << "1. place [tile letter] at [coordinate]" << std::endl;
+                    std::cout << "   place Done" << std::endl;
+                    std::cout << "2. replace [tile letter]" << std::endl;
+                    std::cout << "3. pass" << std::endl;
+                    std::cout << "4. save [filename]" << std::endl;
+                    std::cout << "5. quit" << std::endl;
+                    std::cout << std::endl;
+                }
+                // skip turn
+                else if (!(command.compare("pass"))) {
+                    switchPlayer(&currentPlayerIndex, players.size());
+                    inputNotReceived = false;
+                }
+                // save the game
+                else if (!(command.compare("save"))) {
+                    // reject save if arguments is not in the format `save [filename]`
+                    if (arguments.size() != 2) {
+                        std::cout << "Failed to save. Use `save [filename]` to save (Note: filename must not contain whitespaces)" << std::endl;
+                        std::cout << std::endl;
+                    }
+                    // proceed to save
+                    else {
+                        std::string filename = arguments[1];
+                        if (saveState(filename)) {
+                            std::cout << "Game successfully saved as " << filename << ".txt" << std::endl;
+                            std::cout << std::endl;
+                            inputNotReceived = false;
+                        }
+                    }
+                }
+                // player quits the game
+                else if (!(command.compare("quit"))) {
+                    inputNotReceived = false;
+                }
+                // invalid input
+                else {
+                    std::cout << "Invalid command. Please type help to view the available command." << std::endl;
+                    std::cout << std::endl;
+                }
                 
                 // TODO: remove after testing
-                std::cout << playerAction << std::endl;
+                // std::cout << playerAction << std::endl;
 
                 // TODO: implement player action: placement
                 // syntax: place <tile1> at <grid location>
@@ -494,11 +545,11 @@ std::string Game::gameInput(std::string firstPlayer) {
                 //this->saveState("testSave.txt");
 
                 // remove at the end of testing
-                inputNotReceived = false;
+                // inputNotReceived = false;
             }
             
             // remove at the end of testing. 
-            gameLoop = false;
+            // gameLoop = false;
         }
 
     }
@@ -537,4 +588,40 @@ std::string Game::gameEnd() {
 
 void Game::AddPlayer(Player player){
     this->players.push_back(player);
+}
+
+std::vector<std::string> Game::parseArguments(std::string input) {
+    // store a vector of potential arguments
+    std::vector<std::string> arguments;
+
+    // store each word while iterating
+    std::string word = "";
+
+    for (int i = 0; i < input.size(); ++i) {
+        // char is not whitespace
+        if (input[i] != ' ') {
+            // append word
+            word += input[i];
+            // append arguments if last char in input
+            if (i == input.size() - 1) {
+                arguments.push_back(word);
+            }
+        } else {
+            // trimming in case of whitespace
+            if (word.size()) {
+                // append arguments and reset word
+                arguments.push_back(word);
+                word = "";
+            }
+        }
+    }
+    
+    return arguments;
+}
+
+void Game::switchPlayer(int* ptr_currentPlayerIndex, int totalPlayers) {
+    ++*ptr_currentPlayerIndex;
+    if (*ptr_currentPlayerIndex >= totalPlayers) {
+        *ptr_currentPlayerIndex = 0;
+    }
 }
