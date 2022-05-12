@@ -41,7 +41,7 @@ std::string Player::getHand() {
     // the Tile in the appropriate string format. 
     // string format: Letter-Value
 
-    std::string playerHand;
+    std::string playerHand = "TODO:Player.getHand()";
     return playerHand;
 }
 

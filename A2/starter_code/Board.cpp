@@ -7,9 +7,6 @@ Board::Board(){
     columns = COLUMN;
     std::vector<std::vector<Tile>> b(rows, std::vector<Tile>(columns, Tile()));
     this->board = b;
-    Tile* tile = new Tile('A', 4);
-    board[0][0] = *tile;
-    placeTile(*tile, "B10");
 }
 Board::~Board(){
 }

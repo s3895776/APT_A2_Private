@@ -69,7 +69,7 @@ int Game::view_mainMenu() {
 
         if (std::cin.eof()){
             this->quitGame();
-            return 1;
+            return 4;
         }
 
         // reject invalid input which is not an integer between 1 and 4
@@ -102,70 +102,67 @@ bool Game::validName(std::string name) {
     return validName;
 }
 
+
+
 std::string Game::newGame() {
     // 1. Print a message for starting a new game
     std::cout << std::endl;
     std::cout << "Starting a New Game" << std::endl;
     std::cout << std::endl;
     
-    // 2. Ask for the player names
-    // TODO: store the players names. 
-    
-    // TODO: initialise players in newGame() 
+    // Initialise players
     const int NUMBER_OF_PLAYERS = 2;
-    int i = 0;
-    
     // for each player, add pointer-to-player in players vector
-    while (i < NUMBER_OF_PLAYERS) {
-        Player player;
-
-        this->players.push_back(player);
-
-        ++i;
+    for (int i=0; i < NUMBER_OF_PLAYERS; i++) {
+        Game::AddPlayer(Player());
     }
 
-    i = 0;
-    std::string playerName;
+    // 2. Ask for the player names
 
-    while (i < NUMBER_OF_PLAYERS) {   
+    // fixed some printing errors with this method
+    // I assume this flushes out std::cin? 
+    std::cin.ignore();
+    for (int i=0; i < NUMBER_OF_PLAYERS; i++) {   
+        std::string playerName;
         // keep asking for player name until it is valid
-        // std::cin.ignore();
-        do {
-            if (std::cin.eof()){
-                this->quitGame();
+        
+
+        while (!validName(playerName)) {
+            if (std::cin.eof()) {
+                std::cout << this->quitGame();
                 return "";
             }
             std::cout << "Enter a name for player " << i + 1 << " (uppercase characters only)" << std::endl;
             std::cout << "> ";
             std::getline(std::cin, playerName);
+            // std::cout << playerName << std::endl;
             std::cout << std::endl;
-        } while (!validName(playerName));
+
+        }
+
         // set the player's name
         this->players[i].setName(playerName);
-        ++i;
     }
 
-    std::cout << this->players[0].getName() << std::endl;
-    std::cout << this->players[1].getName() << std::endl;
+    // DEBUG: print the players names
+    // for (int i=0; i < NUMBER_OF_PLAYERS; i++) { 
+    //     std::cout << players[i].getName() << std::endl;
+    // }
 
     std::cout << "Let's Play!" << std::endl;
 
     // 3. Create a new game of Scrabble
     InitaliseBag(tileBag);
     
-    // TODO: initialise Players One and Two LinkedList values with Tiles.
-    i = 0;
+    // Initialise Players hands with tiles from bag
     const int INITIAL_HAND = 10;
     int drawnHand = INITIAL_HAND - NUMBER_OF_PLAYERS;
 
-    while (i < NUMBER_OF_PLAYERS) {
-        // remember that number of players correlate to hand size 
-        int j = 0;
-        while (j < drawnHand) {
+    for (int i=0; i < NUMBER_OF_PLAYERS; i++) { 
+        // number of players correlate to hand size 
+        for (int j=0; j < drawnHand; j++) {  
             this->players[i].fillHand(tileBag.DrawTile());
-            j += 1;
         }
-        ++i;
     }
 
     // TODO: initialise 2d vector with starting values 
@@ -173,13 +170,6 @@ std::string Game::newGame() {
 
     // 4. Proceed with normal gameplay 
     // Let main call gameInput();
-    
-    // // Test players vector.
-    // i = 0;
-    // while (i < NUMBER_OF_PLAYERS) {
-    //     std::cout << players[i].getName() << std::endl;
-    //     ++i;
-    // }
 
     return this->players[0].getName();
 }
@@ -240,7 +230,17 @@ bool Game::saveState(std::string filename) {
         file << this->players[i].getName() << "\n";
         file << this->players[i].getScore() << "\n";
         file << this->players[i].getHand() << "\n";
+
+        // DEBUG: preview output
+        //std::cout << this->players[i].getName() << "\n";
+        //std::cout << this->players[i].getScore() << "\n";
+        //std::cout << this->players[i].getHand() << "\n";
     }
+
+    // DEBUG: preview output
+    //this->board.displayBoard();
+    //std::cout << this->tileBag.ToString() << std::endl;
+
     // TODO: resolve - save board state
     // file << this->board.getBoard() << "\n";
     // TODO: resolve - save tile bag content
@@ -284,8 +284,7 @@ std::string Game::loadGame() {
         const int NO_OF_PLAYERS = 2;
         // add players into vector
         for (int i=0; i < NO_OF_PLAYERS; ++i) {
-            Player player;
-            this->players.push_back(player);
+             Game::AddPlayer(Player());
         }
         // load name, score and hand of each player
         std::string name, hand;
@@ -358,8 +357,10 @@ void Game::InitaliseBag(LinkedList& bag){
 
 std::string Game::gameInput(std::string firstPlayer) {
 
-    // TODO: search for the player beginning their turn
-    const int NUMBER_OF_PLAYERS = 2;
+    // search for the player beginning their turn
+
+    // use vector size to determine number of players at the start. 
+    const int NUMBER_OF_PLAYERS = players.size();
     int currentPlayerIndex = -1;
 
     try {
@@ -448,7 +449,8 @@ std::string Game::gameInput(std::string firstPlayer) {
             for (Player& player : players) {
                 player.printScore();
             }
-            // TODO: print the board
+
+            // print the board
             this->board.displayBoard();
 
             std::cout << "Your hand is: " << std::endl;
@@ -492,6 +494,8 @@ std::string Game::gameInput(std::string firstPlayer) {
                 // TODO: Invalid Input
                 // syntax: any command not shown above
 
+                //this->saveState("testSave.txt");
+
                 // remove at the end of testing
                 inputNotReceived = false;
             }
@@ -532,4 +536,8 @@ std::string Game::gameEnd() {
     << std::endl;
 
     return "";
+}
+
+void Game::AddPlayer(Player player){
+    this->players.push_back(player);
 }

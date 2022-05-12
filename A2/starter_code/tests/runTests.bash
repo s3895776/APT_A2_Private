@@ -1,6 +1,4 @@
 #!/bin/bash
-# NOTE : Run this script from the /tests/ directory, or it won't work
-
 FILES="./tests/*.input"
 FAILS=0
 
