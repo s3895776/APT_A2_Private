@@ -1,7 +1,5 @@
 #include "Game.h"
 #include <iostream>
-#include "./tests/LinkedList_test.cpp"
-#include "./tests/BoardTest.cpp"
 
 #define EXIT_SUCCESS    0
 

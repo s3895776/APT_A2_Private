@@ -63,11 +63,14 @@ class Game {
          */
         bool validName(std::string name);
 
+        // I made this public for testing puposes
+        void InitaliseBag(LinkedList& bag);
+        void AddPlayer(Player player);
+
     private:
         std::vector<Player> players;
 
         LinkedList tileBag;
-        void InitaliseBag(LinkedList& bag);
 
         /* Display the end of the game information */
         std::string gameEnd();

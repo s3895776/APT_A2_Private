@@ -11,16 +11,14 @@ Starting a New Game
 
 Enter a name for player 1 (uppercase characters only)
 > 
-Enter a name for player 1 (uppercase characters only)
-> 
 Enter a name for player 2 (uppercase characters only)
 > 
+
 PLAYER1
-LAYER2
 Let's Play!
-PLAYER1, it's your turn
+, it's your turn
+Score for : 0
 Score for PLAYER1: 0
-Score for LAYER2: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
 A |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -41,6 +39,6 @@ O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
 
 
->
+>PLAYER2
 
 Goodbye
