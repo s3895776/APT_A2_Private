@@ -102,8 +102,6 @@ bool Game::validName(std::string name) {
     return validName;
 }
 
-
-
 std::string Game::newGame() {
     // 1. Print a message for starting a new game
     std::cout << std::endl;
@@ -125,7 +123,6 @@ std::string Game::newGame() {
     for (int i=0; i < NUMBER_OF_PLAYERS; i++) {   
         std::string playerName;
         // keep asking for player name until it is valid
-        
 
         while (!validName(playerName)) {
             if (std::cin.eof()) {

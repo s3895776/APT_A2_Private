@@ -72,7 +72,7 @@ Tile LinkedList::DrawTile(){ //draw from front
    return t;
 }
 
-Tile LinkedList::DrawTile(Tile& tile){ //draw specific tile
+Tile LinkedList::DrawTile(Tile& tile){ 
 
    Node* curr = this->head;
    Node* prev = nullptr;
@@ -120,45 +120,28 @@ Tile LinkedList::DrawTile(Tile& tile){ //draw specific tile
    return outTile;
 }
 
-bool LinkedList::ContainsTile(Tile& tile){
-   return ContainsTile(tile.getLetter());
-}
-
-bool LinkedList::ContainsTile(Letter letter){
-   bool result = false;
-
-   //walk list
-   Node* curr = this->head;
-
-   while ( (curr != nullptr) & !(result) ) {
-      if (curr->tile.getLetter() == letter ) {
-         result = true;
-      }
-      curr = curr->next;
-   }
-
-   return result;
-}
-
-int LinkedList::GetTileValue(Letter letter){
-   int result = -1;
-
-   Node* curr = this->head;
-   while ( (curr != nullptr) & !(result) ) {
-      if (curr->tile.getLetter() == letter ) {
-         result = curr->tile.getValue();
-      }
-      curr = curr->next;
-   }
-
-   return result;
-}
+// bool LinkedList::ContainsTile(Tile& tile){
+//    // if (this->head == nullptr){return false;}
+//    bool result = false;
+//    Node* curr = this->head;
+//    while (curr != nullptr) {
+//       if (curr->tile.getLetter() == tile.getLetter()){
+//          result = true;
+//       }
+//       curr = curr->next;
+//    }
+//    return result;
+// }
+// int LinkedList::Count(){
+//    return size;
+// }
 
 std::string LinkedList::ToString(){
    std::string s = "";
 
    if (this->head == nullptr) {
-      s = "";
+      // this is the reason the test fails. Which string is preferable?
+      s = "EMPTY";
    }
 
 
