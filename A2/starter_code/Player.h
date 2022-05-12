@@ -16,7 +16,10 @@ class Player {
         Player(Player& other);
         Player(const Player& other);
 
-        /* drop a tile from linkedList hand and return it */
+        /* Delete a tile from the LinkedList hand and return it.
+            If there is no tile in hand with the same letter, 
+            the returned Tile will be Tiles' default constructor.
+        */
         Tile dropTile(Letter letter);
 
         /* set a tile in the hand */

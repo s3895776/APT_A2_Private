@@ -17,6 +17,10 @@ public:
    void AddTile(Tile& tile);
 
    Tile DrawTile();
+
+   /* Draw a specific Tile given a Tile reference.
+   If that tile does not exist, return a default constructed tile.
+   */
    Tile DrawTile(Tile& tile);
 
    int Count();
