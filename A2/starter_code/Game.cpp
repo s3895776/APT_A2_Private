@@ -150,7 +150,10 @@ std::string Game::newGame() {
 
     // 3. Create a new game of Scrabble
     InitaliseBag(tileBag);
-    
+    // DEBUG: print the TileBag after initialising.
+    // std::cout<< this->tileBag.ToString() << std::endl;
+
+
     // Initialise Players hands with tiles from bag
     const int INITIAL_HAND = 10;
     int drawnHand = INITIAL_HAND - NUMBER_OF_PLAYERS;
@@ -331,6 +334,14 @@ void Game::InitaliseBag(LinkedList& bag){
     }
     // close tile file
     tileFile.close();
+
+    // DEBUG
+    // int i = 0;  
+    // while (i < num_tiles) {
+    //     std::cout << tiles[i].getTileAsString() << " ";
+    //     ++i;
+    // }
+    std::cout << std::endl;
 
     // Fisher–Yates shuffle
     int back = num_tiles - 1;
