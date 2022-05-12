@@ -120,28 +120,45 @@ Tile LinkedList::DrawTile(Tile& tile){
    return outTile;
 }
 
-// bool LinkedList::ContainsTile(Tile& tile){
-//    // if (this->head == nullptr){return false;}
-//    bool result = false;
-//    Node* curr = this->head;
-//    while (curr != nullptr) {
-//       if (curr->tile.getLetter() == tile.getLetter()){
-//          result = true;
-//       }
-//       curr = curr->next;
-//    }
-//    return result;
-// }
-// int LinkedList::Count(){
-//    return size;
-// }
+bool LinkedList::ContainsTile(Tile& tile){
+   return ContainsTile(tile.getLetter());
+}
+
+bool LinkedList::ContainsTile(Letter letter){
+   bool result = false;
+
+   //walk list
+   Node* curr = this->head;
+
+   while ( (curr != nullptr) & !(result) ) {
+      if (curr->tile.getLetter() == letter ) {
+         result = true;
+      }
+      curr = curr->next;
+   }
+
+   return result;
+}
+
+int LinkedList::GetTileValue(Letter letter){
+   int result = -1;
+
+   Node* curr = this->head;
+   while ( (curr != nullptr) & !(result) ) {
+      if (curr->tile.getLetter() == letter ) {
+         result = curr->tile.getValue();
+      }
+      curr = curr->next;
+   }
+
+   return result;
+}
 
 std::string LinkedList::ToString(){
    std::string s = "";
 
    if (this->head == nullptr) {
-      // this is the reason the test fails. Which string is preferable?
-      s = "EMPTY";
+      s = "";
    }
 
 
