@@ -16,6 +16,9 @@ class Player {
         Player(Player& other);
         Player(const Player& other);
 
+        /* Return true if player has this tile in hand */
+        bool hasTile(Letter letter);
+
         /* drop a tile from linkedList hand and return it */
         Tile dropTile(Letter letter);
 
@@ -51,6 +54,7 @@ class Player {
 
         /* Print the users score in the format. */
         std::string printScore();
+
 
     private:
         LinkedList hand;

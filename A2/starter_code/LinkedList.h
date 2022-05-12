@@ -22,6 +22,8 @@ public:
    int Count();
 
    bool ContainsTile(Tile& tile);
+   bool ContainsTile(Letter letter);
+   int GetTileValue(Letter letter);
 
    std::string ToString();
 

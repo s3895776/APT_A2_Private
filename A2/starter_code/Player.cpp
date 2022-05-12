@@ -22,12 +22,16 @@ Player::Player(const Player& other):
     score(other.score)
 {}
 
+bool Player::hasTile(Letter letter){
+    return this->hand.ContainsTile(letter);
+}
 
 Tile Player::dropTile(Letter letter) {
-    // TODO: remove tile from hand if letter exists. 
+    // create temp tile from letter
+    Tile tileToDraw = Tile(letter, this->hand.GetTileValue(letter));
 
-    Tile droppedTile;
-    return droppedTile;
+    //remove from hand
+    return this->hand.DrawTile(tileToDraw);
 }
 
 std::string Player::setName(std::string name) {
@@ -36,17 +40,11 @@ std::string Player::setName(std::string name) {
 }
 
 std::string Player::getHand() {
-    // TODO: Return all elements of LinkedList as strings 
-    // note: use Tile.getTileAsString(); to return 
-    // the Tile in the appropriate string format. 
-    // string format: Letter-Value
-
-    std::string playerHand = "TODO:Player.getHand()";
-    return playerHand;
+    return this->hand.ToString();
 }
 
 std::string Player::fillHand(Tile tile) {
-    // TODO: fill a tile in the internal LinkedList player hand.
+    // Fill a tile in the internal LinkedList player hand.
     // just copy the tile and let LinkedList manage pointers to tile
     this->hand.AddTile(tile);
     
@@ -67,7 +65,7 @@ int Player::getScore() {
 }
 
 bool Player::handEmpty() {
-    // TODO:: determine if hand is empty
+    // Determine if hand is empty
     bool handIsEmpty = false;
 
     // hard to determine if this is the right method

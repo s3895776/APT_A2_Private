@@ -73,43 +73,6 @@ Tile LinkedList::DrawTile(){ //draw from front
 }
 
 Tile LinkedList::DrawTile(Tile& tile){ //draw specific tile
-   //search if tile exists
-   // if (!ContainsTile(tile)) {
-   //    std::cout << "\nERROR: Tried to draw tile that is not in LinkedList!" << std::endl;
-   //    return Tile();
-   // }
-
-   // --size;
-   // Tile* outTile = nullptr;
-
-   // //remove and patch list
-   // Node* curr = this->head;
-
-   // while (curr != nullptr){
-   //    if (curr->tile->getLetter() == tile.getLetter()){
-   //       //tile found
-   //       if (prev == nullptr){
-   //          head = curr->next;
-   //       } else {
-   //          prev->next = curr->next;
-   //       }
-   //       if (curr == tail){
-   //          tail = prev;
-   //          tail->next = nullptr;
-   //       }
-
-   //       //extract tile
-   //       outTile = curr->tile;
-   //       delete curr;
-   //       break;
-   //    }
-
-   //    prev = curr;
-   //    curr = curr->next;
-   // }
-
-   // return outTile;
-
 
    Node* curr = this->head;
    Node* prev = nullptr;
@@ -157,31 +120,45 @@ Tile LinkedList::DrawTile(Tile& tile){ //draw specific tile
    return outTile;
 }
 
-// bool LinkedList::ContainsTile(Tile& tile){
-//    // if (this->head == nullptr){return false;}
+bool LinkedList::ContainsTile(Tile& tile){
+   return ContainsTile(tile.getLetter());
+}
 
-//    bool result = false;
+bool LinkedList::ContainsTile(Letter letter){
+   bool result = false;
 
-//    Node* curr = this->head;
-//    while (curr != nullptr) {
-//       if (curr->tile.getLetter() == tile.getLetter()){
-//          result = true;
-//       }
-//       curr = curr->next;
-//    }
+   //walk list
+   Node* curr = this->head;
 
-//    return result;
-// }
+   while ( (curr != nullptr) & !(result) ) {
+      if (curr->tile.getLetter() == letter ) {
+         result = true;
+      }
+      curr = curr->next;
+   }
 
-// int LinkedList::Count(){
-//    return size;
-// }
+   return result;
+}
+
+int LinkedList::GetTileValue(Letter letter){
+   int result = -1;
+
+   Node* curr = this->head;
+   while ( (curr != nullptr) & !(result) ) {
+      if (curr->tile.getLetter() == letter ) {
+         result = curr->tile.getValue();
+      }
+      curr = curr->next;
+   }
+
+   return result;
+}
 
 std::string LinkedList::ToString(){
    std::string s = "";
 
    if (this->head == nullptr) {
-      s = "EMPTY";
+      s = "";
    }
 
 
