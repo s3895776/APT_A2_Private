@@ -466,8 +466,8 @@ std::string Game::gameInput(std::string firstPlayer) {
                 // std::cin >> playerAction;
                 std::getline(std::cin, playerAction);
                 std::string done = playerAction.substr(6,4);
-                char tileFace;
-                std::string coord;
+                char tileFace = '0';
+                std::string coord = "empty";
                 bool success = false;
                 if (done == "Done"){
                     // check that the moves done at this point were valid, if not, return the tiles to the player
