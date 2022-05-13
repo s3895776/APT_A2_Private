@@ -39,7 +39,7 @@ int Game_Save(){
 
     numFailures += AssertAndReport(name, "PLAYERONE", "Game_Save_Name");
     numFailures += AssertAndReport(score, 0, "Game_Save_Score");
-    numFailures += AssertAndReport(hand, "", "Game_Save_Hand");
+    numFailures += AssertAndReport(hand, "EMPTY", "Game_Save_Hand");
 
     return numFailures;
 }

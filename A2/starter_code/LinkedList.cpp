@@ -158,7 +158,7 @@ std::string LinkedList::ToString(){
    std::string s = "";
 
    if (this->head == nullptr) {
-      s = "";
+      s = "EMPTY";
    }
 
 
