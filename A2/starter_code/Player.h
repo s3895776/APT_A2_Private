@@ -16,6 +16,9 @@ class Player {
         Player(Player& other);
         Player(const Player& other);
 
+        /* Return true if player has this tile in hand */
+        bool hasTile(Letter letter);
+
         /* Delete a tile from the LinkedList hand and return it.
             If there is no tile in hand with the same letter, 
             the returned Tile will be Tiles' default constructor.
@@ -54,6 +57,7 @@ class Player {
 
         /* Print the users score in the format. */
         std::string printScore();
+
 
     private:
         LinkedList hand;

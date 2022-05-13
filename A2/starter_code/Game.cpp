@@ -102,8 +102,6 @@ bool Game::validName(std::string name) {
     return validName;
 }
 
-
-
 std::string Game::newGame() {
     // 1. Print a message for starting a new game
     std::cout << std::endl;
@@ -125,7 +123,6 @@ std::string Game::newGame() {
     for (int i=0; i < NUMBER_OF_PLAYERS; i++) {   
         std::string playerName;
         // keep asking for player name until it is valid
-        
 
         while (!validName(playerName)) {
             if (std::cin.eof()) {
@@ -153,7 +150,10 @@ std::string Game::newGame() {
 
     // 3. Create a new game of Scrabble
     InitaliseBag(tileBag);
-    std::cout << "Let's Play!" << std::endl;
+    // // DEBUG: print the TileBag after initialising.
+    // std::cout<< this->tileBag.ToString() << std::endl;
+
+
     // Initialise Players hands with tiles from bag
     const int INITIAL_HAND = 10;
     int drawnHand = INITIAL_HAND - NUMBER_OF_PLAYERS;
@@ -180,11 +180,11 @@ std::string Game::displayCredits() {
     credits.append("-------------------------------------\n");
     credits.append("Name: Dan Podbury\n");
     credits.append("Student ID: s3881206\n");
-    credits.append("Email: \n");
+    credits.append("Email: s3881206@student.rmit.edu.au\n");
     credits.append("\n");
     credits.append("Name: Guo An Liew\n");
-    credits.append("Student ID: \n");
-    credits.append("Email: \n");
+    credits.append("Student ID: s3895776\n");
+    credits.append("Email: s3895776@student.rmit.edu.au\n");
     credits.append("\n");
     credits.append("Name: Kerubo Ndubi\n");
     credits.append("Student ID: s3844734\n");
@@ -311,46 +311,40 @@ std::string Game::loadGame() {
 }
 
 void Game::InitaliseBag(LinkedList& bag){
-    // TODO(dan): test no duplicates, shuffle correct, etc...
-
     // Define consts
     int const num_tiles = 98;
     std::string const filename = "./ScrabbleTiles.txt";
 
     // Mersenne Twister PRNG
-    //std::random_device r;
-    //std::mt19937 rng(1);
-    //TODO(dan): fix
-    
+    std::random_device r;
+    std::mt19937 rng(1);
+
     // Import tiles from file into array
     Tile tiles[num_tiles];
     std::ifstream tileFile (filename);
     char letter; int value; int index = 0;
-    while (tileFile.good() && index <= num_tiles){
-        tileFile >> letter;
-        tileFile >> value;
+    // read letter and value per row
+    while (tileFile >> letter >> value) {
         tiles[index] = Tile(letter, value);
-        index++;
+        ++index;
     }
 
     // Fisher–Yates shuffle
     int back = num_tiles - 1;
-    while (back > 0){
+    while (back > 0) {
         // Pick a random unshuffled elem
-        //std::uniform_int_distribution<int> dist(0, back);
-        int index = rand() % num_tiles;//dist(rand());
-
+        std::uniform_int_distribution<int> dist(0, back);
+        int index = dist(rng);
         // Move to back of list
         Tile temp = tiles[back];
         tiles[back] = tiles[index];
         tiles[index] = temp;
-
         // Slide unshuffled window down
         back--;
     }
 
     // Insert tiles into bag
-    for (int i = 0; i < 99; i++){
+    for (int i = 0; i < num_tiles; i++){
         bag.AddTile(tiles[i]);
     }
 }

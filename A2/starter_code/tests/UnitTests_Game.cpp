@@ -60,6 +60,7 @@ int Game_Load(){
 }
 
 int Game_InitaliseBag(){
+    // TODO(dan): test no duplicates, shuffle correct, etc...
     // Arrange
     Game g;
     LinkedList t;
