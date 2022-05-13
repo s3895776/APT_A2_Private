@@ -23,10 +23,19 @@ public:
 
     /* Place Tile on the board, takes the coordinates in the format sent in by the player,
        and converts it into the appropriate vector coordinates */
-    std::string placeTile(Tile tile, std::string coordinates);
+    bool placeTile(Tile tile, std::string coordinates);
 
     /* Remove Tile, to be used if move is invalid*/
     std::string removeTile(std::string coordinates);
+
+    /* returns the row and column extracted from the board coordinates provided */
+    Row getRow(std::string coordinates);
+    Column getCol(std::string coordinates);
+
+    /* checks that there is no tile at the specified location */
+    bool isEmpty(std::string coordinates);
+    /* checks that one of the surrounding tiles is occupied, to make the move valid */
+    bool validMove(std::string coordinates);
 
     /* Utility method to get the face of the tile */
     std::string displayTile(int row, int col);
