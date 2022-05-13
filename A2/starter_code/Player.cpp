@@ -34,6 +34,7 @@ Tile Player::dropTile(Letter letter) {
     Tile droppedTile = hand.DrawTile( dummyTileRef );
     return droppedTile;
 }
+// need a replace tile in the case that the turn is not valid and all the tiles need to be replaced?
 
 std::string Player::setName(std::string name) {
     this->name = name;
