@@ -322,8 +322,9 @@ void Game::InitaliseBag(LinkedList& bag){
     // Import tiles from file into array
     Tile tiles[num_tiles];
     std::ifstream tileFile (filename);
-    char letter; int value; int index = 0;
+    
     // read letter and value per row
+    char letter; int value; int index = 0;
     while (tileFile >> letter >> value) {
         tiles[index] = Tile(letter, value);
         ++index;
@@ -335,10 +336,12 @@ void Game::InitaliseBag(LinkedList& bag){
         // Pick a random unshuffled elem
         std::uniform_int_distribution<int> dist(0, back);
         int index = dist(rng);
+
         // Move to back of list
         Tile temp = tiles[back];
         tiles[back] = tiles[index];
         tiles[index] = temp;
+
         // Slide unshuffled window down
         back--;
     }
