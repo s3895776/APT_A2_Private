@@ -153,7 +153,7 @@ std::string Game::newGame() {
 
     // 3. Create a new game of Scrabble
     InitaliseBag(tileBag);
-    
+    std::cout << "Let's Play!" << std::endl;
     // Initialise Players hands with tiles from bag
     const int INITIAL_HAND = 10;
     int drawnHand = INITIAL_HAND - NUMBER_OF_PLAYERS;
