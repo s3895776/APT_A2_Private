@@ -242,7 +242,7 @@ bool Game::saveState(std::string filename) {
     //std::cout << this->tileBag.ToString() << std::endl;
 
     // TODO: resolve - save board state
-    // file << this->board.getBoard() << "\n";
+    this->board.saveBoard(file);
     // TODO: resolve - save tile bag content
     // file << this->board.getTileContents() << "\n";
     // TODO: save cuurent player name
