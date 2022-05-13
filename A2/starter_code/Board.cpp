@@ -21,7 +21,7 @@ std::vector<std::vector<Tile>> Board::getBoard(){
 }
 Row Board::getRow(std::string coordinates){
     char r = coordinates[0];
-    Row row;
+    Row row = -1;
     char row_letters[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'};
     for (int i = 0; i < ROW; ++i) {
         if (r == row_letters[i]){
