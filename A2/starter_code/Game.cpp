@@ -491,6 +491,31 @@ std::string Game::gameInput(std::string firstPlayer) {
                         // source is from stack overflow split string. 
                         playerInput.erase(0, pos + delimiter.length());
                         std::string TileString;
+                        std::string atToken;
+
+                        if ( (pos = playerInput.find(delimiter) ) 
+                        != std::string::npos) {
+                            TileString = playerInput.substr(0, pos);
+                            playerInput.erase(0, pos + delimiter.length());
+                        }
+
+                        // not sure how to check if its one character long?
+                        if (TileString.length() != 1) {
+                            
+                        }   
+
+                        if ( (pos = playerInput.find(delimiter) ) 
+                        != std::string::npos) {
+                            atToken = playerInput.substr(0, pos);
+                            playerInput.erase(0, pos + delimiter.length());
+                        }
+                        if (atToken != "at") {
+                            std::cout << "Invalid Input" << std::endl;
+                        }
+
+                        else {
+                            std::string coordinates = playerInput;
+                        }
 
                         inputNotReceived = false;
                     }
