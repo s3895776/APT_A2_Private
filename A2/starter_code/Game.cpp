@@ -457,73 +457,74 @@ std::string Game::gameInput(std::string firstPlayer) {
 
             bool inputNotReceived = true;
 
-            while (inputNotReceived) {
+            while (inputNotReceived) {  
                 std::cout << "> ";
 
                 // TODO: choose inputs for making the player move.
                 // std::cin >> string
                 // dissect the string into parts to get the right string. 
-               
-           
-                std::string playerAction;
+                std::string playerInput;
                 // std::cin >> playerAction;
-                std::getline(std::cin, playerAction);
-                std::string done = playerAction.substr(6,4);
-                char tileFace = '0';
-                std::string coord = "empty";
-                bool success = false;
-                if (done == "Done"){
-                    // check that the moves done at this point were valid, if not, return the tiles to the player
-                    // if the moves were valid replace the tiles with tiles from the tilebag
-                    inputNotReceived = false;
-                } else {
-                    tileFace = playerAction[6];
-                    // Format for string slicing
-                    // place E at B10
-                    // 01234567891123
-                    coord = playerAction.substr(11);
-                }
+                std::getline(std::cin, playerInput);
                 
-                // TODO: remove after testing
-                std::cout << playerAction << std::endl;
-
-                // TODO: implement player action: placement
-                // syntax: place <tile1> at <grid location>
-                // need to implement the checks that are necessary.
-                if (inputNotReceived){
-                    Tile tile;
-                    //check if the player has the tile
-                    if (currPlayer.hasTile(tileFace)){
-                        tile = currPlayer.dropTile(tileFace);
-                    }
-                    success = board.placeTile(tile, coord);
-                    if (success){
-                        std::cout << "Tile placed" << std::endl;
-                    }
-                    // Do we need a possible list of actions made in the turn to keep 
-                    // track of what we may want to remove from board and replace in hand?
-                }
-                // TODO: implement player action: replace
-                // syntax: replace <tile> (only one can be replaced)
-                // syntax: place <tile1> at <grid location>
-                // question: what order do the Tiles return in if the move
-                // isn't legal?
-
-                // TODO: save testing ground (delete after)
-                // std::string filename;
-                // std::cin >> filename;
-                // this->saveState(filename);
-                    
-                // TODO: implement function: quit
-                // syntax: quit
-
                 // TODO: special character ^D
                 // use the quit command.    
+                if (std::cin.eof()) {
+                    inputNotReceived = false;
+                }
 
-                // TODO: Invalid Input
-                // syntax: any command not shown above
+                else {
+                    size_t pos = 0;
+                    std::string playerAction;
+                    std::string delimiter = " ";
+                    if ((pos = playerInput.find(delimiter)) != std::string::npos) {
+                        playerAction = playerInput.substr(0, pos);
+                        playerInput.erase(0, pos + delimiter.length());
+                    }
 
-                //this->saveState("testSave.txt");
+                    playerAction = playerInput.substr(0, pos);
+                    // if player action involves "place" then do the 
+                    // appropriate action  
+                    if (playerAction == "place") {
+                        // continue until "Done" is reached - do not accept
+                        // input that isn't formatted correctly.
+                        // source is from stack overflow split string. 
+                        playerInput.erase(0, pos + delimiter.length());
+                        std::string TileString;
+                    }
+            
+
+                    // TODO: implement player action: replace
+                    // syntax: replace <tile> (only one can be replaced)
+                    // syntax: place <tile1> at <grid location>
+                    // question: what order do the Tiles return in if the move
+                    // isn't legal?
+                    else if (playerAction == "replace") {
+                        playerInput.erase(0, pos + delimiter.length());
+                    }
+
+                    // TODO: save testing ground (delete after)
+                    // std::string filename;
+                    // std::cin >> filename;
+                    // this->saveState(filename);
+                    // this->saveState("testSave.txt");
+                    else if (playerAction == "save") {
+                        playerInput.erase(0, pos + delimiter.length());
+                    }
+                        
+                    // TODO: implement function: quit
+                    // syntax: quit
+                    else if (playerAction == "quit") {
+
+                    }
+
+
+                    // TODO: Invalid Input
+                    // syntax: any command not shown above
+                    else {
+                        std::cout << "Invalid Input" << std::endl;
+                    }
+                }
 
                 // remove at the end of testing
                 inputNotReceived = false;
@@ -537,7 +538,7 @@ std::string Game::gameInput(std::string firstPlayer) {
 
     // TODO: return an appropriate string 
     std::cout << quitGame();
-    return ("");
+    return "";
 }
 
 std::string Game::quitGame() {
@@ -570,3 +571,45 @@ std::string Game::gameEnd() {
 void Game::AddPlayer(Player player){
     this->players.push_back(player);
 }
+
+// void Game::placeTiles(Player& currentPlayer) {
+//     bool inputNotReceived = true;
+//     std::string playerAction;
+//     // std::cin >> playerAction;
+//     std::getline(std::cin, playerAction);
+//     std::string done = playerAction.substr(6,4);
+//     char tileFace = '0';
+//     std::string coord = "empty";
+//     bool success = false;
+//     if (done == "Done"){
+//         // check that the moves done at this point were valid, if not, return the tiles to the player
+//         // if the moves were valid replace the tiles with tiles from the tilebag
+//         inputNotReceived = false;
+//     } else {
+//         tileFace = playerAction[6];
+//         // Format for string slicing
+//         // place E at B10
+//         // 01234567891123
+//         coord = playerAction.substr(11);
+//     }
+    
+//     // TODO: remove after testing
+//     std::cout << playerAction << std::endl;
+
+//     // TODO: implement player action: placement
+//     // syntax: place <tile1> at <grid location>
+//     // need to implement the checks that are necessary.
+//     if (inputNotReceived){
+//         Tile tile;
+//         //check if the player has the tile
+//         if (currentPlayer.hasTile(tileFace)){
+//             tile = currentPlayer.dropTile(tileFace);
+//         }
+//         success = board.placeTile(tile, coord);
+//         if (success){
+//             std::cout << "Tile placed" << std::endl;
+//         }
+//         // Do we need a possible list of actions made in the turn to keep 
+//         // track of what we may want to remove from board and replace in hand?
+//     }
+// }

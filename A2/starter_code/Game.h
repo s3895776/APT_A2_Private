@@ -67,6 +67,9 @@ class Game {
         void InitaliseBag(LinkedList& bag);
         void AddPlayer(Player player);
 
+        void placeTiles(Player& currentPlayer);
+        void replaceTiles(Player& player);
+
     private:
         std::vector<Player> players;
 
