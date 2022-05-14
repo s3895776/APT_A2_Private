@@ -397,7 +397,7 @@ std::string Game::gameInput(std::string firstPlayer) {
     // player in vector players will continue
     // at the end, next player chosen will be the starting player
     bool gameLoop = true;
-
+    
     while (gameLoop) {
 
         // TODO: Special Operation: Ending a Game
@@ -421,7 +421,7 @@ std::string Game::gameInput(std::string firstPlayer) {
                         this->gameEnd();
                         gameLoop = false;
                     }
-
+                    // check players have skipped two turns
                     else if (player.skippedTwoTurns()) {
                         // TODO: call method to display the end of the game. 
                         this->gameEnd(); 
@@ -438,9 +438,12 @@ std::string Game::gameInput(std::string firstPlayer) {
         if (gameLoop) {
             std::string currPlayerName;
             std::string currHand;
-            Player currPlayer = players[currentPlayerIndex];
-            currPlayerName = currPlayer.getName();
-            currHand = currPlayer.getHand(); 
+
+            // Don't do this, because idk (causes double free for some reason)
+            // Player currPlayer = players[currentPlayerIndex];
+
+            currPlayerName = players[currentPlayerIndex].getName();
+            currHand = players[currentPlayerIndex].getHand(); 
 
             std::cout << currPlayerName << ", it's your turn" << std::endl;
 
@@ -456,33 +459,30 @@ std::string Game::gameInput(std::string firstPlayer) {
             std::cout << std::endl;
 
             bool inputNotReceived = true;
+            std::string playerInput;
+            
 
             while (inputNotReceived) {  
                 std::cout << "> ";
-
+                playerInput = "";
                 // TODO: choose inputs for making the player move.
-                // std::cin >> string
-                // dissect the string into parts to get the right string. 
-                std::string playerInput;
-                // std::cin >> playerAction;
                 std::getline(std::cin, playerInput);
                 
                 // TODO: special character ^D
-                // use the quit command.    
+                // exit the loop.   
                 if (std::cin.eof()) {
                     inputNotReceived = false;
+                    gameLoop = false;
                 }
 
                 else {
+                    // dissect the string into parts to get the right string. 
                     size_t pos = 0;
                     std::string playerAction;
                     std::string delimiter = " ";
-                    if ((pos = playerInput.find(delimiter)) != std::string::npos) {
-                        playerAction = playerInput.substr(0, pos);
-                        playerInput.erase(0, pos + delimiter.length());
-                    }
-
+                    pos = playerInput.find(delimiter);
                     playerAction = playerInput.substr(0, pos);
+
                     // if player action involves "place" then do the 
                     // appropriate action  
                     if (playerAction == "place") {
@@ -491,6 +491,8 @@ std::string Game::gameInput(std::string firstPlayer) {
                         // source is from stack overflow split string. 
                         playerInput.erase(0, pos + delimiter.length());
                         std::string TileString;
+
+                        inputNotReceived = false;
                     }
             
 
@@ -501,6 +503,7 @@ std::string Game::gameInput(std::string firstPlayer) {
                     // isn't legal?
                     else if (playerAction == "replace") {
                         playerInput.erase(0, pos + delimiter.length());
+                        inputNotReceived = false;
                     }
 
                     // TODO: save testing ground (delete after)
@@ -510,12 +513,15 @@ std::string Game::gameInput(std::string firstPlayer) {
                     // this->saveState("testSave.txt");
                     else if (playerAction == "save") {
                         playerInput.erase(0, pos + delimiter.length());
+
+                        inputNotReceived = false;
                     }
                         
                     // TODO: implement function: quit
                     // syntax: quit
                     else if (playerAction == "quit") {
-
+                        inputNotReceived = false;
+                        gameLoop = false;
                     }
 
 
@@ -527,11 +533,11 @@ std::string Game::gameInput(std::string firstPlayer) {
                 }
 
                 // remove at the end of testing
-                inputNotReceived = false;
+                // inputNotReceived = false;
             }
             
             // remove at the end of testing. 
-            gameLoop = false;
+            // gameLoop = false;
         }
 
     }
