@@ -31,6 +31,10 @@ Row Board::getRow(std::string coordinates){
     return row;
 }
 Column Board::getCol(std::string coordinates){
+    
+    // Check the coordinates 
+    // this method probably needs to be boolean
+    // Column col = coordinates[1] - '0'
     std::string c = coordinates.substr(1);
     Column col = std::stoi(c);
     return col;
@@ -38,37 +42,50 @@ Column Board::getCol(std::string coordinates){
 bool Board::placeTile(Tile tile, std::string coordinates){
     bool success = false;
     /* convert the coordinates into rows and cols */ 
-    // TODO: maybe find a better way to do this, or just leave it as it is
-    // B10
-    Column col = getCol(coordinates);
-    if (col >= 0 && col < COLUMN){
-        success = true;
-    } 
-    // Check the coordinates 
-    // this method probably needs to be boolean
-    // Column col = coordinates[1] - '0';
     
-    Row row = getRow(coordinates);
-    //todo define const and remove magic numbers
-    if (row>=0 && row < ROW){
-        success = true;
-    } else {
-        success = false;
-    }
-    std::cout << row << std::endl;
-    // TODO: Call validMove to check if the move is valid, if the board is notEmpty
     // TODO: add validation for the string, that its in the right order
-    if (isEmpty(coordinates) && success){
-        board[row][col] = tile;
+    Column col = getCol(coordinates);
+    Row row = getRow(coordinates);
+
+    // place the tile given conditions
+    // return success
+
+    // TODO: Call validMove to check if the move is valid, if the board is notEmpty
+    if (validAndEmpty(row, col)) {
+            success = true;
+            board[row][col] = tile;
+        
     }
-    
-    //do we need a return? cause this could theoretically be a void method
+
     return success;
 }
 
-bool Board::isEmpty(std::string coordinates){
+bool Board::isEmpty(std::string coordinates) {
     Row row = getRow(coordinates);
     Column col = getCol(coordinates);
+    bool empty = false;
+    
+    if (board[row][col].isEmpty()){
+        empty = true;
+    }
+    
+    return empty;
+}
+
+bool Board::validMove(std::string coordinates) {
+    bool valid = false;
+    Row row = getRow(coordinates);
+    Column col = getCol(coordinates);
+
+    if ( (col >= 0 && col < COLUMN)
+    && (row>=0 && row < ROW)) {
+        valid = true;
+    }
+
+    return valid;
+}
+
+bool Board::isEmpty(Row row, Column col){
     bool empty = false;
     if (board[row][col].isEmpty()){
         empty = true;
@@ -76,8 +93,37 @@ bool Board::isEmpty(std::string coordinates){
     return empty;
 }
 
-bool Board::validMove(std::string coordinates){
-    return true;
+bool Board::validMove(Row row, Column col) {
+    bool valid = false;
+
+    if ( (col >= 0 && col < COLUMN)
+    && (row>=0 && row < ROW)) {
+        valid = true;
+    }
+
+    return valid;
+}
+
+bool Board::validAndEmpty(std::string coordinates) {
+    bool validAndEmpty = false;
+    Column col = getCol(coordinates);
+    Row row = getRow(coordinates);
+    if (validMove(row, col)) {
+        if ( isEmpty(row, col) ) {
+            validAndEmpty = true;
+        }
+    }
+    return validAndEmpty;
+}
+
+bool Board::validAndEmpty( Row row, Column col ) {
+    bool validAndEmpty = false;
+    if (validMove(row, col)) {
+        if ( isEmpty(row, col) ) {
+            validAndEmpty = true;
+        }
+    }
+    return validAndEmpty;
 }
 
 std::string Board::removeTile(std::string coordinates){

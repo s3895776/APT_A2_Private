@@ -67,8 +67,18 @@ class Game {
         void InitaliseBag(LinkedList& bag);
         void AddPlayer(Player player);
 
-        void placeTiles(Player& currentPlayer);
-        void replaceTiles(Player& player);
+        // recursive case: only activates once gameInput() validates one sentence.
+        bool placeTiles(int currentPlayerIndex, bool prevValid);
+        void replaceTiles(std::string currentPlayer);
+        
+        /* this must be able to validate such that a sentence involving place
+        is in the following format:
+        place A at A00, or 
+        place A at A0. Will return false otherwise. Does not need to handle
+        place Done. 
+        */ 
+        // made public for testing. 
+        bool validatePlaceTiles(std::string placeSentence);
 
     private:
         std::vector<Player> players;
@@ -78,6 +88,10 @@ class Game {
         /* Display the end of the game information */
         std::string gameEnd();
         Board board;
+        // return index of player stored in vector
+        int searchPlayer(std::string currentPlayer);
+
+        
 };
 
 

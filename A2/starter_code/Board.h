@@ -32,10 +32,18 @@ public:
     Row getRow(std::string coordinates);
     Column getCol(std::string coordinates);
 
-    /* checks that there is no tile at the specified location */
+    /* checks that there is no tile at the specified location 
+    will cause segment fault without correct coordinates.*/
     bool isEmpty(std::string coordinates);
+    bool isEmpty(Row row, Column col);
+
     /* checks that one of the surrounding tiles is occupied, to make the move valid */
     bool validMove(std::string coordinates);
+    bool validMove(Row row, Column col);
+
+    /* Return true if coordinate is both valid and empty */
+    bool validAndEmpty(std::string coordinates);
+    bool validAndEmpty(Row row, Column col);
 
     /* Utility method to get the face of the tile */
     std::string displayTile(int row, int col);

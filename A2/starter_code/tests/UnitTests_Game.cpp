@@ -138,6 +138,40 @@ int Game_MainMenuChoices(){
     return numFailures;
 }
 
+int Game_validatePlacementInput() {
+    // Arrange
+    Game g;
+
+    // Act
+    int numFailures = 0;
+
+    if ( !g.validatePlaceTiles("place A at C0") ) {
+        numFailures += 1;
+    }
+    if (!g.validatePlaceTiles("place A at C000")) {
+        numFailures += 1;
+    }
+
+    if ( g.validatePlaceTiles("place AatC0") ) {
+        numFailures += 1;
+    }
+    
+    if ( g.validatePlaceTiles("place A a C0") ) {
+        numFailures += 1;
+    }
+    
+    if ( g.validatePlaceTiles("place A at 0") ) {
+        numFailures += 1;
+    }
+
+    if ( g.validatePlaceTiles("place AA at C0") ) {
+        numFailures += 1;
+    }
+    // if you can think of other ways to break input, feel free to add
+    
+    return numFailures;
+}
+
 
 int Game_RunTests(){
     int numFailures = 0;
@@ -147,6 +181,7 @@ int Game_RunTests(){
     numFailures += Game_InitaliseBag();
     numFailures += Game_Save();
     //numFailures += Game_Load();
+    numFailures += Game_validatePlacementInput();
 
     std::cout << std::endl;
     return numFailures;

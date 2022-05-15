@@ -357,40 +357,13 @@ std::string Game::gameInput(std::string firstPlayer) {
     // search for the player beginning their turn
 
     // use vector size to determine number of players at the start. 
-    const int NUMBER_OF_PLAYERS = players.size();
-    int currentPlayerIndex = -1;
 
-    try {
-    int i = 0;
+    // validate that player exists. 
+    int currentPlayerIndex = searchPlayer(firstPlayer);
 
-        while (i < NUMBER_OF_PLAYERS) {
-
-            if ((this->players[i].getName() == firstPlayer) &
-            (currentPlayerIndex == -1) ) {
-                currentPlayerIndex = i;
-            }
-
-            ++i;
-        }    
-        // // TEST: if the error prevents the rest of the code from executing
-        // firstPlayerIndex = -1; 
-
-        // if no modifications are made to firstPlayerIndex, 
-        // a fatal error has occured. 
-        if (currentPlayerIndex == -1) {
-            throw currentPlayerIndex;
-        }
-
+    if (currentPlayerIndex == -1) {
+        return "\nGoodbye\n";
     }
-    catch (int x) {
-        std::string Error = "Fatal error has occured: unable to find ";
-        Error += "first player. Aborting gameInput.";
-        std::cout << Error << std::endl;
-        return "Goodbye\n";
-    }
-
-    // // try block will return Error message and end input for faulty
-    // input. std::cout << "Success" << std::endl;
     
     // TODO: implement turns within gameInput()
     // currentPlayer takes a turn, and the following 
@@ -463,14 +436,23 @@ std::string Game::gameInput(std::string firstPlayer) {
             
 
             while (inputNotReceived) {  
-                std::cout << "> ";
                 playerInput = "";
-                // TODO: choose inputs for making the player move.
-                std::getline(std::cin, playerInput);
-                
+                // this looks kinda strange to have two eof checks
+                // but it works if EOF is not on a newline. 
+                // i.e. if EOF follows an action, you still want to trigger
+                // the action but you don't want to get more input. 
+                if (std::cin.eof()) {
+                    inputNotReceived = false;
+                    gameLoop = false;
+                }
+                else {
+                    std::cout << "> ";
+                    // TODO: choose inputs for making the player move.
+                    std::getline(std::cin, playerInput);
+                }
                 // TODO: special character ^D
                 // exit the loop.   
-                if (std::cin.eof()) {
+                if (std::cin.eof() && (playerInput == "")) {
                     inputNotReceived = false;
                     gameLoop = false;
                 }
@@ -486,38 +468,30 @@ std::string Game::gameInput(std::string firstPlayer) {
                     // if player action involves "place" then do the 
                     // appropriate action  
                     if (playerAction == "place") {
-                        // continue until "Done" is reached - do not accept
-                        // input that isn't formatted correctly.
-                        // source is from stack overflow split string. 
-                        playerInput.erase(0, pos + delimiter.length());
-                        std::string TileString;
-                        std::string atToken;
+                        if (this->validatePlaceTiles(playerInput)) {
+                            std::string coordinates = playerInput.substr(11);
 
-                        if ( (pos = playerInput.find(delimiter) ) 
-                        != std::string::npos) {
-                            TileString = playerInput.substr(0, pos);
-                            playerInput.erase(0, pos + delimiter.length());
+                            // if the space is empty, return true. Therefore,
+                            // tile can be placed.
+                            if (board.validAndEmpty(coordinates)) {
+                                // check if player has the correct tile.
+                                Letter tileLetter = playerInput[6]; 
+
+                                if (players[currentPlayerIndex].hasTile(tileLetter)) {
+                                    if (this->placeTiles(currentPlayerIndex, true)) {
+                                        inputNotReceived = false;
+                                    }
+
+                                }
+
+                            }                            
+
                         }
 
-                        // not sure how to check if its one character long?
-                        if (TileString.length() != 1) {
-                            
-                        }   
-
-                        if ( (pos = playerInput.find(delimiter) ) 
-                        != std::string::npos) {
-                            atToken = playerInput.substr(0, pos);
-                            playerInput.erase(0, pos + delimiter.length());
-                        }
-                        if (atToken != "at") {
-                            std::cout << "Invalid Input" << std::endl;
+                        if (inputNotReceived) {
+                            std::cout << "Invalid input" << std::endl;
                         }
 
-                        else {
-                            std::string coordinates = playerInput;
-                        }
-
-                        inputNotReceived = false;
                     }
             
 
@@ -527,8 +501,15 @@ std::string Game::gameInput(std::string firstPlayer) {
                     // question: what order do the Tiles return in if the move
                     // isn't legal?
                     else if (playerAction == "replace") {
+                        
                         playerInput.erase(0, pos + delimiter.length());
+
+                        // TEST: EOF follows an action, action should still
+                        // trigger.
+                        std::cout << "Trigger" << std::endl;
+                        // if invalid input, do not accept. 
                         inputNotReceived = false;
+
                     }
 
                     // TODO: save testing ground (delete after)
@@ -572,6 +553,158 @@ std::string Game::gameInput(std::string firstPlayer) {
     return "";
 }
 
+bool Game::placeTiles(int currentPlayerIndex, bool prevValid) {
+    // continue until "Done" is reached - do not accept
+    // input that isn't formatted correctly.
+
+    if (std::cin.eof()) {
+        // for convenience
+        // this is for inline EOF. Will only occur given that 
+        // place Done does not come before the EOF.  
+        return false;
+    }
+
+    bool tilesPlaced = false;
+    std::string playerInput;
+    std::getline(std::cin, playerInput);
+    // std::string done = playerInput.substr(6);
+    // char tileFace = '0';
+    bool validMove = false;
+
+    
+    if (std::cin.eof() && playerInput == "") {
+        // input ends on a newline. Therefore, 
+        // no place Done is given. 
+        tilesPlaced = false;
+    }
+
+    // base case 1: playerInput done. 
+    // note that regardless of syntax or valid board placements, 
+    // it will allow the user to enter sentences as they wish,
+    // until playerInput becoems "place Done".
+    else if (playerInput == "place Done") {
+        tilesPlaced = true;
+    } 
+
+    // if prevValid was not valid, this triggers. 
+    // essentially no validation is necessary because its already wrong
+    // just waiting for place Done or EOF before recursion can end. 
+    else if (!prevValid) {
+        this->placeTiles(currentPlayerIndex, false);
+    }
+
+    else {
+        
+        if (this->validatePlaceTiles(playerInput)) {
+            std::string coordinates = playerInput.substr(11);
+
+            if (board.validAndEmpty(coordinates)) {
+                // check if player has the correct tile.
+                Letter tileLetter = playerInput[6]; 
+
+                if (players[currentPlayerIndex].hasTile(tileLetter)) {
+                    // the recursion for correct moves. 
+                    validMove = this->placeTiles(currentPlayerIndex, true);
+                }
+
+            }
+
+        }
+
+    }
+    
+    // all above cases pass.
+    if (validMove) {
+        std::string coordinates = playerInput.substr(11);
+        Letter tileLetter = playerInput[6]; 
+        Tile tile = players[currentPlayerIndex].dropTile(tileLetter);
+        // start to placeTiles (starts from lowest recursion)
+        board.placeTile(tile, coordinates);
+        tilesPlaced = true;
+    }
+    
+    // do a pointless recursion (still accept input regardless 
+    // of invalid input)
+    else {
+        this->placeTiles(currentPlayerIndex, false);
+    }
+
+    // TODO: implement player action: placement
+    // syntax: place <tile1> at <grid location>
+    // need to implement the checks that are necessary.
+
+    // Tile tile;
+    // //check if the player has the tile
+    // if (players[currentPlayerIndex].hasTile(tileFace)){
+    //     tile = players[currentPlayerIndex].dropTile(tileFace);
+    // }
+    // success = board.placeTile(tile, coord);
+    // if (success){
+    //     std::cout << "Tile placed" << std::endl;
+    // }
+    // // Do we need a possible list of actions made in the turn to keep 
+    // // track of what we may want to remove from board and replace in hand?
+    return tilesPlaced;
+    
+}
+
+bool Game::validatePlaceTiles(std::string placeSentence) {
+
+    bool validTilePlacement = true;
+    size_t pos = 0;
+    std::string playerAction;
+    std::string delimiter = " ";
+    pos = placeSentence.find(delimiter);
+    playerAction = placeSentence.substr(0, pos);
+    // TODO: validate
+    // input validation: perform once here, perform again
+    // in recursive call. 
+    // source is from stack overflow split string. 
+
+    // erase "place"
+    placeSentence.erase(0, pos + delimiter.length());
+    std::string TileString = "";
+    std::string atToken = "";
+    bool continueValidation = true;
+
+    if ( (pos = placeSentence.find(delimiter) ) 
+    != std::string::npos) {
+        TileString = placeSentence.substr(0, pos);
+        placeSentence.erase(0, pos + delimiter.length());
+    }
+
+    // check if the next input is at least one letter. 
+    if (TileString.length() != 1) {
+        validTilePlacement = false;
+        continueValidation = false;
+    }   
+
+    if ( (pos = placeSentence.find(delimiter) ) 
+    != std::string::npos && (continueValidation)) {
+        atToken = placeSentence.substr(0, pos);
+        placeSentence.erase(0, pos + delimiter.length());
+    }
+    if (atToken != "at" && (continueValidation)) {
+        validTilePlacement = false;
+        continueValidation = false;
+    }
+
+    if (continueValidation) {
+        // Don't actually check for correct coordinates, just length.
+        // valid coordinates should be checked afterwards.
+        if (placeSentence.length() >= 2) {
+            validTilePlacement = true;
+        }
+        else {
+            validTilePlacement = false;
+        }
+
+        
+    }
+    return validTilePlacement;
+
+}
+
 std::string Game::quitGame() {
     return "\nGoodbye\n";
 }
@@ -603,44 +736,39 @@ void Game::AddPlayer(Player player){
     this->players.push_back(player);
 }
 
-// void Game::placeTiles(Player& currentPlayer) {
-//     bool inputNotReceived = true;
-//     std::string playerAction;
-//     // std::cin >> playerAction;
-//     std::getline(std::cin, playerAction);
-//     std::string done = playerAction.substr(6,4);
-//     char tileFace = '0';
-//     std::string coord = "empty";
-//     bool success = false;
-//     if (done == "Done"){
-//         // check that the moves done at this point were valid, if not, return the tiles to the player
-//         // if the moves were valid replace the tiles with tiles from the tilebag
-//         inputNotReceived = false;
-//     } else {
-//         tileFace = playerAction[6];
-//         // Format for string slicing
-//         // place E at B10
-//         // 01234567891123
-//         coord = playerAction.substr(11);
-//     }
-    
-//     // TODO: remove after testing
-//     std::cout << playerAction << std::endl;
 
-//     // TODO: implement player action: placement
-//     // syntax: place <tile1> at <grid location>
-//     // need to implement the checks that are necessary.
-//     if (inputNotReceived){
-//         Tile tile;
-//         //check if the player has the tile
-//         if (currentPlayer.hasTile(tileFace)){
-//             tile = currentPlayer.dropTile(tileFace);
-//         }
-//         success = board.placeTile(tile, coord);
-//         if (success){
-//             std::cout << "Tile placed" << std::endl;
-//         }
-//         // Do we need a possible list of actions made in the turn to keep 
-//         // track of what we may want to remove from board and replace in hand?
-//     }
-// }
+
+int Game::searchPlayer(std::string currentPlayer) {
+    const int NUMBER_OF_PLAYERS = players.size();
+    int currentPlayerIndex = -1;
+
+    try {
+    int i = 0;
+
+        while (i < NUMBER_OF_PLAYERS) {
+
+            if ((this->players[i].getName() == currentPlayer) &
+            (currentPlayerIndex == -1) ) {
+                currentPlayerIndex = i;
+            }
+
+            ++i;
+        }    
+        // // TEST: if the error prevents the rest of the code from executing
+        // currentPlayerIndex = -1; 
+
+        // if no modifications are made to currentPlayerIndex, 
+        // a fatal error has occured. 
+        if (currentPlayerIndex == -1) {
+            throw currentPlayerIndex;
+        }
+
+    }
+    catch (int x) {
+        std::string Error = "Fatal error has occured: unable to find ";
+        Error += "first player. Aborting gameInput.";
+        std::cout << Error << std::endl;
+    }
+
+    return currentPlayerIndex;
+}
