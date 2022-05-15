@@ -77,7 +77,8 @@ bool Board::validCoordinate(std::string coordinates) {
         valid = false;
     }
     std::string _col = coordinates.substr(1);
-    for (int i = 0; i < _col.length(); ++i){
+    int colLength = _col.length();
+    for (int i = 0; i < colLength; ++i){
         if (!isdigit(_col[i])){
             valid = false;
         }
