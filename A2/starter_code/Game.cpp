@@ -464,13 +464,14 @@ std::string Game::gameInput(std::string firstPlayer) {
                     std::string delimiter = " ";
                     pos = playerInput.find(delimiter);
                     playerAction = playerInput.substr(0, pos);
-
                     // if player action involves "place" then do the 
                     // appropriate action  
                     if (playerAction == "place") {
+                        
                         if (this->validatePlaceTiles(playerInput)) {
                             std::string coordinates = playerInput.substr(11);
-
+                            // place V at B10
+                            // 01234567891123
                             // if the space is empty, return true. Therefore,
                             // tile can be placed.
                             if (board.validAndEmpty(coordinates)) {
@@ -487,7 +488,6 @@ std::string Game::gameInput(std::string firstPlayer) {
                             }                            
 
                         }
-
                         if (inputNotReceived) {
                             std::cout << "Invalid input" << std::endl;
                         }
@@ -656,6 +656,7 @@ bool Game::validatePlaceTiles(std::string placeSentence) {
     std::string delimiter = " ";
     pos = placeSentence.find(delimiter);
     playerAction = placeSentence.substr(0, pos);
+    // WORKS
     // TODO: validate
     // input validation: perform once here, perform again
     // in recursive call. 
@@ -666,6 +667,7 @@ bool Game::validatePlaceTiles(std::string placeSentence) {
     std::string TileString = "";
     std::string atToken = "";
     bool continueValidation = true;
+    // WORKS
 
     if ( (pos = placeSentence.find(delimiter) ) 
     != std::string::npos) {
@@ -678,7 +680,7 @@ bool Game::validatePlaceTiles(std::string placeSentence) {
         validTilePlacement = false;
         continueValidation = false;
     }   
-
+    // check if the 
     if ( (pos = placeSentence.find(delimiter) ) 
     != std::string::npos && (continueValidation)) {
         atToken = placeSentence.substr(0, pos);
@@ -693,13 +695,14 @@ bool Game::validatePlaceTiles(std::string placeSentence) {
         // Don't actually check for correct coordinates, just length.
         // valid coordinates should be checked afterwards.
         if (placeSentence.length() >= 2) {
-            validTilePlacement = true;
+            
+            //B10
+            //ROWCOL
+            validTilePlacement = board.validCoordinate(placeSentence);
         }
         else {
             validTilePlacement = false;
-        }
-
-        
+        }  
     }
     return validTilePlacement;
 

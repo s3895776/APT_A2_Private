@@ -38,7 +38,7 @@ public:
     bool isEmpty(Row row, Column col);
 
     /* checks that one of the surrounding tiles is occupied, to make the move valid */
-    bool validMove(std::string coordinates);
+    bool validCoordinate(std::string coordinates);
     bool validMove(Row row, Column col);
 
     /* Return true if coordinate is both valid and empty */
