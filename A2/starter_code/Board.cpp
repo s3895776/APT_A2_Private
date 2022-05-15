@@ -31,7 +31,7 @@ Row Board::getRow(std::string coordinates){
     return row;
 }
 Column Board::getCol(std::string coordinates){
-    std::string c = coordinates.substr(1);
+    std::string c = coordinates.substr(1,2);
     Column col = std::stoi(c);
     return col;
 }
