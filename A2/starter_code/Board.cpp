@@ -50,7 +50,7 @@ void Board::placeTile(Tile tile, std::string coordinates){
     // return success
 
     // TODO: Call validMove to check if the move is valid, if the board is notEmpty
-    if (validAndEmpty(row, col)) {
+    if (validAndEmpty(coordinates)) {
         board[row][col] = tile;
     }
     
@@ -90,7 +90,8 @@ bool Board::validCoordinate(std::string coordinates) {
     if ( (col >= 0 && col < COLUMN)
     && (row>=0 && row < ROW) && valid) {
         valid = true;
-    } else {
+    } 
+    else {
         valid = false;
     }
     
@@ -120,7 +121,7 @@ bool Board::validAndEmpty(std::string coordinates) {
     bool validAndEmpty = false;
     Column col = getCol(coordinates);
     Row row = getRow(coordinates);
-    if (validMove(row, col)) {
+    if (validCoordinate(coordinates)) {
         
         if (isEmpty(row, col) ) {
             validAndEmpty = true;

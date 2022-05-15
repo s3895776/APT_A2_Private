@@ -468,8 +468,14 @@ std::string Game::gameInput(std::string firstPlayer) {
                     // appropriate action  
                     if (playerAction == "place") {
                         
+                        // input validation: perform once here, perform again
+                        // in recursive call. 
+                        
                         if (this->validatePlaceTiles(playerInput)) {
                             std::string coordinates = playerInput.substr(11);
+                            // check that the Tiles are adjacent to another coordinate,
+                            // or some extremely convulted straight line check. 
+
                             // place V at B10
                             // 01234567891123
                             // if the space is empty, return true. Therefore,
@@ -479,8 +485,20 @@ std::string Game::gameInput(std::string firstPlayer) {
                                 Letter tileLetter = playerInput[6]; 
 
                                 if (players[currentPlayerIndex].hasTile(tileLetter)) {
-                                    if (this->placeTiles(currentPlayerIndex, true)) {
+                                    Tile tile = players[currentPlayerIndex].dropTile(tileLetter);
+                                    std::cout << players[currentPlayerIndex].getHand();
+
+                                    if (this->placeTiles(currentPlayerIndex, true, coordinates)) {
+
+                                        std::string coordinates = playerInput.substr(11);
+                                        // start to placeTiles (starts from lowest recursion)
+                                        board.placeTile(tile, coordinates);
                                         inputNotReceived = false;
+                                    }
+                                    else {
+                                        players[currentPlayerIndex].fillHand(tile);
+                                        std::cout << players[currentPlayerIndex].getHand();
+
                                     }
 
                                 }
@@ -553,7 +571,7 @@ std::string Game::gameInput(std::string firstPlayer) {
     return "";
 }
 
-bool Game::placeTiles(int currentPlayerIndex, bool prevValid) {
+bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::string prevCoordinate) {
     // continue until "Done" is reached - do not accept
     // input that isn't formatted correctly.
 
@@ -566,10 +584,12 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid) {
 
     bool tilesPlaced = false;
     std::string playerInput;
+    std::cout << "> ";
     std::getline(std::cin, playerInput);
     // std::string done = playerInput.substr(6);
     // char tileFace = '0';
     bool validMove = false;
+    Tile tileToPlace;
 
     
     if (std::cin.eof() && playerInput == "") {
@@ -590,21 +610,32 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid) {
     // essentially no validation is necessary because its already wrong
     // just waiting for place Done or EOF before recursion can end. 
     else if (!prevValid) {
-        this->placeTiles(currentPlayerIndex, false);
+        this->placeTiles(currentPlayerIndex, false, prevCoordinate);
     }
 
     else {
         
         if (this->validatePlaceTiles(playerInput)) {
             std::string coordinates = playerInput.substr(11);
+            // check if coordinates are adjacent 
+
 
             if (board.validAndEmpty(coordinates)) {
+
                 // check if player has the correct tile.
                 Letter tileLetter = playerInput[6]; 
 
                 if (players[currentPlayerIndex].hasTile(tileLetter)) {
+                    // drop the tile before recursing.
+                    tileToPlace = players[currentPlayerIndex].dropTile(tileLetter);
+                    // TEST: cheat
+                    std::cout << players[currentPlayerIndex].getHand();
+
                     // the recursion for correct moves. 
-                    validMove = this->placeTiles(currentPlayerIndex, true);
+                    validMove = this->placeTiles(currentPlayerIndex, true, coordinates);
+                    if (!validMove) {
+                        players[currentPlayerIndex].fillHand(tileToPlace);
+                    }
                 }
 
             }
@@ -616,17 +647,16 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid) {
     // all above cases pass.
     if (validMove) {
         std::string coordinates = playerInput.substr(11);
-        Letter tileLetter = playerInput[6]; 
-        Tile tile = players[currentPlayerIndex].dropTile(tileLetter);
+        // Tile tile = players[currentPlayerIndex].dropTile(tileLetter);
         // start to placeTiles (starts from lowest recursion)
-        board.placeTile(tile, coordinates);
+        board.placeTile(tileToPlace, coordinates);
         tilesPlaced = true;
     }
     
     // do a pointless recursion (still accept input regardless 
     // of invalid input)
-    else {
-        this->placeTiles(currentPlayerIndex, false);
+    else if (!tilesPlaced) {
+        this->placeTiles(currentPlayerIndex, false, prevCoordinate);
     }
 
     // TODO: implement player action: placement
@@ -658,8 +688,6 @@ bool Game::validatePlaceTiles(std::string placeSentence) {
     playerAction = placeSentence.substr(0, pos);
     // WORKS
     // TODO: validate
-    // input validation: perform once here, perform again
-    // in recursive call. 
     // source is from stack overflow split string. 
 
     // erase "place"

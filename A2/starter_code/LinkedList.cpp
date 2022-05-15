@@ -102,16 +102,16 @@ Tile LinkedList::DrawTile(Tile& tile){
          delete deletedNode;
       } 
       
-      else {
-         Node* deletedNode = curr;
-         prev->next = curr->next;
-         delete deletedNode;
-      }
-
-      if (curr == tail) {
+      else if (curr == tail) {
          Node* deletedNode = tail;
          tail = prev;
          tail->next = nullptr;
+         delete deletedNode;
+      }
+
+      else {
+         Node* deletedNode = curr;
+         prev->next = curr->next;
          delete deletedNode;
       }
 
