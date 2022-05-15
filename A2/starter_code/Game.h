@@ -68,7 +68,7 @@ class Game {
         void AddPlayer(Player player);
 
         // recursive case: only activates once gameInput() validates one sentence.
-        bool placeTiles(int currentPlayerIndex, bool prevValid, std::string prevCoordinate);
+        bool placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::string> projectedCoordinates);
         void replaceTiles(std::string currentPlayer);
 
         /* this must be able to validate such that a sentence involving place
@@ -79,6 +79,8 @@ class Game {
         */ 
         // made public for testing. 
         bool validatePlaceTiles(std::string placeSentence);
+
+        bool checkBoardAdjacency(std::vector<std::string> projectedCoordinates);
 
     private:
         std::vector<Player> players;

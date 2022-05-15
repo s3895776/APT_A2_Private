@@ -2,6 +2,7 @@
 #include <fstream>
 #include <random>
 #include <iostream>
+#include <algorithm>
 
 Game::Game() {
     tileBag = LinkedList();
@@ -487,8 +488,9 @@ std::string Game::gameInput(std::string firstPlayer) {
                                 if (players[currentPlayerIndex].hasTile(tileLetter)) {
                                     Tile tile = players[currentPlayerIndex].dropTile(tileLetter);
                                     std::cout << players[currentPlayerIndex].getHand();
-
-                                    if (this->placeTiles(currentPlayerIndex, true, coordinates)) {
+                                    std::vector<std::string> projectedCoordinates;
+                                    projectedCoordinates.push_back(coordinates);
+                                    if (this->placeTiles(currentPlayerIndex, true, projectedCoordinates)) {
 
                                         std::string coordinates = playerInput.substr(11);
                                         // start to placeTiles (starts from lowest recursion)
@@ -571,7 +573,7 @@ std::string Game::gameInput(std::string firstPlayer) {
     return "";
 }
 
-bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::string prevCoordinate) {
+bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::string> projectedCoordinates) {
     // continue until "Done" is reached - do not accept
     // input that isn't formatted correctly.
 
@@ -602,7 +604,7 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::string prevCo
     // note that regardless of syntax or valid board placements, 
     // it will allow the user to enter sentences as they wish,
     // until playerInput becoems "place Done".
-    else if (playerInput == "place Done") {
+    else if (playerInput == "place Done") {        
         tilesPlaced = true;
     } 
 
@@ -610,15 +612,13 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::string prevCo
     // essentially no validation is necessary because its already wrong
     // just waiting for place Done or EOF before recursion can end. 
     else if (!prevValid) {
-        this->placeTiles(currentPlayerIndex, false, prevCoordinate);
+        this->placeTiles(currentPlayerIndex, false, projectedCoordinates);
     }
 
     else {
         
         if (this->validatePlaceTiles(playerInput)) {
             std::string coordinates = playerInput.substr(11);
-            // check if coordinates are adjacent 
-
 
             if (board.validAndEmpty(coordinates)) {
 
@@ -631,8 +631,11 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::string prevCo
                     // TEST: cheat
                     std::cout << players[currentPlayerIndex].getHand();
 
+                    // push projectedCoordinates
+                    projectedCoordinates.push_back(coordinates);
+
                     // the recursion for correct moves. 
-                    validMove = this->placeTiles(currentPlayerIndex, true, coordinates);
+                    validMove = this->placeTiles(currentPlayerIndex, true, projectedCoordinates);
                     if (!validMove) {
                         players[currentPlayerIndex].fillHand(tileToPlace);
                     }
@@ -656,7 +659,7 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::string prevCo
     // do a pointless recursion (still accept input regardless 
     // of invalid input)
     else if (!tilesPlaced) {
-        this->placeTiles(currentPlayerIndex, false, prevCoordinate);
+        this->placeTiles(currentPlayerIndex, false, projectedCoordinates);
     }
 
     // TODO: implement player action: placement
@@ -736,6 +739,27 @@ bool Game::validatePlaceTiles(std::string placeSentence) {
 
 }
 
+bool checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
+    bool canBePlaced = false;
+    
+    if (projectedCoordinates.size() == 1) {
+        // TODO: check all adjacent tiles. 
+        
+    }
+
+    else {
+        std::sort(projectedCoordinates.begin(), projectedCoordinates.end());
+        
+        // TODO: check if there are any duplicate coordinates. 
+        // since its sorted, can check one element to the next. 
+
+        // TODO: check if all coordinates belong on the same line. 
+        // i.e. letter == letter or number == number 
+    }
+    return canBePlaced;
+}
+
+
 std::string Game::quitGame() {
     return "\nGoodbye\n";
 }
@@ -766,8 +790,6 @@ std::string Game::gameEnd() {
 void Game::AddPlayer(Player player){
     this->players.push_back(player);
 }
-
-
 
 int Game::searchPlayer(std::string currentPlayer) {
     const int NUMBER_OF_PLAYERS = players.size();
