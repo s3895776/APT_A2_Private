@@ -23,7 +23,7 @@ public:
 
     /* Place Tile on the board, takes the coordinates in the format sent in by the player,
        and converts it into the appropriate vector coordinates */
-    bool placeTile(Tile tile, std::string coordinates);
+    void placeTile(Tile tile, std::string coordinates);
 
     /* Remove Tile, to be used if move is invalid*/
     std::string removeTile(std::string coordinates);

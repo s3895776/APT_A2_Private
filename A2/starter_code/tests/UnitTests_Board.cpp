@@ -47,30 +47,31 @@ int Board_TestPlaceTile() {
     return numFailures;
 }
 
-int Board_TestRemoveTile(){
-    // Arrange
-    Board board;
-    Tile tile = Tile('G', 10);
-    board.placeTile(tile, "A6");
 
-    // Act
-    board.removeTile("A6");
+// int Board_TestRemoveTile(){
+//     // Arrange
+//     Board board;
+//     Tile tile = Tile('G', 10);
+//     board.placeTile(tile, "A6");
 
-    // Assert 
-    int numFailures = 0;
-    char letter = board.getBoard()[0][6].getLetter();
+//     // Act
+//     board.removeTile("A6");
 
-    numFailures += AssertAndReport(letter, ' ', "Board_TestRemoveTile");
+//     // Assert 
+//     int numFailures = 0;
+//     char letter = board.getBoard()[0][6].getLetter();
 
-    return numFailures;
-}
+//     numFailures += AssertAndReport(letter, ' ', "Board_TestRemoveTile");
+
+//     return numFailures;
+// }
 
 int Board_RunTests(){
     int numFailures = 0;
 
     numFailures += Board_TestInitalise();
     numFailures += Board_TestPlaceTile();
-    numFailures += Board_TestRemoveTile();
+    // numFailures += Board_TestRemoveTile();
 
     //std::cout << "    Board Failures: " << numFailures << "\n\n";
     std::cout << std::endl;

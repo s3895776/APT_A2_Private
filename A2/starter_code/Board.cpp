@@ -35,7 +35,7 @@ Column Board::getCol(std::string coordinates){
     Column col = std::stoi(c);
     return col;
 }
-bool Board::placeTile(Tile tile, std::string coordinates){
+void Board::placeTile(Tile tile, std::string coordinates){
     bool success = false;
     /* convert the coordinates into rows and cols */ 
     // TODO: maybe find a better way to do this, or just leave it as it is
@@ -55,15 +55,11 @@ bool Board::placeTile(Tile tile, std::string coordinates){
     } else {
         success = false;
     }
-    std::cout << row << std::endl;
-    // TODO: Call validMove to check if the move is valid, if the board is notEmpty
     // TODO: add validation for the string, that its in the right order
     if (isEmpty(coordinates) && success){
         board[row][col] = tile;
     }
-    
     //do we need a return? cause this could theoretically be a void method
-    return success;
 }
 
 bool Board::isEmpty(std::string coordinates){
@@ -80,18 +76,18 @@ bool Board::validMove(std::string coordinates){
     return true;
 }
 
-std::string Board::removeTile(std::string coordinates){
-    // TODO: maybe find a better way to do this, or just leave it as it is
-    // Column col = coordinates[0] - '0';
+// std::string Board::removeTile(std::string coordinates){
+//     // TODO: maybe find a better way to do this, or just leave it as it is
+//     // Column col = coordinates[0] - '0';
    
-    Column col = getCol(coordinates);
+//     Column col = getCol(coordinates);
     
-    Row row = getRow(coordinates);
-    board[row][col] = Tile();
-    // no need to clean up if it ain't a pointer kekw
-    //do we need a return? cause this could theoretically be a void method
-    return "in progress";
-}
+//     Row row = getRow(coordinates);
+//     board[row][col] = Tile();
+//     // no need to clean up if it ain't a pointer kekw
+//     //do we need a return? cause this could theoretically be a void method
+//     return "in progress";
+// }
 
 std::string Board::displayTile(int row, int col){
     std::string tile = " ";
@@ -161,22 +157,22 @@ void Board::displayBoard(){
 }
 
 void Board::saveBoard(std::ofstream& file){
-    file << "    0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 " << std::endl;
-    file << "  -------------------------------------------------------------" << std::endl;
-    file << printRow(0,"A") << std::endl;
-    file << printRow(1,"B") << std::endl;
-    file << printRow(2,"C") << std::endl;
-    file << printRow(3,"D") << std::endl;
-    file << printRow(4,"E") << std::endl;
-    file << printRow(5,"F") << std::endl;
-    file << printRow(6,"G") << std::endl;
-    file << printRow(7,"H") << std::endl;
-    file << printRow(8,"I") << std::endl;
-    file << printRow(9,"J") << std::endl;
-    file << printRow(10,"K") << std::endl;
-    file << printRow(11,"L") << std::endl;
-    file << printRow(12,"M") << std::endl;
-    file << printRow(13,"N") << std::endl;
-    file << printRow(14,"O") << std::endl;
+    /* save format */
+    /*W@B3 I@B4 M@B5 C@C1 S@D10 etc... */
+    char row_letters[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'};
+    std::string boardState = "";
+    for (int i = 0; i < COLUMN; ++i){
+        for (int j = 0; j< ROW; ++j){
+            Tile tile = board[j][i];
+            if (!tile.isEmpty()){
+                boardState += board[j][i].getLetter(); 
+                boardState += '@';
+                boardState += row_letters[j];
+                boardState += std::to_string(i);;
+                boardState += " ";
+            }
+        }
+    }
+    file << boardState << std::endl;
  
 }
