@@ -146,29 +146,37 @@ int Game_validatePlacementInput() {
     int numFailures = 0;
 
     if ( !g.validatePlaceTiles("place A at C0") ) {
-        numFailures += 1;
+        
+        numFailures += AssertAndReport("place A at C0 returns true", "returned false", "Game_validatePlacementInput");
     }
     if (!g.validatePlaceTiles("place A at C000")) {
-        numFailures += 1;
+        
+        numFailures += AssertAndReport("place A at C000 returns true", "returned false", "Game_validatePlacementInput");
     }
 
     if ( g.validatePlaceTiles("place AatC0") ) {
-        numFailures += 1;
+        
+        numFailures += AssertAndReport("place AatC0 returns false", "returned true", "Game_validatePlacementInput");
     }
     
     if ( g.validatePlaceTiles("place A a C0") ) {
-        numFailures += 1;
+        
+        numFailures += AssertAndReport("place A a C0 returns false", "returned true", "Game_validatePlacementInput");
     }
     
     if ( g.validatePlaceTiles("place A at 0") ) {
-        numFailures += 1;
+        
+        numFailures += AssertAndReport("place A at 0 returns false", "returned true", "Game_validatePlacementInput");
     }
 
     if ( g.validatePlaceTiles("place AA at C0") ) {
-        numFailures += 1;
+        numFailures += AssertAndReport("place AA at C0 returns false", "returned true", "Game_validatePlacementInput");
     }
     // if you can think of other ways to break input, feel free to add
-    
+
+    if (numFailures == 0 ) {
+        numFailures += AssertAndReport("", "", "Game_validatePlacementInput");
+    }
     return numFailures;
 }
 
