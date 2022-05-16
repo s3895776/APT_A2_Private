@@ -93,6 +93,8 @@ class Game {
         // return index of player stored in vector
         int searchPlayer(std::string currentPlayer);
 
+        std::string currPlayerName;
+
         
 };
 

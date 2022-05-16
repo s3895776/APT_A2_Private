@@ -240,14 +240,13 @@ bool Game::saveState(std::string filename) {
 
     // DEBUG: preview output
     //this->board.displayBoard();
-    //std::cout << this->tileBag.ToString() << std::endl;
 
-    // TODO: resolve - save board state
+    // save board state
     this->board.saveBoard(file);
-    // TODO: resolve - save tile bag content
-    // file << this->board.getTileContents() << "\n";
-    // TODO: save cuurent player name
-    // file << this->currentPlayer() << "\n";
+    // save tile bag contents
+    file << this->tileBag.ToString() << "\n";
+    // save current player name
+    file << this->currPlayerName << "\n";
     return true;
 }
 
@@ -532,14 +531,16 @@ std::string Game::gameInput(std::string firstPlayer) {
 
                     }
 
-                    // TODO: save testing ground (delete after)
-                    // std::string filename;
-                    // std::cin >> filename;
-                    // this->saveState(filename);
-                    // this->saveState("testSave.txt");
+                    // save game
                     else if (playerAction == "save") {
+                        // get filename from input
                         playerInput.erase(0, pos + delimiter.length());
-
+                        // store current player name before saving
+                        this->currPlayerName = currPlayerName;
+                        // save game
+                        if (this->saveState(playerInput)) {
+                            std::cout << "Game successfully saved" << std::endl;
+                        }
                         inputNotReceived = false;
                     }
                         
@@ -560,6 +561,12 @@ std::string Game::gameInput(std::string firstPlayer) {
 
                 // remove at the end of testing
                 // inputNotReceived = false;
+            }
+
+            // switch player
+            currentPlayerIndex += 1;
+            if (currentPlayerIndex == 2) {
+                currentPlayerIndex = 0;
             }
             
             // remove at the end of testing. 
