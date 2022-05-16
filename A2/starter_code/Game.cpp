@@ -2,6 +2,7 @@
 #include <fstream>
 #include <random>
 #include <iostream>
+#include <algorithm>
 
 Game::Game() {
     tileBag = LinkedList();
@@ -464,13 +465,20 @@ std::string Game::gameInput(std::string firstPlayer) {
                     std::string delimiter = " ";
                     pos = playerInput.find(delimiter);
                     playerAction = playerInput.substr(0, pos);
-
                     // if player action involves "place" then do the 
                     // appropriate action  
                     if (playerAction == "place") {
+                        
+                        // input validation: perform once here, perform again
+                        // in recursive call. 
+                        
                         if (this->validatePlaceTiles(playerInput)) {
                             std::string coordinates = playerInput.substr(11);
+                            // check that the Tiles are adjacent to another coordinate,
+                            // or some extremely convulted straight line check. 
 
+                            // place V at B10
+                            // 01234567891123
                             // if the space is empty, return true. Therefore,
                             // tile can be placed.
                             if (board.validAndEmpty(coordinates)) {
@@ -478,8 +486,21 @@ std::string Game::gameInput(std::string firstPlayer) {
                                 Letter tileLetter = playerInput[6]; 
 
                                 if (players[currentPlayerIndex].hasTile(tileLetter)) {
-                                    if (this->placeTiles(currentPlayerIndex, true)) {
+                                    Tile tile = players[currentPlayerIndex].dropTile(tileLetter);
+                                    std::cout << players[currentPlayerIndex].getHand();
+                                    std::vector<std::string> projectedCoordinates;
+                                    projectedCoordinates.push_back(coordinates);
+                                    if (this->placeTiles(currentPlayerIndex, true, projectedCoordinates)) {
+
+                                        std::string coordinates = playerInput.substr(11);
+                                        // start to placeTiles (starts from lowest recursion)
+                                        board.placeTile(tile, coordinates);
                                         inputNotReceived = false;
+                                    }
+                                    else {
+                                        players[currentPlayerIndex].fillHand(tile);
+                                        std::cout << players[currentPlayerIndex].getHand();
+
                                     }
 
                                 }
@@ -487,7 +508,6 @@ std::string Game::gameInput(std::string firstPlayer) {
                             }                            
 
                         }
-
                         if (inputNotReceived) {
                             std::cout << "Invalid input" << std::endl;
                         }
@@ -553,7 +573,7 @@ std::string Game::gameInput(std::string firstPlayer) {
     return "";
 }
 
-bool Game::placeTiles(int currentPlayerIndex, bool prevValid) {
+bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::string> projectedCoordinates) {
     // continue until "Done" is reached - do not accept
     // input that isn't formatted correctly.
 
@@ -566,10 +586,12 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid) {
 
     bool tilesPlaced = false;
     std::string playerInput;
+    std::cout << "> ";
     std::getline(std::cin, playerInput);
     // std::string done = playerInput.substr(6);
     // char tileFace = '0';
     bool validMove = false;
+    Tile tileToPlace;
 
     
     if (std::cin.eof() && playerInput == "") {
@@ -582,15 +604,17 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid) {
     // note that regardless of syntax or valid board placements, 
     // it will allow the user to enter sentences as they wish,
     // until playerInput becoems "place Done".
-    else if (playerInput == "place Done") {
-        tilesPlaced = true;
+    else if (playerInput == "place Done") {        
+        // tilesPlaced = true;
+        // perform check for adjacency here. 
+        tilesPlaced = this->checkBoardAdjacency(projectedCoordinates);
     } 
 
     // if prevValid was not valid, this triggers. 
     // essentially no validation is necessary because its already wrong
     // just waiting for place Done or EOF before recursion can end. 
     else if (!prevValid) {
-        this->placeTiles(currentPlayerIndex, false);
+        this->placeTiles(currentPlayerIndex, false, projectedCoordinates);
     }
 
     else {
@@ -599,12 +623,24 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid) {
             std::string coordinates = playerInput.substr(11);
 
             if (board.validAndEmpty(coordinates)) {
+
                 // check if player has the correct tile.
                 Letter tileLetter = playerInput[6]; 
 
                 if (players[currentPlayerIndex].hasTile(tileLetter)) {
+                    // drop the tile before recursing.
+                    tileToPlace = players[currentPlayerIndex].dropTile(tileLetter);
+                    // TEST: cheat
+                    std::cout << players[currentPlayerIndex].getHand();
+
+                    // push projectedCoordinates
+                    projectedCoordinates.push_back(coordinates);
+
                     // the recursion for correct moves. 
-                    validMove = this->placeTiles(currentPlayerIndex, true);
+                    validMove = this->placeTiles(currentPlayerIndex, true, projectedCoordinates);
+                    if (!validMove) {
+                        players[currentPlayerIndex].fillHand(tileToPlace);
+                    }
                 }
 
             }
@@ -616,17 +652,16 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid) {
     // all above cases pass.
     if (validMove) {
         std::string coordinates = playerInput.substr(11);
-        Letter tileLetter = playerInput[6]; 
-        Tile tile = players[currentPlayerIndex].dropTile(tileLetter);
+        // Tile tile = players[currentPlayerIndex].dropTile(tileLetter);
         // start to placeTiles (starts from lowest recursion)
-        board.placeTile(tile, coordinates);
+        board.placeTile(tileToPlace, coordinates);
         tilesPlaced = true;
     }
     
     // do a pointless recursion (still accept input regardless 
     // of invalid input)
-    else {
-        this->placeTiles(currentPlayerIndex, false);
+    else if (!tilesPlaced) {
+        this->placeTiles(currentPlayerIndex, false, projectedCoordinates);
     }
 
     // TODO: implement player action: placement
@@ -656,9 +691,8 @@ bool Game::validatePlaceTiles(std::string placeSentence) {
     std::string delimiter = " ";
     pos = placeSentence.find(delimiter);
     playerAction = placeSentence.substr(0, pos);
+    // WORKS
     // TODO: validate
-    // input validation: perform once here, perform again
-    // in recursive call. 
     // source is from stack overflow split string. 
 
     // erase "place"
@@ -666,6 +700,7 @@ bool Game::validatePlaceTiles(std::string placeSentence) {
     std::string TileString = "";
     std::string atToken = "";
     bool continueValidation = true;
+    // WORKS
 
     if ( (pos = placeSentence.find(delimiter) ) 
     != std::string::npos) {
@@ -678,7 +713,7 @@ bool Game::validatePlaceTiles(std::string placeSentence) {
         validTilePlacement = false;
         continueValidation = false;
     }   
-
+    // check if the 
     if ( (pos = placeSentence.find(delimiter) ) 
     != std::string::npos && (continueValidation)) {
         atToken = placeSentence.substr(0, pos);
@@ -693,17 +728,170 @@ bool Game::validatePlaceTiles(std::string placeSentence) {
         // Don't actually check for correct coordinates, just length.
         // valid coordinates should be checked afterwards.
         if (placeSentence.length() >= 2) {
-            validTilePlacement = true;
+            
+            //B10
+            //ROWCOL
+            validTilePlacement = board.validCoordinate(placeSentence);
         }
         else {
             validTilePlacement = false;
-        }
-
-        
+        }  
     }
     return validTilePlacement;
 
 }
+
+bool Game::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
+    bool canBePlaced = false;
+    // separate the projectedCoordinates to expect normal input.
+    // each cell should have two spaces with the first representing row 
+    // and the second representing column
+    // this lets us compare coordinates defined by the board.
+    std::vector<std::vector<int>> separateCoordinates;
+    
+    // case where projectedCoordinates is zero is not checked
+
+    if (projectedCoordinates.size() == 1) {
+        // TODO: check all adjacent tiles. If at least one is not empty, than it can be placed.
+        separateCoordinates.push_back(this->board.separateCoordinates(projectedCoordinates[0]));
+
+        // do not check if coordinate is on a boundary. 
+        // TODO: check right coordinate
+        int rowCoordinate = separateCoordinates[0][0];
+        int colCoordinate = separateCoordinates[0][1];
+
+        // initiate boundary checks. 
+        bool checkLeft = true;
+        bool checkRight = true;
+        bool checkAbove = true;
+        bool checkBelow = true;
+
+        if (rowCoordinate == ROW) {
+            checkRight = false;
+        }
+        else if (rowCoordinate == 0) {
+            checkLeft = false;
+        }
+
+        if (colCoordinate == COLUMN) {
+            checkBelow = false;
+        }
+
+        else if (colCoordinate == 0) {
+            checkAbove = false;
+        }
+
+        if (checkAbove) {
+            // TODO: check above coordinate
+            if ( !board.isEmpty( (rowCoordinate), (colCoordinate - 1) ) ) {
+                canBePlaced = true;
+            }
+        }
+
+        if (checkBelow) {
+            // TODO: check below coordinate
+            if ( !board.isEmpty( (rowCoordinate), (colCoordinate + 1) ) ) {
+                canBePlaced = true;
+            }
+        }
+
+        if (checkLeft) {
+            // checks left coordinate
+            if ( !board.isEmpty( (rowCoordinate - 1), (colCoordinate) ) ) {
+                canBePlaced = true;
+            }
+        }
+
+        if (checkRight) {
+
+            // checks the right coordinate
+            if ( !board.isEmpty( (rowCoordinate + 1), (colCoordinate) ) ) {
+                canBePlaced = true;
+            }
+        }
+
+    }
+
+    else {
+        canBePlaced = true;
+        std::sort(projectedCoordinates.begin(), projectedCoordinates.end());
+        
+        // TODO: check if there are any duplicate coordinates. 
+        // since its sorted, can check one element to the next. 
+
+        for (std::string& coordinateString : projectedCoordinates) {
+            separateCoordinates.push_back(this->board.separateCoordinates(coordinateString));
+        }
+
+        
+        // TODO: check if all coordinates belong on the same line. 
+        // i.e. letter == letter or number == number 
+        int i = 0;
+        int projectedSize = projectedCoordinates.size();
+        bool letterIsSame = false;
+        bool numberIsSame = false;
+
+        // coordinates must be the same
+        if (separateCoordinates[0][0] != separateCoordinates[1][0]) {
+            numberIsSame = true;
+        }
+        // letters must be the same
+        else {
+            letterIsSame = true;
+        }
+
+        // checks simultaneously for coordinates belonging on the same line 
+        // and if two coordinates are the same. 
+        while (i < projectedSize - 1 && canBePlaced) {
+            int currentRow = separateCoordinates[i][0];
+            int currentCol = separateCoordinates[i][1];
+            int nextRow = separateCoordinates[i + 1][0];
+            int nextCol = separateCoordinates[i + 1][1];
+
+            // TODO: check if there are any duplicate coordinates. 
+            // since its sorted, can check one element to the next. 
+            if (currentRow == nextRow && currentCol == nextCol) {
+                // cannot be placed.      
+                canBePlaced = false;   
+
+            } 
+
+            if (numberIsSame) {
+
+                // number is not the same: compare second cell
+                if (currentCol != nextCol) {
+                    // cannot be placed.                
+                    canBePlaced = false;          
+                }
+
+            }
+
+            else if (letterIsSame) {
+                
+                // letter is not the same: compare first cell. 
+                if (currentRow != nextRow) {
+                    // cannot be placed.                
+                    canBePlaced = false;          
+                }              
+
+            }
+
+            i += 1;
+        }
+        
+        // all tiles are in a straight line. 
+        // check for emptiness between tiles.
+        // example: for C11 and C15, check C12 to C14. 
+        // note that only right or left side needs comparison,
+        // and the row is represented by 
+        if (canBePlaced) {
+
+        }
+
+    }
+    return canBePlaced;
+}
+
 
 std::string Game::quitGame() {
     return "\nGoodbye\n";
@@ -735,8 +923,6 @@ std::string Game::gameEnd() {
 void Game::AddPlayer(Player player){
     this->players.push_back(player);
 }
-
-
 
 int Game::searchPlayer(std::string currentPlayer) {
     const int NUMBER_OF_PLAYERS = players.size();

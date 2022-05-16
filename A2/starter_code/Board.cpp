@@ -1,6 +1,7 @@
 #include "Board.h"
 #include <fstream>
 #include <iostream>
+#include <string>
 
 Board::Board(){
     rows = ROW;
@@ -221,4 +222,20 @@ void Board::saveBoard(std::ofstream& file){
     }
     file << boardState << std::endl;
  
+}
+
+// separate coordinates
+std::vector<int> Board::separateCoordinates(std::string coordinates) {
+    // verify coordinates
+    std::vector<int> separateCoordinates;
+
+    if (this->validCoordinate(coordinates)) {
+        // use std::to_string on Row and Col types.
+        int row = ( getRow(coordinates));
+        int col = ( getCol(coordinates));
+        separateCoordinates.push_back(row);
+        separateCoordinates.push_back(col);
+    }
+    
+    return separateCoordinates;
 }

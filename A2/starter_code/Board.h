@@ -58,6 +58,10 @@ public:
 
     void saveBoard(std::ofstream& file);
 
+    // separate coordinates according to how Board treats coordinates. 
+    // row is first, column is second
+    std::vector<int> separateCoordinates(std::string coordinates);
+
    
 
 private:
