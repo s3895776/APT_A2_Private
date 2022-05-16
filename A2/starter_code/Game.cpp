@@ -592,7 +592,6 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::s
     // char tileFace = '0';
     bool validMove = false;
     Tile tileToPlace;
-
     
     if (std::cin.eof() && playerInput == "") {
         // input ends on a newline. Therefore, 
@@ -605,11 +604,11 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::s
     // it will allow the user to enter sentences as they wish,
     // until playerInput becomes "place Done".
     else if (playerInput == "place Done") {        
-        // tilesPlaced = true;
+        tilesPlaced = true;
         // perform check for adjacency here. 
-        if (prevValid) {
-            tilesPlaced = board.checkBoardAdjacency(projectedCoordinates);
-        }
+        // if (prevValid) {
+        //     tilesPlaced = board.checkBoardAdjacency(projectedCoordinates);
+        // }
 
     } 
 
@@ -621,7 +620,7 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::s
     }
 
     else {
-        
+        bool recurse = false;
         if (this->validatePlaceTiles(playerInput)) {
             std::string coordinates = playerInput.substr(11);
 
@@ -640,6 +639,8 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::s
                     projectedCoordinates.push_back(coordinates);
 
                     // the recursion for correct moves. 
+                    // if this is false, do not place tiles. 
+                    recurse = true;
                     validMove = this->placeTiles(currentPlayerIndex, true, projectedCoordinates);
                     if (!validMove) {
                         players[currentPlayerIndex].fillHand(tileToPlace);
@@ -649,6 +650,12 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::s
 
             }
 
+        }
+
+        // do a pointless recursion (still accept input regardless 
+        // of invalid input) if not recursing already. 
+        if (!recurse) {
+            this->placeTiles(currentPlayerIndex, false, projectedCoordinates);
         }
 
     }
@@ -662,11 +669,6 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::s
         tilesPlaced = true;
     }
     
-    // do a pointless recursion (still accept input regardless 
-    // of invalid input)
-    else if (!tilesPlaced) {
-        this->placeTiles(currentPlayerIndex, false, projectedCoordinates);
-    }
 
     // TODO: implement player action: placement
     // syntax: place <tile1> at <grid location>
