@@ -150,6 +150,37 @@ int Board_Test_Empty_Board() {
     // /* Check if the board is empty: done for adjacency checks. */
     // bool boardEmpty();
 
+
+int Board_checkBoardAdjacency(){
+    // Arrange
+    Board board;
+
+    // Act
+    //TODO
+
+    // Assert
+    int numFailures = 0;
+    numFailures += AssertAndReport("TODO", "", "Game_MainMenuChoices");
+
+    return numFailures;
+}
+
+int Board_adjacentNotEmpty() {
+    // Arrange
+    Board board;
+    // setup isolated tiles, boundary tiles and adjacent tiles.
+    Tile tile = Tile('A', 1);
+
+    // Act
+    //TODO: checks for adjacent coordinates and boundary coordinates.
+
+    // Assert
+    int numFailures = 0;
+    numFailures += AssertAndReport("TODO", "", "Game_MainMenuChoices");
+
+    return numFailures;
+}
+
 int Board_RunTests(){
     int numFailures = 0;
 
@@ -158,6 +189,8 @@ int Board_RunTests(){
     // numFailures += Board_TestRemoveTile();
     numFailures += Board_Test_SeperateCoordinates();
     numFailures += Board_Test_Empty_Board();
+    numFailures += Board_adjacentNotEmpty();
+    numFailures += Board_checkBoardAdjacency();
 
     //std::cout << "    Board Failures: " << numFailures << "\n\n";
     std::cout << std::endl;

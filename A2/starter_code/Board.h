@@ -67,6 +67,18 @@ public:
     /* Check if the board is empty. */
     bool boardEmpty();
    
+    /* checks projectedCoordinates to see if they are all valid moves.
+    only works for when Coordinates are already validated.
+
+
+    */
+    bool checkBoardAdjacency(std::vector<std::string> projectedCoordinates);
+
+    /* Return boolean that tells if the current tile is adjacent
+        to a non-empty tile
+        Coordinate parameters must be valid for Board. 
+        */
+    bool adjacentNotEmpty(int rowCoordinate, int colCoordinate);
 
 private:
     std::vector<std::vector<Tile>> board;

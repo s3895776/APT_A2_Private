@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 Board::Board(){
     rows = ROW;
@@ -273,4 +274,264 @@ bool Board::boardEmpty() {
         i += 1;
     }
     return boardEmpty;
+}
+
+bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
+    bool canBePlaced = false;
+    // separate the projectedCoordinates to expect normal input.
+    // each cell should have two spaces with the first representing row 
+    // and the second representing column
+    // this lets us compare coordinates defined by the board.
+    std::vector<std::vector<int>> separateCoordinates;
+    
+    // case where projectedCoordinates is zero is not checked
+
+    // should also check if the board is empty: 
+    // if so, no need to check for existent tiles.
+
+    bool boardIsEmpty = this->boardEmpty();
+
+
+    if (projectedCoordinates.size() == 1) {
+        // TODO: if the board is empty, it will be a valid move. 
+        if (boardIsEmpty) {
+            canBePlaced = true;
+        }
+
+        else {
+            // TODO: check all adjacent tiles. 
+            // If at least one is not empty, than it can be placed.
+            separateCoordinates.push_back(
+                this->separateCoordinates(projectedCoordinates[0]));
+
+            // do not check if coordinate is on a boundary. 
+            // initiate boundary checks. 
+            // enter the row as first param and the column as second param. 
+            canBePlaced = this->adjacentNotEmpty(
+                separateCoordinates[0][0], separateCoordinates[0][1]);
+        }
+
+    }
+
+    else {
+        canBePlaced = true;
+        std::sort(projectedCoordinates.begin(), projectedCoordinates.end());
+        
+        // TODO: check if there are any duplicate coordinates. 
+        // since its sorted, can check one element to the next. 
+
+        for (std::string& coordinateString : projectedCoordinates) {
+            separateCoordinates.push_back(
+                this->separateCoordinates(coordinateString));
+        }
+
+        
+        // TODO: check if all coordinates belong on the same line. 
+        // i.e. letter == letter or number == number 
+        int i = 0;
+        int projectedSize = projectedCoordinates.size();
+        bool rowIsSame = false;
+        bool columnIsSame = false;
+
+        // coordinates must be the same
+        if (separateCoordinates[0][0] != separateCoordinates[1][0]) {
+            columnIsSame = true;
+        }
+        // letters must be the same
+        else {
+            rowIsSame = true;
+        }
+
+        // must check for adjacency. 
+        // if no tiles are adjacent to at least an existing tile,
+        // the move is invalid. 
+        // alternatively, if the board is empty, no need to check 
+        // for adjacency.  
+
+        // if notAdjacentToTile is true at end of while loop,
+        // the board is not empty and tiles are not placed next to 
+        // a non-empty space, therefore canBePlaced will also be false. 
+        bool notAdjacentToTile = true;
+
+        if (boardIsEmpty) {
+            notAdjacentToTile = false;
+        }
+
+        // checks for coordinates belonging on the same line 
+        // and if two coordinates are the same. 
+        // checks if the board is empty, if not at least one tile
+        // must belong next to an existing tile. 
+        while (i < projectedSize - 1 && canBePlaced) {
+            int currentRow = separateCoordinates[i][0];
+            int currentCol = separateCoordinates[i][1];
+            int nextRow = separateCoordinates[i + 1][0];
+            int nextCol = separateCoordinates[i + 1][1];
+
+            // TODO: check if there are any duplicate coordinates. 
+            // since its sorted, can check one element to the next. 
+            if (currentRow == nextRow && currentCol == nextCol) {
+                // cannot be placed.      
+                canBePlaced = false;   
+
+            } 
+
+            if (columnIsSame) {
+
+                // number is not the same: compare second cell
+                if (currentCol != nextCol) {
+                    // cannot be placed.                
+                    canBePlaced = false;          
+                }
+
+            }
+
+            else if (rowIsSame) {
+                
+                // letter is not the same: compare first cell. 
+                if (currentRow != nextRow) {
+                    // cannot be placed.                
+                    canBePlaced = false;          
+                }              
+
+            }
+
+            if (notAdjacentToTile) {
+                // check that adjacent is not empty.
+                // if it is, the check no longer occurs.
+                // if it isn't, the check continues in
+                // the next loop. 
+                notAdjacentToTile = this->adjacentNotEmpty(
+                    currentRow, currentCol);
+            }
+
+            i += 1;
+        }
+        
+        // based on above spec, if this is true, canBePlaced 
+        // is false.
+        if (notAdjacentToTile) {
+            canBePlaced = false;
+        }
+
+        // all tiles are in a straight line. 
+        // check for emptiness between tiles.
+        // example: for C11 and C15, check C12 to C14. 
+        // note that the straight line comparison depends 
+        // on what line the user places tiles across.
+        if (canBePlaced) {
+            // check in between for the column
+            int i = 0;
+
+            // use this in place of a row or column.
+            int numCoordinates = separateCoordinates.size();
+
+            if (columnIsSame) {
+                int columnIndex = 1;
+                int columnNum = separateCoordinates[0][columnIndex];
+                while ( i < numCoordinates) {
+                    // whether its a row or column, increment to check 
+                    // that the space between this and the next coordinate
+                    // is not empty.
+                    int rowCheck = separateCoordinates[i][columnIndex] + 1;
+                    int nextRowCol = separateCoordinates[i + 1][columnIndex];
+                    
+
+                    while (rowCheck < nextRowCol) {
+                        // if the cell is empty, the move is invalid. 
+                        if (this->isEmpty(rowCheck, columnNum)) {
+                            canBePlaced = false;
+                        }
+                        rowCheck += 1;
+                    }
+
+                    i += 1;
+                }
+            }
+            
+            // row is same
+            else {
+                int rowIndex = 0;
+                int rowNum = separateCoordinates[0][rowIndex];
+                
+                while ( i < numCoordinates) {
+                    // whether its a row or column, increment to check 
+                    // that the space between this and the next coordinate
+                    // is not empty.
+                    int colCheck = separateCoordinates[i][rowIndex] + 1;
+                    int nextRowCol = separateCoordinates[i + 1][rowIndex];
+                    
+
+                    while (colCheck < nextRowCol) {
+                        // if the cell is empty, the move is invalid. 
+                        if (this->isEmpty(rowNum, colCheck)) {
+                            canBePlaced = false;
+                        }
+
+                        colCheck += 1;
+                    }
+
+                    i += 1;
+                }
+
+            }
+
+        }
+
+    }
+    return canBePlaced;
+}
+
+
+bool Board::adjacentNotEmpty(int rowCoordinate, int colCoordinate) {
+    // initiate boundary checks. 
+    bool adjacentNotEmpty = false;
+    bool checkLeft = true;
+    bool checkRight = true;
+    bool checkAbove = true;
+    bool checkBelow = true;
+
+    if (rowCoordinate == ROW) {
+        checkRight = false;
+    }
+    else if (rowCoordinate == 0) {
+        checkLeft = false;
+    }
+
+    if (colCoordinate == COLUMN) {
+        checkBelow = false;
+    }
+
+    else if (colCoordinate == 0) {
+        checkAbove = false;
+    }
+
+    if (checkAbove) {
+        // TODO: check above coordinate
+        if ( !this->isEmpty( (rowCoordinate), (colCoordinate - 1) ) ) {
+            adjacentNotEmpty = true;
+        }
+    }
+
+    if (checkBelow) {
+        // TODO: check below coordinate
+        if ( !this->isEmpty( (rowCoordinate), (colCoordinate + 1) ) ) {
+            adjacentNotEmpty = true;
+        }
+    }
+
+    if (checkLeft) {
+        // checks left coordinate
+        if ( !this->isEmpty( (rowCoordinate - 1), (colCoordinate) ) ) {
+            adjacentNotEmpty = true;
+        }
+    }
+
+    if (checkRight) {
+
+        // checks the right coordinate
+        if ( !this->isEmpty( (rowCoordinate + 1), (colCoordinate) ) ) {
+            adjacentNotEmpty = true;
+        }
+    }
+    return adjacentNotEmpty;
 }
