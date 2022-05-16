@@ -60,8 +60,12 @@ public:
 
     // separate coordinates according to how Board treats coordinates. 
     // row is first, column is second
+    // works as expected given that the coordinates are valid for 
+    // the Board ADT. 
     std::vector<int> separateCoordinates(std::string coordinates);
 
+    /* Check if the board is empty. */
+    bool boardEmpty();
    
 
 private:

@@ -257,3 +257,20 @@ std::vector<int> Board::separateCoordinates(std::string coordinates) {
     
     return separateCoordinates;
 }
+
+bool Board::boardEmpty() {
+    bool boardEmpty = true;
+    int i = 0;
+    int j = 0;
+    while (boardEmpty && i < ROW) {
+        while (boardEmpty && j < COLUMN) {
+            if (!this->board[i][j].isEmpty()) {
+                boardEmpty = false;
+            }
+            j += 1;
+        }
+        j = 0;
+        i += 1;
+    }
+    return boardEmpty;
+}
