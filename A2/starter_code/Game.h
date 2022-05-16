@@ -49,6 +49,10 @@ class Game {
          */
         std::string loadGame();       
 
+        void loadPlayerHand(std::string hand, int playerIndex);
+        void loadTileBag(std::string tileBagState);
+        void loadBoard(std::string boardState);
+
         /* Wait for player input and call player methods in this state. 
         */
         std::string gameInput(std::string firstPlayer);

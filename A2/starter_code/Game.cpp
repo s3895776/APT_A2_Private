@@ -27,7 +27,6 @@ std::string Game::run_menu() {
         }
         else if (choice == 2) {
             firstPlayer = this->loadGame();
-            std::cout << "loading game" << std::endl;
             menu = false;
         }
         else if (choice == 3) {
@@ -281,32 +280,137 @@ std::string Game::loadGame() {
     }
     // file successfully read
     else {
+        
         const int NO_OF_PLAYERS = 2;
         // add players into vector
         for (int i=0; i < NO_OF_PLAYERS; ++i) {
              Game::AddPlayer(Player());
         }
         // load name, score and hand of each player
-        std::string name, hand;
-        int score;
+        std::string name, hand, score;
         for (int i=0; i < NO_OF_PLAYERS; ++i) {
-            fileLoaded >> name;
-            fileLoaded >> score;
-            fileLoaded >> hand;
+            std::getline(fileLoaded, name);
+            std::getline(fileLoaded, score);
+            std::getline(fileLoaded, hand);
+            // cast score from string to int
+            int scoreInt = std::stoi(score);
+            // load name, score
             this->players[i].setName(name);
-            this->players[i].addScore(score);
-            // TODO: resolve - set player hand
-            // this->players[i].fillHand(hand);
+            this->players[i].addScore(scoreInt);
+            // load hand
+            this->loadPlayerHand(hand, i);
         }
-        // TODO: resolve - load board state
-        // fileLoaded >> this->board.loadBoard();
-        // TODO: resolve - save tile bag content
-        // fileLoaded >> this->board.loadTileContents();
-        // TODO: load cuurent player name
-        // std::string currentPlayer;
-        // fileLoaded >> currentPlayer;
-        // this->setCurrentPlayer(currentPlayer);
-        return "Game Loaded / True";
+        // load board state
+        std::string boardState;
+        std::getline(fileLoaded, boardState);
+        this->loadBoard(boardState);
+        // load tile bag contents
+        std::string tileBagState;
+        std::getline(fileLoaded, tileBagState);
+        this->loadTileBag(tileBagState);
+    
+        // load current player
+        std::string currPlayerName;
+        std::getline(fileLoaded, currPlayerName);
+        this->currPlayerName = currPlayerName;
+
+        // DEBUG: loaded
+        std::cout << "LOAD START" << std::endl;
+        std::cout << this->players[0].getName() << std::endl;
+        std::cout << this->players[0].getScore() << std::endl;
+        std::cout << this->players[0].getHand() << std::endl; // terminal shows V-4, T-1, E-1, S-1, E-1, Z-10,  --1
+        
+        std::cout << this->players[1].getName() << std::endl;
+        std::cout << this->players[1].getScore() << std::endl;
+        std::cout << this->players[1].getHand() << std::endl;
+
+        this->board.displayBoard();
+        std::cout << this->tileBag.ToString() << std::endl;
+        std::cout << this->currPlayerName << std::endl;
+        std::cout << "LOAD END" << std::endl;
+        
+        return this->currPlayerName;
+    }
+}
+
+// Helper method for loading: load player's hand
+void Game::loadPlayerHand(std::string hand, int playerIndex) {
+    while (hand != "") {
+        // store each tile in tileString
+        std::string tileString = "";
+        int j = 0;
+        // append the first tile from the hand so long as the char is not comma
+        // keep doing it only if index does not exceed the length of hand string
+        while ((hand[j] != ',') && (j < hand.length())) {
+            tileString += hand[j];
+            ++j;
+        }
+        // parse tileString to extract char and value
+        char letter = tileString[0];
+        std::string valueString = tileString.substr(2);
+        int value = std::stoi(valueString); // cast valueString into int
+        // add tile to the player's hand
+        Tile tile = Tile(letter, value);
+        this->players[playerIndex].fillHand(Tile(letter, value));
+
+        // the last tile in hand
+        if (j == hand.length()) {
+            hand = "";
+        }
+        // not last tile in hand so accounts for ", " which is index + 2
+        else {
+            hand = hand.substr(j + 2);
+        }
+    }
+}
+
+// Helper method for loading: load board state
+void Game::loadBoard(std::string boardState) {
+    std::string delimiter = " ";
+    size_t pos = boardState.find(delimiter);
+    std::string tileCoordinate;
+    // extract each tile and coordinate with delimiter
+    while (boardState != "") {
+        // extract each tile and itss coordinate
+        tileCoordinate = boardState.substr(0, pos);
+        // extract letter and value from each tileString
+        char letter = tileCoordinate[0];
+        std::string coordinate = tileCoordinate.substr(2);
+        boardState.erase(0, pos + delimiter.length());
+        // place each tile on the boars
+        board.placeTile(Tile(letter, 0), coordinate);
+    }
+}
+
+// Helper method for loading: load tile bag
+void Game::loadTileBag(std::string tileBagState) {
+    // extract tiles until tileBagState is exhausted
+    while (tileBagState != "") {
+        // store each tile in tileString
+        std::string tileString = "";
+        int j = 0;
+        // append the first tile from the state so long as the char is not comma
+        // keep doing it only if index does not exceed the length of tileBagState string
+        while ((tileBagState[j] != ',') && (j < tileBagState.length())) {
+            tileString += tileBagState[j];
+            ++j;
+        }
+        // parse tileString to extract char and value
+        char letter = tileString[0];
+        std::string valueString = tileString.substr(2);
+        int value = std::stoi(valueString); // cast valueString into int
+        // add tile to the bag
+        Tile tile = Tile(letter, value);
+        this->tileBag.AddTile(tile);
+
+        // the last tile in bag
+        if (j == tileBagState.length()) {
+            tileBagState = "";
+        }
+        // not last tile in bag so accounts for ", " which is index + 2
+        else {
+            tileBagState = tileBagState.substr(j + 2);
+        }
     }
 }
 

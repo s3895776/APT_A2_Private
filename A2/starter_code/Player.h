@@ -26,7 +26,7 @@ class Player {
         Tile dropTile(Letter letter);
 
         /* set a tile in the hand */
-        std::string fillHand(Tile tile);
+        void fillHand(Tile tile);
 
         /* return the hand as a comma separated ordered list */
         std::string getHand();
