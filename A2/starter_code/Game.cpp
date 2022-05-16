@@ -603,11 +603,11 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::s
     // base case 1: playerInput done. 
     // note that regardless of syntax or valid board placements, 
     // it will allow the user to enter sentences as they wish,
-    // until playerInput becoems "place Done".
+    // until playerInput becomes "place Done".
     else if (playerInput == "place Done") {        
-        // tilesPlaced = true;
+        tilesPlaced = true;
         // perform check for adjacency here. 
-        tilesPlaced = this->checkBoardAdjacency(projectedCoordinates);
+        // tilesPlaced = this->checkBoardAdjacency(projectedCoordinates);
     } 
 
     // if prevValid was not valid, this triggers. 

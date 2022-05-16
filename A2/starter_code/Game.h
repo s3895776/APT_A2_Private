@@ -80,6 +80,11 @@ class Game {
         // made public for testing. 
         bool validatePlaceTiles(std::string placeSentence);
 
+        /* checks projectedCoordinates to see if they are all valid moves.
+        only works for when Coordinates are already validated.
+        
+
+        */
         bool checkBoardAdjacency(std::vector<std::string> projectedCoordinates);
 
     private:
