@@ -6,22 +6,26 @@
 
 Game::Game() {
     tileBag = LinkedList();  
+    std::vector<std::vector<Tile>> b(ROW, std::vector<Tile>(COLUMN, Tile()));
     for (int i = 0; i < ROW; ++i){
         for (int j = 0; j < COLUMN; ++j){
-            scoreTilesPlaced[i][j] = Tile();
+            b[i][j] = Tile();
         }
     }
+    this->scoreTilesPlaced = b;
     std::random_device seed;
     this->seed = seed();
 
 }
 Game::Game(int seed) {
-    tileBag = LinkedList();  
+    tileBag = LinkedList(); 
+    std::vector<std::vector<Tile>> b(ROW, std::vector<Tile>(COLUMN, Tile()));
     for (int i = 0; i < ROW; ++i){
         for (int j = 0; j < COLUMN; ++j){
-            scoreTilesPlaced[i][j] = Tile();
+            b[i][j] = Tile();
         }
     }
+    this->scoreTilesPlaced = b;
     this->seed = seed; 
 }
 
