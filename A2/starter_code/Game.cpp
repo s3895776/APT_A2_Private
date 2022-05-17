@@ -822,10 +822,11 @@ bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projected
         std::string coordinates = playerInput.substr(11);
         // Tile tile = players[currentPlayerIndex].dropTile(tileLetter);
         // start to placeTiles (starts from lowest recursion)
+        
+        board.placeTile(tileToPlace, coordinates);
         int row = board.getRow(coordinates);
         int col = board.getCol(coordinates);
         scoreTilesPlaced[row][col] = tileToPlace;
-        board.placeTile(tileToPlace, coordinates);
         tilesPlaced = true;
     }
     

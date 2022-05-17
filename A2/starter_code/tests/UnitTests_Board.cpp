@@ -507,7 +507,6 @@ int Board_TestGetScore(){
     board.placeTile(E,"L2");
     tilesPlaced[board.getRow("L2")][board.getCol("L2")] = E;
     score += board.getScore(tilesPlaced);
-    std::cout << score <<std::endl;
     if (score != 26){
         numFailures += 1;
     }
@@ -524,8 +523,8 @@ int Board_TestGetScore(){
     board.placeTile(D,"J5");
     tilesPlaced[board.getRow("J5")][board.getCol("J5")] = D;
     score += board.getScore(tilesPlaced);
-    std::cout << score <<std::endl;
-    if (score != 33){
+    
+    if (score != 32){
         numFailures += 1;
     }
     for (int i = 0; i < ROW; ++i){
@@ -540,7 +539,6 @@ int Board_TestGetScore(){
     board.placeTile(R,"L5");
     tilesPlaced[board.getRow("L5")][board.getCol("L5")] = R;
     score += board.getScore(tilesPlaced);
-    std::cout << score <<std::endl;
     if (score != 39){
         numFailures += 1;
     }
