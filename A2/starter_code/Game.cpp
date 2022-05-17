@@ -605,9 +605,12 @@ std::string Game::gameInput(std::string firstPlayer) {
                                     Tile tile = players[currentPlayerIndex].dropTile(tileLetter);
                                     std::vector<std::string> projectedCoordinates;
                                     projectedCoordinates.push_back(coordinates);
-                                    // tilesPlaced[board.getRow(coordinates)][board.getCol(coordinates)] = tile;
-                                    if (this->placeTiles(currentPlayerIndex, true, projectedCoordinates)) {
-                                        std::string coordinates = playerInput.substr(11);
+                                    int row = board.getRow(coordinates);
+                                    int col = board.getCol(coordinates);
+                                    tilesPlaced[row][col] = tile;
+                                   
+                                    if (this->placeTiles(currentPlayerIndex, projectedCoordinates)) {
+
                                         // start to placeTiles (starts from lowest recursion)
                                         board.placeTile(tile, coordinates);
                                         int playerScore = board.getScore(tilesPlaced);
