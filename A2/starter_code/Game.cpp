@@ -5,12 +5,6 @@
 #include <algorithm>
 
 Game::Game() {
-<<<<<<< HEAD
-    tileBag = LinkedList();
-    turnScore = 0;
-    // board = new Board();
-    
-=======
     tileBag = LinkedList();  
 
     std::random_device seed;
@@ -21,7 +15,6 @@ Game::Game(int seed) {
     tileBag = LinkedList();  
 
     this->seed = seed; 
->>>>>>> 3a6d9d22f584b7ea705b59d6b57ea00a5e8f1afd
 }
 
 Game::~Game() {
