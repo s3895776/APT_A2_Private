@@ -712,10 +712,14 @@ bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projected
     // it will allow the user to enter sentences as they wish,
     // until playerInput becomes "place Done".
     else if (playerInput == "place Done") {        
+        // one final check: validates the positions of the tiles on the board.
+        // this can only be determined to be true once
+        // all projectedCoordinates are given, thus it is given here. 
         tilesPlaced = board.checkBoardAdjacency(projectedCoordinates);
     } 
 
     else {
+        
         if (this->validatePlaceTiles(playerInput)) {
             std::string coordinates = playerInput.substr(11);
 
@@ -727,8 +731,9 @@ bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projected
                 if (players[currentPlayerIndex].hasTile(tileLetter)) {
                     // drop the tile before recursing.
                     tileToPlace = players[currentPlayerIndex].dropTile(tileLetter);
-                    // TEST: cheat
-                    std::cout << players[currentPlayerIndex].getHand();
+
+                    // // TEST: cheat knowledge on tiles in the hand. 
+                    // std::cout << players[currentPlayerIndex].getHand();
 
                     // push projectedCoordinates
                     projectedCoordinates.push_back(coordinates);
