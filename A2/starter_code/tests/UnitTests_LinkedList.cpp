@@ -82,6 +82,25 @@ int LL_Test_Draw(){
     return numFailures;
 }
 
+int LL_Test_Draw_Existing_Tile(){
+    int numFailures = 0;
+
+    // Arrange
+    Tile tile1('A', 1);
+    Tile tile2('B', 2);
+    LinkedList bag;
+
+    // Act
+    bag.AddTile(tile1);
+    bag.AddTile(tile2);
+    Tile endTile = bag.DrawTile(tile2);
+
+    // Assert
+    numFailures += AssertAndReport(endTile.getLetter(), 'B', "LinkedList_DrawOrder");
+
+    return numFailures;
+}
+
 
 int LL_RunTests(){
     int numFailures = 0;
@@ -89,8 +108,10 @@ int LL_RunTests(){
     numFailures += LL_Test_Add();
     numFailures += LL_Test_Count();
     numFailures += LL_Test_Draw();
+    numFailures += LL_Test_Draw_Existing_Tile();
 
     //std::cout << "    LinkedList Failures: " << numFailures << "\n\n";
     std::cout << std::endl;
     return numFailures;
 }
+
