@@ -602,7 +602,7 @@ std::string Game::gameInput(std::string firstPlayer) {
                                         std::string coordinates = playerInput.substr(11);
                                         // start to placeTiles (starts from lowest recursion)
                                         board.placeTile(tile, coordinates);
-                                        tilesPlaced[board.getRow(coordinates)][board.getCol(coordinates)] = tile;
+                                        //tilesPlaced[board.getRow(coordinates)][board.getCol(coordinates)] = tile;
                                         // players[currentPlayerIndex].addScore();
                                         inputNotReceived = false;
                                     } else {
@@ -771,7 +771,7 @@ bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projected
         }
 
     }
-    
+
     // all above cases pass.
     if (validMove) {
         std::string coordinates = playerInput.substr(11);
@@ -780,7 +780,7 @@ bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projected
         board.placeTile(tileToPlace, coordinates);
         tilesPlaced = true;
     }
-    
+
     // TODO: implement player action: placement
     // syntax: place <tile1> at <grid location>
     // need to implement the checks that are necessary.

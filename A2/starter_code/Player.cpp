@@ -105,7 +105,7 @@ std::string Player::printScore() {
 bool Player::hasLetter(Letter letter) {
     bool letterFound = false;
     std::string handString = this->getHand();
-    for (int i = 0; i < handString.length(); ++i) {
+    for (int i = 0; i < (int)handString.length(); ++i) {
         if (handString[i] == letter) {
             letterFound = true;
         }
