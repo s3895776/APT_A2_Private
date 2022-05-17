@@ -6,14 +6,14 @@
 
 Game::Game() {
     tileBag = LinkedList();  
-
+    std::vector<std::vector<Tile>> tilesPlaced(15, std::vector<Tile>(15, Tile())
     std::random_device seed;
     this->seed = seed();
 
 }
 Game::Game(int seed) {
     tileBag = LinkedList();  
-
+    std::vector<std::vector<Tile>> tilesPlaced(15, std::vector<Tile>(15, Tile())
     this->seed = seed; 
 }
 
@@ -597,18 +597,23 @@ std::string Game::gameInput(std::string firstPlayer) {
                                     std::cout << players[currentPlayerIndex].getHand();
                                     std::vector<std::string> projectedCoordinates;
                                     projectedCoordinates.push_back(coordinates);
-                                    
+                                    tilesPlaced[board.getRow(coordinates)][board.getCol(coordinates)] = tile;
                                     if (this->placeTiles(currentPlayerIndex, true, projectedCoordinates)) {
-
                                         std::string coordinates = playerInput.substr(11);
                                         // start to placeTiles (starts from lowest recursion)
                                         board.placeTile(tile, coordinates);
-                                        tilesPlaced[board.getRow(coordinates)][board.getCol(coordinates)] = tile;
-                                        // players[currentPlayerIndex].addScore();
+                                        int playerScore = board.getScore(tilesPlaced);
+                                        players[currentPlayerIndex].addScore(playerScore);
                                         inputNotReceived = false;
                                     } else {
                                         players[currentPlayerIndex].fillHand(tile);
                                         std::cout << players[currentPlayerIndex].getHand();
+                                    }
+                                    // clear the tilesPlaced vector
+                                    for (int i = 0; i < ROW; ++i){
+                                        for (int j = 0; j < COLUMN; ++j){
+                                            tilesPlaced[i][j] = Tile();
+                                        }
                                     }
                                 }
 
@@ -757,6 +762,7 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::s
                     validMove = this->placeTiles(currentPlayerIndex, true, projectedCoordinates);
                     if (!validMove) {
                         players[currentPlayerIndex].fillHand(tileToPlace);
+                        
                     }
 
                 }
