@@ -6,14 +6,22 @@
 
 Game::Game() {
     tileBag = LinkedList();  
-    std::vector<std::vector<Tile>> scoreTilesPlaced(15, std::vector<Tile>(15, Tile()));
+    for (int i = 0; i < ROW; ++i){
+        for (int j = 0; j < COLUMN; ++j){
+            scoreTilesPlaced[i][j] = Tile();
+        }
+    }
     std::random_device seed;
     this->seed = seed();
 
 }
 Game::Game(int seed) {
     tileBag = LinkedList();  
-    std::vector<std::vector<Tile>> scoreTilesPlaced(15, std::vector<Tile>(15, Tile()));
+    for (int i = 0; i < ROW; ++i){
+        for (int j = 0; j < COLUMN; ++j){
+            scoreTilesPlaced[i][j] = Tile();
+        }
+    }
     this->seed = seed; 
 }
 
@@ -822,10 +830,11 @@ bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projected
         std::string coordinates = playerInput.substr(11);
         // Tile tile = players[currentPlayerIndex].dropTile(tileLetter);
         // start to placeTiles (starts from lowest recursion)
+        
+        board.placeTile(tileToPlace, coordinates);
         int row = board.getRow(coordinates);
         int col = board.getCol(coordinates);
         scoreTilesPlaced[row][col] = tileToPlace;
-        board.placeTile(tileToPlace, coordinates);
         tilesPlaced = true;
     }
     
