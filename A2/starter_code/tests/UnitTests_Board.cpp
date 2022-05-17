@@ -92,7 +92,7 @@ int Board_Test_SeperateCoordinates() {
 
     std::vector<std::vector<int>> seperatedCoordinates;
     for (std::string& string : coordinateList) {
-        seperatedCoordinates.push_back(board.seperateCoordinates(string));
+        seperatedCoordinates.push_back(board.separateCoordinates(string));
     }
 
     int i = 0;

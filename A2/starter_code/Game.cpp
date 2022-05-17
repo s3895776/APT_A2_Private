@@ -781,21 +781,6 @@ bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projected
         tilesPlaced = true;
     }
     
-    // TODO: implement player action: placement
-    // syntax: place <tile1> at <grid location>
-    // need to implement the checks that are necessary.
-
-    // Tile tile;
-    // //check if the player has the tile
-    // if (players[currentPlayerIndex].hasTile(tileFace)){
-    //     tile = players[currentPlayerIndex].dropTile(tileFace);
-    // }
-    // success = board.placeTile(tile, coord);
-    // if (success){
-    //     std::cout << "Tile placed" << std::endl;
-    // }
-    // // Do we need a possible list of actions made in the turn to keep 
-    // // track of what we may want to remove from board and replace in hand?
     return tilesPlaced;
     
 }
