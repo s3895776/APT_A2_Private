@@ -71,7 +71,10 @@ class Game {
         void InitaliseBag(LinkedList& bag);
         void AddPlayer(Player player);
 
-        // recursive case: only activates once gameInput() validates one sentence.
+        /* recursive case: only activates once gameInput() validates 
+        one sentence.  prevValid indicates that the previous recursion must be valid.
+        If not, the case is automatically false.
+        */
         bool placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::string> projectedCoordinates);
         void replaceTiles(std::string currentPlayer);
 
@@ -84,7 +87,18 @@ class Game {
         // made public for testing. 
         bool validatePlaceTiles(std::string placeSentence);
 
+        /* checks projectedCoordinates to see if they are all valid moves.
+        only works for when Coordinates are already validated.
+        
+
+        */
         bool checkBoardAdjacency(std::vector<std::string> projectedCoordinates);
+
+        /* Return boolean that tells if the current tile is adjacent
+            to a non-empty tile
+            Coordinate parameters must be valid for Board. 
+         */
+        bool adjacentNotEmpty(int rowCoordinate, int colCoordinate);
 
     private:
         std::vector<Player> players;
