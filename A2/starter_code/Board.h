@@ -75,7 +75,7 @@ public:
     */
     bool checkBoardAdjacency(std::vector<std::string> projectedCoordinates);
 
-    /* Return boolean that tells if the current tile is adjacent
+    /* Return boolean that is true if the current tile is adjacent
         to a non-empty tile
         Coordinate parameters must be valid for Board. 
         */
