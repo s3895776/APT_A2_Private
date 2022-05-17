@@ -68,6 +68,11 @@ class Game {
          */
         bool validName(std::string name);
 
+        /*
+         * Check if main menu choice is between 1 and 4
+         */
+        bool validMainMenuChoice(int choice);
+
         // I made this public for testing puposes
         void InitaliseBag(LinkedList& bag);
         void AddPlayer(Player player);
