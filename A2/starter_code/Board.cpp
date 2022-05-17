@@ -42,7 +42,77 @@ Column Board::getCol(std::string coordinates){
     return col;
 }
 int Board::getScore(std::string coordinates){
+
     int turnScore = 0;
+    Row row = getRow(coordinates);
+    Column col = getCol(coordinates);
+
+    bool checkLeft = true;
+    bool checkRight = true;
+    bool checkAbove = true;
+    bool checkBelow = true;
+
+    int lastRow = ROW - 1;
+    int lastCol = COLUMN - 1;
+
+    Tile curr = board[row][col];
+    turnScore += curr.getValue();
+
+    // add a vertical list
+
+    // add a horizontal list
+    // check if the tiles are in the lists
+    
+    // last row: check below is false
+    while (checkBelow){
+        if (row == lastRow) {
+            checkBelow = false; 
+        } else if (!board[row+1][col].isEmpty())
+        {
+            Tile down = board[row+1][col];
+            turnScore += down.getValue();
+            row += 1;
+        } else {
+            checkBelow = false;
+        }
+    }
+    while (checkAbove){
+        if (row == 0) {
+            checkAbove = false; 
+        } else if (!board[row-1][col].isEmpty())
+        {
+            Tile up = board[row-1][col];
+            turnScore += up.getValue();
+            row -= 1;
+        } else {
+            checkAbove = false;
+        }
+    }
+    while (checkRight){
+        if (col == lastCol) {
+            checkRight = false;
+        } else if (!board[row][col+1].isEmpty()) {
+            Tile right = board[row][col+1];
+            turnScore += right.getValue();
+            col += 1;
+        } else {
+            checkRight = false;
+        }
+    }
+    while (checkLeft){
+        if (col == 0) {
+            checkLeft = false;
+        } else if (!board[row][col-1].isEmpty()) {
+            Tile left = board[row][col-1];
+            turnScore += left.getValue();
+            col -= 1;
+        } else {
+            checkLeft = false;
+        }
+    }
+    
+    
+    int value = 0;
     // check if the coordinates are left, right, up or down of the given tile
     // get the value of the coordinates to the direction
     // repeat until there is no coordinate to check
