@@ -5,9 +5,16 @@
 #include <algorithm>
 
 Game::Game() {
-    tileBag = LinkedList();
-    // board = new Board();
-    
+    tileBag = LinkedList();  
+
+    std::random_device seed;
+    this->seed = seed();
+
+}
+Game::Game(int seed) {
+    tileBag = LinkedList();  
+
+    this->seed = seed; 
 }
 
 Game::~Game() {
@@ -418,9 +425,7 @@ void Game::InitaliseBag(LinkedList& bag){
     int const num_tiles = 98;
     std::string const filename = "./ScrabbleTiles.txt";
 
-    // Mersenne Twister PRNG
-    std::random_device r;
-    std::mt19937 rng(1);
+    std::mt19937 rng(this->seed);
 
     // Import tiles from file into array
     Tile tiles[num_tiles];
