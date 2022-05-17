@@ -158,6 +158,7 @@ int Board_checkBoardAdjacency(){
     Tile tile = Tile('A', 1);
 
     std::vector<std::string> projectedCoordinates;
+    int numFailures = 0;
 
     // Act
     //TODO: returns if the tile placement is not next to anything
@@ -166,13 +167,14 @@ int Board_checkBoardAdjacency(){
     projectedCoordinates.push_back("A1");
     // place A1: expect true
     if (!emptyBoard.checkBoardAdjacency(projectedCoordinates) ) {
-
+        numFailures += 1;
     }
 
     // 2: non-empty board, one tile 
     filledBoard.placeTile(tile, "A0");
     // place A1 next to A0: expect true
     if (!filledBoard.checkBoardAdjacency(projectedCoordinates)) {
+        numFailures += 1;
 
     }
     
@@ -190,6 +192,7 @@ int Board_checkBoardAdjacency(){
     // place A1, A2, A3, empty board, expect true.
 
     if (!emptyBoard.checkBoardAdjacency(projectedCoordinates)) {
+        numFailures += 1;
 
     }
     // 5: board non-empty, invalid placement
@@ -200,18 +203,18 @@ int Board_checkBoardAdjacency(){
     // place A2, A3, expect false.
 
     if (filledBoard.checkBoardAdjacency(projectedCoordinates)) {
+        numFailures += 1;
 
     }
     // 6: board non-empty, valid placement. 
     // place A1, A2, A3, expect true.
     projectedCoordinates.push_back("A1");
     if (!filledBoard.checkBoardAdjacency(projectedCoordinates)) {
-
+        numFailures += 1;
     }
 
     // Assert
-    int numFailures = 0;
-    numFailures += AssertAndReport("TODO", "", "Game_MainMenuChoices");
+    AssertAndReport(numFailures, 0, "Board_checkBoardAdjacency");
 
     return numFailures;
 }
@@ -294,9 +297,9 @@ int Board_adjacentNotEmpty() {
         numFailures += 1;
     }
 
-    if (numFailures > 0) {
-        AssertAndReport(numFailures, 0, "Board_adjacentNotEmpty()");
-    }
+    
+    AssertAndReport(numFailures, 0, "Board_adjacentNotEmpty()");
+    
 
     return numFailures;
 }

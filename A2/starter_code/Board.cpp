@@ -528,7 +528,7 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
             if (columnIsSame) {
                 int columnIndex = 1;
                 int columnNum = separateCoordinates[0][columnIndex];
-                while ( i < numCoordinates) {
+                while ( i < numCoordinates - 1) {
                     // whether its a row or column, increment to check 
                     // that the space between this and the next coordinate
                     // is not empty.
@@ -553,7 +553,7 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
                 int rowIndex = 0;
                 int rowNum = separateCoordinates[0][rowIndex];
                 
-                while ( i < numCoordinates) {
+                while ( i < numCoordinates - 1) {
                     // whether its a row or column, increment to check 
                     // that the space between this and the next coordinate
                     // is not empty.
