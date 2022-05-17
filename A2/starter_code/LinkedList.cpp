@@ -102,16 +102,16 @@ Tile LinkedList::DrawTile(Tile& tile){
          delete deletedNode;
       } 
       
-      else {
-         Node* deletedNode = curr;
-         prev->next = curr->next;
-         delete deletedNode;
-      }
-
-      if (curr == tail) {
+      else if (curr == tail) {
          Node* deletedNode = tail;
          tail = prev;
          tail->next = nullptr;
+         delete deletedNode;
+      }
+
+      else {
+         Node* deletedNode = curr;
+         prev->next = curr->next;
          delete deletedNode;
       }
 
@@ -157,10 +157,10 @@ int LinkedList::GetTileValue(Letter letter){
 std::string LinkedList::ToString(){
    std::string s = "";
 
-   if (this->head == nullptr) {
-      s = "EMPTY";
-   }
-
+   // unnecessary, unless you want to modify s.
+   // if (this->head == nullptr) {
+   //    s = "";
+   // }
 
    Node* curr = this->head;
    while (curr != nullptr){
@@ -170,7 +170,7 @@ std::string LinkedList::ToString(){
       s += curr->tile.getTileAsString();
 
       curr = curr->next;
-      if (curr != nullptr){
+      if (curr != nullptr) {
          s += ", ";
       }
    }
