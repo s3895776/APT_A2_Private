@@ -595,12 +595,11 @@ std::string Game::gameInput(std::string firstPlayer) {
 
                                 if (players[currentPlayerIndex].hasTile(tileLetter)) {
                                     Tile tile = players[currentPlayerIndex].dropTile(tileLetter);
-                                    std::cout << players[currentPlayerIndex].getHand();
                                     std::vector<std::string> projectedCoordinates;
                                     projectedCoordinates.push_back(coordinates);
+
                                     if (this->placeTiles(currentPlayerIndex, projectedCoordinates)) {
 
-                                        std::string coordinates = playerInput.substr(11);
                                         // start to placeTiles (starts from lowest recursion)
                                         board.placeTile(tile, coordinates);
                                         //tilesPlaced[board.getRow(coordinates)][board.getCol(coordinates)] = tile;
@@ -608,7 +607,7 @@ std::string Game::gameInput(std::string firstPlayer) {
                                         inputNotReceived = false;
                                         // replace all tiles.
                                         // keep calling the players hand size until
-                                        // reaching 7.
+                                        // the hand reaches seven. 
                                         while (players[currentPlayerIndex].sizeOfHand() < MAX_HAND_CAPACITY) {
                                             players[currentPlayerIndex].fillHand(tileBag.DrawTile());
                                         }
@@ -619,6 +618,7 @@ std::string Game::gameInput(std::string firstPlayer) {
                                         players[currentPlayerIndex].fillHand(tile);
                                         std::cout << players[currentPlayerIndex].getHand();
                                     }
+
                                 }
 
                             }                            
