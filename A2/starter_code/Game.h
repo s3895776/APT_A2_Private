@@ -16,6 +16,7 @@ class Game {
          * Constructor, destructor, copy constructor
          */
         Game();
+        Game(int seed);
         ~Game();
         Game(Game& other);
 
@@ -104,6 +105,7 @@ class Game {
         std::vector<Player> players;
 
         LinkedList tileBag;
+        int seed;
 
         /* Display the end of the game information */
         std::string gameEnd();
