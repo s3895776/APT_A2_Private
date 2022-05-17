@@ -101,3 +101,14 @@ std::string Player::printScore() {
     std::cout << ": " << this->getScore() << std::endl;
     return "";
 }
+
+bool Player::hasLetter(Letter letter) {
+    bool letterFound = false;
+    std::string handString = this->getHand();
+    for (int i = 0; i < handString.length(); ++i) {
+        if (handString[i] == letter) {
+            letterFound = true;
+        }
+    }
+    return letterFound;
+}
