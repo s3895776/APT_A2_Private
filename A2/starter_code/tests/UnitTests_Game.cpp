@@ -141,16 +141,31 @@ int Game_ValidNames(){
     return numFailures;
 }
 
-int Game_MainMenuChoices(){
+int Game_ValidMainMenuChoice(){
     // Arrange
     Game g;
 
     // Act
-    //TODO
-
-    // Assert
     int numFailures = 0;
-    numFailures += AssertAndReport("TODO", "", "Game_MainMenuChoices");
+
+    if ( !g.validMainMenuChoice(1) ) {
+        numFailures += AssertAndReport("1 returns true", "returned false", "Game_ValidMainMenuChoice");
+    }
+    if ( !g.validMainMenuChoice(2) ) {
+        numFailures += AssertAndReport("2 returns true", "returned false", "Game_ValidMainMenuChoice");
+    }
+    if ( !g.validMainMenuChoice(3) ) {
+        numFailures += AssertAndReport("3 returns true", "returned false", "Game_ValidMainMenuChoice");
+    }
+    if ( !g.validMainMenuChoice(4) ) {
+        numFailures += AssertAndReport("4 returns true", "returned false", "Game_ValidMainMenuChoice");
+    }
+    if ( g.validMainMenuChoice(0) ) {
+        numFailures += AssertAndReport("0 returns false", "returned true", "Game_ValidMainMenuChoice");
+    }
+    if ( g.validMainMenuChoice(10) ) {
+        numFailures += AssertAndReport("10 returns false", "returned true", "Game_ValidMainMenuChoice");
+    }
 
     return numFailures;
 }
@@ -201,7 +216,7 @@ int Game_validatePlacementInput() {
 int Game_RunTests(){
     int numFailures = 0;
 
-    //numFailures += Game_MainMenuChoices();
+    numFailures += Game_ValidMainMenuChoice();
     numFailures += Game_ValidNames();
     numFailures += Game_InitaliseBag();
     numFailures += Game_Save();

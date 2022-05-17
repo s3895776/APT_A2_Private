@@ -79,8 +79,8 @@ int Game::view_mainMenu() {
             return 4;
         }
 
-        // reject invalid input which is not an integer between 1 and 4
-        if (!(std::cin >> choice) || choice > 4 || choice < 1) {
+        // reject input if it is not between 1 and 4
+        if (!(std::cin >> choice) || !(validMainMenuChoice(choice))) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << std::endl;
@@ -92,6 +92,14 @@ int Game::view_mainMenu() {
         }
     }
     return choice;
+}
+
+bool Game::validMainMenuChoice(int choice) {
+    bool validChoice = false;
+    if (choice >= 1 && choice <= 4) {
+        validChoice = true;
+    }
+    return validChoice;
 }
 
 bool Game::validName(std::string name) {
