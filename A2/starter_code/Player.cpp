@@ -105,10 +105,15 @@ std::string Player::printScore() {
 bool Player::hasLetter(Letter letter) {
     bool letterFound = false;
     std::string handString = this->getHand();
-    for (int i = 0; i < handString.length(); ++i) {
+    int handStringLength = handString.length();
+    for (int i = 0; i < handStringLength; ++i) {
         if (handString[i] == letter) {
             letterFound = true;
         }
     }
     return letterFound;
+}
+
+int Player::sizeOfHand() {
+    return this->hand.Count();
 }

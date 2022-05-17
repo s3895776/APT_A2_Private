@@ -478,6 +478,7 @@ std::string Game::gameInput(std::string firstPlayer) {
     // player in vector players will continue
     // at the end, next player chosen will be the starting player
     bool gameLoop = true;
+    const int MAX_HAND_CAPACITY = 7;
     
     while (gameLoop) {
 
@@ -605,7 +606,16 @@ std::string Game::gameInput(std::string firstPlayer) {
                                         tilesPlaced[board.getRow(coordinates)][board.getCol(coordinates)] = tile;
                                         // players[currentPlayerIndex].addScore();
                                         inputNotReceived = false;
-                                    } else {
+                                        // replace all tiles.
+                                        // keep calling the players hand size until
+                                        // reaching 7.
+                                        while (players[currentPlayerIndex].sizeOfHand() < MAX_HAND_CAPACITY) {
+                                            players[currentPlayerIndex].fillHand(tileBag.DrawTile());
+                                        }
+
+                                    } 
+                                    
+                                    else {
                                         players[currentPlayerIndex].fillHand(tile);
                                         std::cout << players[currentPlayerIndex].getHand();
                                     }
@@ -685,7 +695,8 @@ std::string Game::gameInput(std::string firstPlayer) {
 
             // switch player
             currentPlayerIndex += 1;
-            if (currentPlayerIndex == 2) {
+            // players.size gives the amount of players in the game
+            if (currentPlayerIndex == (int)players.size()) {
                 currentPlayerIndex = 0;
             }
             
