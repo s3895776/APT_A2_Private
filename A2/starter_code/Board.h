@@ -29,8 +29,8 @@ public:
     std::string removeTile(std::string coordinates);
 
     /* returns the row and column extracted from the board coordinates provided */
-    Row getRow(std::string coordinates);
-    Column getCol(std::string coordinates);
+    Row getRow(const std::string coordinates);
+    Column getCol(const std::string coordinates);
 
     /* checks that there is no tile at the specified location 
     will cause segment fault without correct coordinates.*/
@@ -38,7 +38,7 @@ public:
     bool isEmpty(Row row, Column col);
 
     /* checks that one of the surrounding tiles is occupied, to make the move valid */
-    bool validCoordinate(std::string coordinates);
+    bool validCoordinate(const std::string coordinates);
     bool validMove(Row row, Column col);
 
     /* Return true if coordinate is both valid and empty */
@@ -49,6 +49,7 @@ public:
     std::string displayTile(int row, int col);
     /* Prints the rows of the board */
     std::string printRow(int row, std::string colLetter);
+    int getScore(std::vector<std::vector<Tile>> openList);
     /* Displays the board as a 2D grid */
     void displayBoard();
     
@@ -62,14 +63,16 @@ public:
     // row is first, column is second
     // works as expected given that the coordinates are valid for 
     // the Board ADT. 
-    std::vector<int> separateCoordinates(std::string coordinates);
+    std::vector<int> seperateCoordinates(const std::string coordinates);
 
-    /* Check if the board is empty. */
+    /* Return true if the board is empty.
+     */
     bool boardEmpty();
    
     /* checks projectedCoordinates to see if they are all valid moves.
     only works for when Coordinates are already validated.
-
+    duplicate coordinates will return false.
+    
 
     */
     bool checkBoardAdjacency(std::vector<std::string> projectedCoordinates);

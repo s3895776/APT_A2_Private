@@ -76,7 +76,7 @@ class Game {
         one sentence.  prevValid indicates that the previous recursion must be valid.
         If not, the case is automatically false.
         */
-        bool placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::string> projectedCoordinates);
+        bool placeTiles(int currentPlayerIndex, std::vector<std::string> projectedCoordinates);
         void replaceTiles(std::string currentPlayer);
 
         /* this must be able to validate such that a sentence involving place
@@ -90,7 +90,7 @@ class Game {
 
         /* checks projectedCoordinates to see if they are all valid moves.
         only works for when Coordinates are already validated.
-        
+        Does not check the emptiness of coordinates in projected coordinates.
 
         */
         bool checkBoardAdjacency(std::vector<std::string> projectedCoordinates);
@@ -112,6 +112,7 @@ class Game {
         Board board;
         // return index of player stored in vector
         int searchPlayer(std::string currentPlayer);
+        std::vector<std::vector<Tile>> tilesPlaced;
         
 };
 

@@ -58,6 +58,9 @@ class Player {
         /* Print the users score in the format. */
         std::string printScore();
 
+        /* REPLACE TILE - check if letter is in the hand*/
+        bool hasLetter(Letter letter);
+
 
     private:
         LinkedList hand;

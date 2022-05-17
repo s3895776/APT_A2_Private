@@ -21,7 +21,7 @@ Board::Board(Board& other){
 std::vector<std::vector<Tile>> Board::getBoard(){
     return board;
 }
-Row Board::getRow(std::string coordinates){
+Row Board::getRow(const std::string coordinates){
     char r = coordinates[0];
     Row row = -1;
     char row_letters[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'};
@@ -32,7 +32,7 @@ Row Board::getRow(std::string coordinates){
     }
     return row;
 }
-Column Board::getCol(std::string coordinates){
+Column Board::getCol(const std::string coordinates){
     
     // Check the coordinates 
     // this method probably needs to be boolean
@@ -40,6 +40,106 @@ Column Board::getCol(std::string coordinates){
     std::string c = coordinates.substr(1);
     Column col = std::stoi(c);
     return col;
+}
+int Board::getScore(std::vector<std::vector<Tile>> openList){
+    int turnScore = 0;
+    for (int i = 0; i < COLUMN; ++i){
+        for (int j = 0; j< ROW; ++j){
+            Row row = j;
+            Column col = i;
+             
+            // add a vertical list, to prevent counting the value of a tile twice
+            std::vector<std::vector<Tile>> vertCloseList;
+            // add a horizontal list, to prevent counting the value of a tile twice
+            std::vector<std::vector<Tile>> horzCloseList;
+            // check if the tiles are in the lists
+            bool checkLeft = true;
+            bool checkRight = true;
+            bool checkAbove = true;
+            bool checkBelow = true;
+
+            int lastRow = ROW - 1;
+            int lastCol = COLUMN - 1;
+
+            //this code doesnt sit right with me
+            Tile curr = board[row][col];
+            if (curr.getLetter() == openList[row][col].getLetter()){
+                turnScore += curr.getValue();
+                openList[row][col] = Tile();
+                vertCloseList[row][col] = curr;
+                horzCloseList[row][col] = curr;
+            }
+            // check the value of the letters below until an empty space is hit or boundary of board
+            while (checkBelow){
+                if (row == lastRow) {
+                    checkBelow = false; 
+                } 
+                if (board[row+1][col].isEmpty()){
+                    checkBelow = false;
+                } else {
+                    if (vertCloseList[row+1][col].isEmpty()){
+                        Tile tile = board[row+1][col];
+                        turnScore += tile.getValue();
+                        vertCloseList[row+1][col] = tile;
+                    }
+                    row += 1;
+                }
+            }
+            // check the value of the letters above until an empty space is hit or boundary of board
+            while (checkAbove){
+                if (row == 0) {
+                    checkAbove = false; 
+                } 
+                if (board[row-1][col].isEmpty()) {
+                    checkAbove = false;
+                } else {
+                    if (vertCloseList[row-1][col].isEmpty()){
+                        Tile tile = board[row-1][col];
+                        turnScore += tile.getValue();
+                        vertCloseList[row-1][col] = tile;
+                    }
+                    row -= 1;
+                } 
+            }
+            // check the value of the letters below until an empty space is hit or boundary of board
+            while (checkRight){
+                if (col == lastCol) {
+                    checkRight = false;
+                } 
+                if (board[row][col+1].isEmpty()) {
+                    checkRight = false;
+                } else {
+                    if (horzCloseList[row][col+1].isEmpty()){
+                        Tile tile = board[row][col+1];
+                        turnScore += tile.getValue();
+                        horzCloseList[row][col+1] = tile;
+                    }
+                    col += 1;
+                }
+            }
+            // check the value of the letters below until an empty space is hit or boundary of board
+            while (checkLeft){
+                if (col == 0) {
+                    checkLeft = false;
+                } if (board[row][col-1].isEmpty()) {
+                    checkLeft = false;
+                } else {
+                    if (horzCloseList[row][col-1].isEmpty()){
+                        Tile tile = board[row][col-1];
+                        turnScore += tile.getValue();
+                        horzCloseList[row][col-1] = tile;
+                    }
+                    col -= 1;
+                }
+            }
+        }
+    }
+    
+    // check if the coordinates are left, right, up or down of the given tile
+    // get the value of the coordinates to the direction
+    // repeat until there is no coordinate to check
+    //return the score
+    return turnScore;
 }
 void Board::placeTile(Tile tile, std::string coordinates){
     /* convert the coordinates into rows and cols */ 
@@ -70,7 +170,7 @@ bool Board::isEmpty(std::string coordinates) {
     return empty;
 }
 
-bool Board::validCoordinate(std::string coordinates) {
+bool Board::validCoordinate(const std::string coordinates) {
     bool valid = true;
     char _row = coordinates[0];
     
@@ -243,20 +343,20 @@ void Board::saveBoard(std::ofstream& file){
  
 }
 
-// separate coordinates
-std::vector<int> Board::separateCoordinates(std::string coordinates) {
+// seperate coordinates
+std::vector<int> Board::seperateCoordinates(const std::string coordinates) {
     // verify coordinates
-    std::vector<int> separateCoordinates;
+    std::vector<int> seperatedCoordinates;
 
     if (this->validCoordinate(coordinates)) {
         // use std::to_string on Row and Col types.
         int row = ( getRow(coordinates));
         int col = ( getCol(coordinates));
-        separateCoordinates.push_back(row);
-        separateCoordinates.push_back(col);
+        seperatedCoordinates.push_back(row);
+        seperatedCoordinates.push_back(col);
     }
     
-    return separateCoordinates;
+    return seperatedCoordinates;
 }
 
 bool Board::boardEmpty() {
@@ -278,11 +378,13 @@ bool Board::boardEmpty() {
 
 bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
     bool canBePlaced = false;
-    // separate the projectedCoordinates to expect normal input.
+    // seperate the projectedCoordinates to expect normal input.
     // each cell should have two spaces with the first representing row 
     // and the second representing column
     // this lets us compare coordinates defined by the board.
-    std::vector<std::vector<int>> separateCoordinates;
+    std::vector<std::vector<int>> seperatedCoordinates;
+    const int COLUMN_INDEX = 1;
+    const int ROW_INDEX = 0;
     
     // case where projectedCoordinates is zero is not checked
 
@@ -301,14 +403,14 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
         else {
             // TODO: check all adjacent tiles. 
             // If at least one is not empty, than it can be placed.
-            separateCoordinates.push_back(
-                this->separateCoordinates(projectedCoordinates[0]));
+            seperatedCoordinates.push_back(
+                this->seperateCoordinates(projectedCoordinates[0]));
 
             // do not check if coordinate is on a boundary. 
             // initiate boundary checks. 
             // enter the row as first param and the column as second param. 
             canBePlaced = this->adjacentNotEmpty(
-                separateCoordinates[0][0], separateCoordinates[0][1]);
+                seperatedCoordinates[0][0], seperatedCoordinates[0][1]);
         }
 
     }
@@ -321,23 +423,28 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
         // since its sorted, can check one element to the next. 
 
         for (std::string& coordinateString : projectedCoordinates) {
-            separateCoordinates.push_back(
-                this->separateCoordinates(coordinateString));
+            seperatedCoordinates.push_back(
+                this->seperateCoordinates(coordinateString));
         }
+
 
         
         // TODO: check if all coordinates belong on the same line. 
-        // i.e. letter == letter or number == number 
+        // i.e. row == row or column == column 
         int i = 0;
         int projectedSize = projectedCoordinates.size();
         bool rowIsSame = false;
         bool columnIsSame = false;
 
-        // coordinates must be the same
-        if (separateCoordinates[0][0] != separateCoordinates[1][0]) {
+        // column must be the same
+        // compare first coordinate to second coordinate. 
+        // if the row is not equal, the column must be equal.
+        if (seperatedCoordinates[0][ROW_INDEX] 
+        != seperatedCoordinates[1][ROW_INDEX]) {
             columnIsSame = true;
         }
-        // letters must be the same
+
+        // rows must be the same
         else {
             rowIsSame = true;
         }
@@ -357,15 +464,17 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
             notAdjacentToTile = false;
         }
 
+
         // checks for coordinates belonging on the same line 
         // and if two coordinates are the same. 
         // checks if the board is empty, if not at least one tile
         // must belong next to an existing tile. 
+
         while (i < projectedSize - 1 && canBePlaced) {
-            int currentRow = separateCoordinates[i][0];
-            int currentCol = separateCoordinates[i][1];
-            int nextRow = separateCoordinates[i + 1][0];
-            int nextCol = separateCoordinates[i + 1][1];
+            int currentRow = seperatedCoordinates[i][ROW_INDEX];
+            int currentCol = seperatedCoordinates[i][COLUMN_INDEX];
+            int nextRow = seperatedCoordinates[i + 1][ROW_INDEX];
+            int nextCol = seperatedCoordinates[i + 1][COLUMN_INDEX];
 
             // TODO: check if there are any duplicate coordinates. 
             // since its sorted, can check one element to the next. 
@@ -400,8 +509,10 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
                 // if it is, the check no longer occurs.
                 // if it isn't, the check continues in
                 // the next loop. 
-                notAdjacentToTile = this->adjacentNotEmpty(
-                    currentRow, currentCol);
+                // the NOT indicates that if the adjacent is 
+                // not empty, notAdjacentToTile is false.
+                notAdjacentToTile = !this->adjacentNotEmpty(
+                    currentRow, currentCol); 
             }
 
             i += 1;
@@ -423,24 +534,30 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
             int i = 0;
 
             // use this in place of a row or column.
-            int numCoordinates = separateCoordinates.size();
+            int numCoordinates = seperatedCoordinates.size();
+
+            // placement of row and column in the std::vector<int>
+            // from seperate coordinates. 
 
             if (columnIsSame) {
-                int columnIndex = 1;
-                int columnNum = separateCoordinates[0][columnIndex];
+                // grab the first coordinates column (all must be the
+                // same)
+                int columnNum = seperatedCoordinates[0][COLUMN_INDEX];
                 while ( i < numCoordinates - 1) {
                     // whether its a row or column, increment to check 
                     // that the space between this and the next coordinate
-                    // is not empty.
-                    int rowCheck = separateCoordinates[i][columnIndex] + 1;
-                    int nextRowCol = separateCoordinates[i + 1][columnIndex];
+                    // is not empty. Coordinates are sorted, therefore only 
+                    // incrementing is required. 
+                    int rowCheck = seperatedCoordinates[i][ROW_INDEX] + 1;
+                    int nextRowCheck = seperatedCoordinates[i + 1][ROW_INDEX];
                     
 
-                    while (rowCheck < nextRowCol) {
+                    while (rowCheck < nextRowCheck) {
                         // if the cell is empty, the move is invalid. 
                         if (this->isEmpty(rowCheck, columnNum)) {
                             canBePlaced = false;
                         }
+
                         rowCheck += 1;
                     }
 
@@ -450,18 +567,20 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
             
             // row is same
             else {
-                int rowIndex = 0;
-                int rowNum = separateCoordinates[0][rowIndex];
+                // grab the first coordinates row (all must be the
+                // same)
+                int rowNum = seperatedCoordinates[0][ROW_INDEX];
                 
                 while ( i < numCoordinates - 1) {
                     // whether its a row or column, increment to check 
                     // that the space between this and the next coordinate
-                    // is not empty.
-                    int colCheck = separateCoordinates[i][rowIndex] + 1;
-                    int nextRowCol = separateCoordinates[i + 1][rowIndex];
+                    // is not empty. Coordinates are sorted, therefore only 
+                    // incrementing is required. 
+                    int colCheck = seperatedCoordinates[i][COLUMN_INDEX] + 1;
+                    int nextColCheck = seperatedCoordinates[i + 1][COLUMN_INDEX];
                     
 
-                    while (colCheck < nextRowCol) {
+                    while (colCheck < nextColCheck) {
                         // if the cell is empty, the move is invalid. 
                         if (this->isEmpty(rowNum, colCheck)) {
                             canBePlaced = false;

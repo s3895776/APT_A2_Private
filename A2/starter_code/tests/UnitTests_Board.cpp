@@ -84,9 +84,6 @@ int Board_TestPlaceTile() {
 // }
 
 
-    // // separate coordinates according to how Board treats coordinates. 
-    // // row is first, column is second
-    // std::vector<int> separateCoordinates(std::string coordinates);
 int Board_Test_SeperateCoordinates() {
     int numFailures = 0;
     Board board;
@@ -95,7 +92,7 @@ int Board_Test_SeperateCoordinates() {
 
     std::vector<std::vector<int>> seperatedCoordinates;
     for (std::string& string : coordinateList) {
-        seperatedCoordinates.push_back(board.separateCoordinates(string));
+        seperatedCoordinates.push_back(board.seperateCoordinates(string));
     }
 
     int i = 0;
@@ -134,7 +131,7 @@ int Board_Test_Empty_Board() {
     }
 
     Tile tile = Tile('A', 1);
-    board.placeTile(tile, "O14");
+    board.placeTile(tile, "A0");
 
     if (board.boardEmpty()) {
         numFailures += AssertAndReport("Empty","Not empty", "Board_Test_Empty_Board");
@@ -155,27 +152,33 @@ int Board_checkBoardAdjacency(){
     // Arrange
     Board emptyBoard;
     Board filledBoard;
+    Board filledBoard2;
+    Board filledBoard3;
     Tile tile = Tile('A', 1);
+    filledBoard.placeTile(tile, "A0");
+
+    if ( filledBoard.boardEmpty()) {
+        std::cout << "yo this board ain't filled at all";
+    }
 
     std::vector<std::string> projectedCoordinates;
     int numFailures = 0;
 
     // Act
-    //TODO: returns if the tile placement is not next to anything
 
     // 1: empty board, one tile 
     projectedCoordinates.push_back("A1");
     // place A1: expect true
     if (!emptyBoard.checkBoardAdjacency(projectedCoordinates) ) {
+        std::cout << "Failed for empty board, one tile" << std::endl;
         numFailures += 1;
     }
 
-    // 2: non-empty board, one tile 
-    filledBoard.placeTile(tile, "A0");
+    // 2: A0 filled, one tile 
     // place A1 next to A0: expect true
     if (!filledBoard.checkBoardAdjacency(projectedCoordinates)) {
+        std::cout << "Failed for A0 filled, one tile" << std::endl;
         numFailures += 1;
-
     }
     
 
@@ -183,33 +186,127 @@ int Board_checkBoardAdjacency(){
     projectedCoordinates.push_back("A3");
     // place A3 and A1: expect false
     if (emptyBoard.checkBoardAdjacency(projectedCoordinates)) {
-
+        std::cout << "Failed for empty board, invalid placement of several tiles" << std::endl;
+        numFailures += 1;
     }
 
     // 4: empty board, placement valid of several tiles
     projectedCoordinates.push_back("A2");
 
-    // place A1, A2, A3, empty board, expect true.
+    // check A1, A2, A3, empty board, expect true.
 
     if (!emptyBoard.checkBoardAdjacency(projectedCoordinates)) {
+        std::cout << "Failed for empty board, placement valid of several tiles" << std::endl;
         numFailures += 1;
 
     }
-    // 5: board non-empty, invalid placement
-    projectedCoordinates.empty();
+
+    // 5: A0 filled, invalid placement
+    projectedCoordinates.clear();
     projectedCoordinates.push_back("A3");
     projectedCoordinates.push_back("A2");
+    // for (std::string& coordinates : projectedCoordinates) {
+    //     std::cout << coordinates << std::endl;
+    // }
 
     // place A2, A3, expect false.
 
     if (filledBoard.checkBoardAdjacency(projectedCoordinates)) {
+        std::cout << "Failed for A0 filled invalid placement" << std::endl;
         numFailures += 1;
 
     }
-    // 6: board non-empty, valid placement. 
+
+    // 6: A0 filled, valid placement. 
     // place A1, A2, A3, expect true.
     projectedCoordinates.push_back("A1");
+
+    // for (std::string& coordinate : projectedCoordinates) {
+    //     std::cout << coordinate << std::endl;
+    // }
     if (!filledBoard.checkBoardAdjacency(projectedCoordinates)) {
+        std::cout << "Failed for A0 filled, valid placement." << std::endl;
+        numFailures += 1;
+    }
+
+    
+    projectedCoordinates.clear();
+    projectedCoordinates.push_back("A5");
+    projectedCoordinates.push_back("A8");
+    // between A5 and A8, some check for A6 should appear 
+    // also ensure that the other non-empty check does not 
+    // get in the way. 
+    filledBoard2.placeTile(tile, "B5");
+    
+
+    // 7. No tiles exist between two. 
+    // expect false.
+    if (filledBoard2.checkBoardAdjacency(projectedCoordinates)) {
+        std::cout << "Failed for A5-A8, none filled, invalid placement." << std::endl;
+        numFailures += 1;
+    }
+
+    // 8. One tile exists but others do not. 
+    // expect false
+    filledBoard2.placeTile(tile, "A6");
+
+    if (filledBoard2.checkBoardAdjacency(projectedCoordinates)) {
+        std::cout << "Failed for for A5-A8, A6 filled, invalid placement." << std::endl;
+        numFailures += 1;
+    }
+
+    // 9. Tiles exist between two of them
+    // expect true.
+    filledBoard2.placeTile(tile, "A7");
+    if (!filledBoard2.checkBoardAdjacency(projectedCoordinates)) {
+        std::cout << "Failed for for A5-A8, A6-A7 filled, valid placement." << std::endl;
+        numFailures += 1;
+    }
+
+    // do the same for 10-12 but with the same row instead.
+
+    // 10. No tiles exist between two. 
+    // expect false.
+
+    projectedCoordinates.clear();
+    projectedCoordinates.push_back("A5");
+    projectedCoordinates.push_back("D5");
+    filledBoard3.placeTile(tile, "A4");
+
+    if (filledBoard3.checkBoardAdjacency(projectedCoordinates)) {
+        std::cout << "Failed for A5-D5, none filled, invalid placement." << std::endl;
+        numFailures += 1;
+    }
+
+    // 11. One tile exists but others do not. 
+    // expect false
+    filledBoard3.placeTile(tile, "B5");
+
+    if (filledBoard3.checkBoardAdjacency(projectedCoordinates)) {
+        std::cout << "Failed for for A5-D5, B5 filled, invalid placement." << std::endl;
+        numFailures += 1;
+    }
+
+    // 12. Tiles exist between two of them
+    // expect true.
+    filledBoard3.placeTile(tile, "C5");
+    if (!filledBoard3.checkBoardAdjacency(projectedCoordinates)) {
+        std::cout << "Failed for for A5-D5, B5-C5 filled, valid placement." << std::endl;
+        numFailures += 1;
+    }
+
+    // 13: for board3, check B6 and A5: should be false,
+    //  can't place in different directions.
+    projectedCoordinates.clear();
+    projectedCoordinates.push_back("A5");
+    projectedCoordinates.push_back("B6");
+    projectedCoordinates.push_back("B7");
+    projectedCoordinates.push_back("B8");
+    projectedCoordinates.push_back("B9");
+    
+
+    if (filledBoard3.checkBoardAdjacency(projectedCoordinates)) {
+        std::cout << "Failed for for A5 & B6-B9, B5 filled, invalid placement." << std::endl;
         numFailures += 1;
     }
 
@@ -232,6 +329,7 @@ int Board_adjacentNotEmpty() {
     board.placeTile(tile,"O0");
     board.placeTile(tile,"O14");
     board.placeTile(tile, "G5");
+    
 
 
     // Assert
@@ -271,6 +369,16 @@ int Board_adjacentNotEmpty() {
 
     // check O13
     if (!board.adjacentNotEmpty(14,13)) {
+        numFailures += 1;
+    }
+    
+    // check A2 
+    if (board.adjacentNotEmpty(0,2)) {
+        numFailures += 1;
+    }
+
+    // check A3 
+    if (board.adjacentNotEmpty(0,3)) {
         numFailures += 1;
     }
 
