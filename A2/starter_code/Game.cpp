@@ -601,14 +601,11 @@ std::string Game::gameInput(std::string firstPlayer) {
                                         board.placeTile(tile, coordinates);
                                         players[currentPlayerIndex].addScore(turnScore);
                                         inputNotReceived = false;
-                                    }
-                                    else {
+                                    } else {
                                         turnScore =- tile.getValue();
-                                        layers[currentPlayerIndex].fillHand(tile);
+                                        players[currentPlayerIndex].fillHand(tile);
                                         std::cout << players[currentPlayerIndex].getHand();
-
                                     }
-
                                 }
 
                             }                            
@@ -781,7 +778,6 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::s
         tilesPlaced = true;
     }
     
-
     // TODO: implement player action: placement
     // syntax: place <tile1> at <grid location>
     // need to implement the checks that are necessary.
