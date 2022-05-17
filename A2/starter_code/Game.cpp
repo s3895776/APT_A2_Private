@@ -6,14 +6,14 @@
 
 Game::Game() {
     tileBag = LinkedList();  
-    std::vector<std::vector<Tile>> tilesPlaced(15, std::vector<Tile>(15, Tile()));
+    std::vector<std::vector<Tile>> scoreTilesPlaced(15, std::vector<Tile>(15, Tile()));
     std::random_device seed;
     this->seed = seed();
 
 }
 Game::Game(int seed) {
     tileBag = LinkedList();  
-    std::vector<std::vector<Tile>> tilesPlaced(15, std::vector<Tile>(15, Tile()));
+    std::vector<std::vector<Tile>> scoreTilesPlaced(15, std::vector<Tile>(15, Tile()));
     this->seed = seed; 
 }
 
@@ -605,15 +605,16 @@ std::string Game::gameInput(std::string firstPlayer) {
                                     Tile tile = players[currentPlayerIndex].dropTile(tileLetter);
                                     std::vector<std::string> projectedCoordinates;
                                     projectedCoordinates.push_back(coordinates);
-                                    int row = board.getRow(coordinates);
-                                    int col = board.getCol(coordinates);
-                                    tilesPlaced[row][col] = tile;
+                                    
                                    
                                     if (this->placeTiles(currentPlayerIndex, projectedCoordinates)) {
 
                                         // start to placeTiles (starts from lowest recursion)
                                         board.placeTile(tile, coordinates);
-                                        int playerScore = board.getScore(tilesPlaced);
+                                        int row = board.getRow(coordinates);
+                                        int col = board.getCol(coordinates);
+                                        scoreTilesPlaced[row][col] = tile;
+                                        int playerScore = board.getScore(scoreTilesPlaced);
                                         players[currentPlayerIndex].addScore(playerScore);
                                         inputNotReceived = false;
                                         // replace all tiles.
@@ -633,7 +634,7 @@ std::string Game::gameInput(std::string firstPlayer) {
                                     }
                                     for (int i = 0; i < ROW; ++i){
                                         for (int j = 0; j < COLUMN; ++j){
-                                            tilesPlaced[i][j] = Tile();
+                                            scoreTilesPlaced[i][j] = Tile();
                                         }
                                     }
                                 }
@@ -791,7 +792,7 @@ bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projected
                 if (players[currentPlayerIndex].hasTile(tileLetter)) {
                     // drop the tile before recursing.
                     tileToPlace = players[currentPlayerIndex].dropTile(tileLetter);
-
+                    
                     // // TEST: cheat knowledge on tiles in the hand. 
                     // std::cout << players[currentPlayerIndex].getHand();
 
@@ -804,7 +805,8 @@ bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projected
                     validMove = this->placeTiles(currentPlayerIndex, projectedCoordinates);
                     if (!validMove) {
                         players[currentPlayerIndex].fillHand(tileToPlace);
-                        tilesPlaced[board.getRow(coordinates)][board.getCol(coordinates)] = tileToPlace;
+                        
+                        
                     }
 
                 }
@@ -820,6 +822,9 @@ bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projected
         std::string coordinates = playerInput.substr(11);
         // Tile tile = players[currentPlayerIndex].dropTile(tileLetter);
         // start to placeTiles (starts from lowest recursion)
+        int row = board.getRow(coordinates);
+        int col = board.getCol(coordinates);
+        scoreTilesPlaced[row][col] = tileToPlace;
         board.placeTile(tileToPlace, coordinates);
         tilesPlaced = true;
     }

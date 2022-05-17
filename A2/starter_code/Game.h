@@ -117,7 +117,7 @@ class Game {
         Board board;
         // return index of player stored in vector
         int searchPlayer(std::string currentPlayer);
-        std::vector<std::vector<Tile>> tilesPlaced;
+        std::vector<std::vector<Tile>> scoreTilesPlaced;
         
 };
 
