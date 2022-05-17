@@ -49,7 +49,7 @@ public:
     std::string displayTile(int row, int col);
     /* Prints the rows of the board */
     std::string printRow(int row, std::string colLetter);
-    int getScore(std::string coordinates);
+    int getScore(std::vector<std::vector<Tile>> openList);
     /* Displays the board as a 2D grid */
     void displayBoard();
     

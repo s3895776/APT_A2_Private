@@ -6,7 +6,6 @@
 
 Game::Game() {
     tileBag = LinkedList();
-    turnScore = 0;
     // board = new Board();
     
 }
@@ -593,16 +592,16 @@ std::string Game::gameInput(std::string firstPlayer) {
                                     std::cout << players[currentPlayerIndex].getHand();
                                     std::vector<std::string> projectedCoordinates;
                                     projectedCoordinates.push_back(coordinates);
-                                    turnScore =+ tile.getValue();
+                                    
                                     if (this->placeTiles(currentPlayerIndex, true, projectedCoordinates)) {
 
                                         std::string coordinates = playerInput.substr(11);
                                         // start to placeTiles (starts from lowest recursion)
                                         board.placeTile(tile, coordinates);
-                                        players[currentPlayerIndex].addScore(turnScore);
+                                        tilesPlaced[board.getRow(coordinates)][board.getCol(coordinates)] = tile;
+                                        // players[currentPlayerIndex].addScore();
                                         inputNotReceived = false;
                                     } else {
-                                        turnScore =- tile.getValue();
                                         players[currentPlayerIndex].fillHand(tile);
                                         std::cout << players[currentPlayerIndex].getHand();
                                     }
