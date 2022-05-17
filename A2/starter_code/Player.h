@@ -61,6 +61,8 @@ class Player {
         /* REPLACE TILE - check if letter is in the hand*/
         bool hasLetter(Letter letter);
 
+        int sizeOfHand();
+
 
     private:
         LinkedList hand;

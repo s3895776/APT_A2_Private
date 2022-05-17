@@ -343,20 +343,20 @@ void Board::saveBoard(std::ofstream& file){
  
 }
 
-// seperate coordinates
-std::vector<int> Board::seperateCoordinates(const std::string coordinates) {
+// separate coordinates
+std::vector<int> Board::separateCoordinates(const std::string coordinates) {
     // verify coordinates
-    std::vector<int> seperatedCoordinates;
+    std::vector<int> separatedCoordinates;
 
     if (this->validCoordinate(coordinates)) {
         // use std::to_string on Row and Col types.
         int row = ( getRow(coordinates));
         int col = ( getCol(coordinates));
-        seperatedCoordinates.push_back(row);
-        seperatedCoordinates.push_back(col);
+        separatedCoordinates.push_back(row);
+        separatedCoordinates.push_back(col);
     }
     
-    return seperatedCoordinates;
+    return separatedCoordinates;
 }
 
 bool Board::boardEmpty() {
@@ -378,11 +378,11 @@ bool Board::boardEmpty() {
 
 bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
     bool canBePlaced = false;
-    // seperate the projectedCoordinates to expect normal input.
+    // separate the projectedCoordinates to expect normal input.
     // each cell should have two spaces with the first representing row 
     // and the second representing column
     // this lets us compare coordinates defined by the board.
-    std::vector<std::vector<int>> seperatedCoordinates;
+    std::vector<std::vector<int>> separatedCoordinates;
     const int COLUMN_INDEX = 1;
     const int ROW_INDEX = 0;
     
@@ -403,14 +403,15 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
         else {
             // TODO: check all adjacent tiles. 
             // If at least one is not empty, than it can be placed.
-            seperatedCoordinates.push_back(
-                this->seperateCoordinates(projectedCoordinates[0]));
+            separatedCoordinates.push_back(
+                this->separateCoordinates(projectedCoordinates[0]));
 
             // do not check if coordinate is on a boundary. 
             // initiate boundary checks. 
             // enter the row as first param and the column as second param. 
             canBePlaced = this->adjacentNotEmpty(
-                seperatedCoordinates[0][0], seperatedCoordinates[0][1]);
+                separatedCoordinates[0][ROW_INDEX],
+                 separatedCoordinates[0][COLUMN_INDEX]);
         }
 
     }
@@ -423,8 +424,8 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
         // since its sorted, can check one element to the next. 
 
         for (std::string& coordinateString : projectedCoordinates) {
-            seperatedCoordinates.push_back(
-                this->seperateCoordinates(coordinateString));
+            separatedCoordinates.push_back(
+                this->separateCoordinates(coordinateString));
         }
 
 
@@ -439,8 +440,8 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
         // column must be the same
         // compare first coordinate to second coordinate. 
         // if the row is not equal, the column must be equal.
-        if (seperatedCoordinates[0][ROW_INDEX] 
-        != seperatedCoordinates[1][ROW_INDEX]) {
+        if (separatedCoordinates[0][ROW_INDEX] 
+        != separatedCoordinates[1][ROW_INDEX]) {
             columnIsSame = true;
         }
 
@@ -471,10 +472,10 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
         // must belong next to an existing tile. 
 
         while (i < projectedSize - 1 && canBePlaced) {
-            int currentRow = seperatedCoordinates[i][ROW_INDEX];
-            int currentCol = seperatedCoordinates[i][COLUMN_INDEX];
-            int nextRow = seperatedCoordinates[i + 1][ROW_INDEX];
-            int nextCol = seperatedCoordinates[i + 1][COLUMN_INDEX];
+            int currentRow = separatedCoordinates[i][ROW_INDEX];
+            int currentCol = separatedCoordinates[i][COLUMN_INDEX];
+            int nextRow = separatedCoordinates[i + 1][ROW_INDEX];
+            int nextCol = separatedCoordinates[i + 1][COLUMN_INDEX];
 
             // TODO: check if there are any duplicate coordinates. 
             // since its sorted, can check one element to the next. 
@@ -534,22 +535,22 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
             int i = 0;
 
             // use this in place of a row or column.
-            int numCoordinates = seperatedCoordinates.size();
+            int numCoordinates = separatedCoordinates.size();
 
             // placement of row and column in the std::vector<int>
-            // from seperate coordinates. 
+            // from separate coordinates. 
 
             if (columnIsSame) {
                 // grab the first coordinates column (all must be the
                 // same)
-                int columnNum = seperatedCoordinates[0][COLUMN_INDEX];
+                int columnNum = separatedCoordinates[0][COLUMN_INDEX];
                 while ( i < numCoordinates - 1) {
                     // whether its a row or column, increment to check 
                     // that the space between this and the next coordinate
                     // is not empty. Coordinates are sorted, therefore only 
                     // incrementing is required. 
-                    int rowCheck = seperatedCoordinates[i][ROW_INDEX] + 1;
-                    int nextRowCheck = seperatedCoordinates[i + 1][ROW_INDEX];
+                    int rowCheck = separatedCoordinates[i][ROW_INDEX] + 1;
+                    int nextRowCheck = separatedCoordinates[i + 1][ROW_INDEX];
                     
 
                     while (rowCheck < nextRowCheck) {
@@ -569,15 +570,15 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
             else {
                 // grab the first coordinates row (all must be the
                 // same)
-                int rowNum = seperatedCoordinates[0][ROW_INDEX];
+                int rowNum = separatedCoordinates[0][ROW_INDEX];
                 
                 while ( i < numCoordinates - 1) {
                     // whether its a row or column, increment to check 
                     // that the space between this and the next coordinate
                     // is not empty. Coordinates are sorted, therefore only 
                     // incrementing is required. 
-                    int colCheck = seperatedCoordinates[i][COLUMN_INDEX] + 1;
-                    int nextColCheck = seperatedCoordinates[i + 1][COLUMN_INDEX];
+                    int colCheck = separatedCoordinates[i][COLUMN_INDEX] + 1;
+                    int nextColCheck = separatedCoordinates[i + 1][COLUMN_INDEX];
                     
 
                     while (colCheck < nextColCheck) {
