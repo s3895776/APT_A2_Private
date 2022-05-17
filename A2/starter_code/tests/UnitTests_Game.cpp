@@ -112,14 +112,31 @@ int Game_InitaliseBag(){
 int Game_ValidNames(){
     // Arrange
     Game g;
-    LinkedList t;
 
     // Act
-    //TODO
-
-    // Assert
     int numFailures = 0;
-    numFailures += AssertAndReport("TODO", "", "Game_ValidNames");
+
+    if ( !g.validName("A") ) {
+        numFailures += AssertAndReport("A returns true", "returned false", "Game_validName");
+    }
+    if ( !g.validName("ABC") ) {
+        numFailures += AssertAndReport("ABC returns true", "returned false", "Game_validName");
+    }
+    if ( !g.validName("U $") ) {
+        numFailures += AssertAndReport("U $ returns true", "returned false", "Game_validName");
+    }
+    if ( !g.validName("1") ) {
+        numFailures += AssertAndReport("1 returns true", "returned false", "Game_validName");
+    }
+    if ( !g.validName("$") ) {
+        numFailures += AssertAndReport("$ returns true", "returned false", "Game_validName");
+    }
+    if ( g.validName("abc") ) {
+        numFailures += AssertAndReport("abc returns false", "returned true", "Game_validName");
+    }
+    if ( g.validName("the X") ) {
+        numFailures += AssertAndReport("the X returns false", "returned true", "Game_validName");
+    }
 
     return numFailures;
 }
@@ -185,7 +202,7 @@ int Game_RunTests(){
     int numFailures = 0;
 
     //numFailures += Game_MainMenuChoices();
-    //numFailures += Game_ValidNames();
+    numFailures += Game_ValidNames();
     numFailures += Game_InitaliseBag();
     numFailures += Game_Save();
     //numFailures += Game_Load();
