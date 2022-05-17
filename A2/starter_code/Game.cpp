@@ -665,27 +665,8 @@ std::string Game::gameInput(std::string firstPlayer) {
                                 inputNotReceived = false;
                                 playerInput.erase(0, pos + delimiter.length());
 
-                                Letter letter = playerInput[0];
-                                // check if player's hand has the letter from player input
-                                if (this->players[currentPlayerIndex].hasLetter(letter)) {
-                                // drop the tile
-                                Tile droppedTile = this->players[currentPlayerIndex].dropTile(letter);
-                                // add the dropped tile back to the end of bag
-                                this->tileBag.AddTile(droppedTile);
-                                
-                                // grab the first tile from bag if the bag is not empty
-                                if (tileBag.Count() > 0) {
-                                    Tile frontTile = this->tileBag.DrawTile();
-                                    // add the new tile to the player's hand
-                                    this->players[currentPlayerIndex].fillHand(frontTile);
-                                }
-
-                                // replace action done
-                                inputNotReceived = false;
-
                                 // player has not skipped turn
                                 players[currentPlayerIndex].turnNotSkipped();
-                        
                             }
 
                             // failed to replace the letter: cannot replace what player doesn't have
