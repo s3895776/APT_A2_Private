@@ -157,10 +157,10 @@ int LinkedList::GetTileValue(Letter letter){
 std::string LinkedList::ToString(){
    std::string s = "";
 
-   // unnecessary, unless you want to modify s.
-   // if (this->head == nullptr) {
-   //    s = "";
-   // }
+   //unnecessary, unless you want to modify s.
+   if (this->head == nullptr) {
+      s = "EMPTY";
+   }
 
    Node* curr = this->head;
    while (curr != nullptr){

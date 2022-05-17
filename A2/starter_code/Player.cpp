@@ -87,17 +87,28 @@ std::string Player::turnNotSkipped() {
 }
 
 bool Player::skippedTwoTurns() {
-    bool twoOrMoreTurns = false;
 
-    if (turnsSkipped >= 2) {
-        twoOrMoreTurns = true;
-    }
-
-    return twoOrMoreTurns;
+    return (turnsSkipped >= 2);
 }
 
 std::string Player::printScore() {
     std::cout << "Score for " << this->getName();
     std::cout << ": " << this->getScore() << std::endl;
     return "";
+}
+
+bool Player::hasLetter(Letter letter) {
+    bool letterFound = false;
+    std::string handString = this->getHand();
+    int handStringLength = handString.length();
+    for (int i = 0; i < handStringLength; ++i) {
+        if (handString[i] == letter) {
+            letterFound = true;
+        }
+    }
+    return letterFound;
+}
+
+int Player::sizeOfHand() {
+    return this->hand.Count();
 }

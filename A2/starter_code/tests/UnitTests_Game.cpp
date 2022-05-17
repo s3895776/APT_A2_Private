@@ -36,30 +36,17 @@ int Game_Save(){
     post >> name;
     post >> score;
     // will only take the first character (won't work for a full hand)
-    // post >> hand;
-    std::getline(post, hand);
+    post >> hand;
+    //std::getline(post, hand);
+    std::cout << hand << std::endl;
 
     numFailures += AssertAndReport(name, "PLAYERONE", "Game_Save_Name");
     numFailures += AssertAndReport(score, 0, "Game_Save_Score");
-    numFailures += AssertAndReport(hand, "", "Game_Save_Hand");
+    numFailures += AssertAndReport(hand, "EMPTY", "Game_Save_Hand");
 
     return numFailures;
 }
 
-int Game_Load(){
-    // Arrange
-    Game g;
-    //g.AddPlayer();
-
-    // Act
-    //TODO
-
-    // Assert
-    int numFailures = 0;
-    numFailures += AssertAndReport("TODO", "", "Game_Load");
-
-    return numFailures;
-}
 
 int Game_InitaliseBag(){
     // Arrange
@@ -112,28 +99,60 @@ int Game_InitaliseBag(){
 int Game_ValidNames(){
     // Arrange
     Game g;
-    LinkedList t;
 
     // Act
-    //TODO
-
-    // Assert
     int numFailures = 0;
-    numFailures += AssertAndReport("TODO", "", "Game_ValidNames");
+
+    if ( !g.validName("A") ) {
+        numFailures += AssertAndReport("A returns true", "returned false", "Game_validName");
+    }
+    if ( !g.validName("ABC") ) {
+        numFailures += AssertAndReport("ABC returns true", "returned false", "Game_validName");
+    }
+    if ( !g.validName("U $") ) {
+        numFailures += AssertAndReport("U $ returns true", "returned false", "Game_validName");
+    }
+    if ( !g.validName("1") ) {
+        numFailures += AssertAndReport("1 returns true", "returned false", "Game_validName");
+    }
+    if ( !g.validName("$") ) {
+        numFailures += AssertAndReport("$ returns true", "returned false", "Game_validName");
+    }
+    if ( g.validName("abc") ) {
+        numFailures += AssertAndReport("abc returns false", "returned true", "Game_validName");
+    }
+    if ( g.validName("the X") ) {
+        numFailures += AssertAndReport("the X returns false", "returned true", "Game_validName");
+    }
 
     return numFailures;
 }
 
-int Game_MainMenuChoices(){
+int Game_ValidMainMenuChoice(){
     // Arrange
     Game g;
 
     // Act
-    //TODO
-
-    // Assert
     int numFailures = 0;
-    numFailures += AssertAndReport("TODO", "", "Game_MainMenuChoices");
+
+    if ( !g.validMainMenuChoice(1) ) {
+        numFailures += AssertAndReport("1 returns true", "returned false", "Game_ValidMainMenuChoice");
+    }
+    if ( !g.validMainMenuChoice(2) ) {
+        numFailures += AssertAndReport("2 returns true", "returned false", "Game_ValidMainMenuChoice");
+    }
+    if ( !g.validMainMenuChoice(3) ) {
+        numFailures += AssertAndReport("3 returns true", "returned false", "Game_ValidMainMenuChoice");
+    }
+    if ( !g.validMainMenuChoice(4) ) {
+        numFailures += AssertAndReport("4 returns true", "returned false", "Game_ValidMainMenuChoice");
+    }
+    if ( g.validMainMenuChoice(0) ) {
+        numFailures += AssertAndReport("0 returns false", "returned true", "Game_ValidMainMenuChoice");
+    }
+    if ( g.validMainMenuChoice(10) ) {
+        numFailures += AssertAndReport("10 returns false", "returned true", "Game_ValidMainMenuChoice");
+    }
 
     return numFailures;
 }
@@ -184,11 +203,10 @@ int Game_validatePlacementInput() {
 int Game_RunTests(){
     int numFailures = 0;
 
-    //numFailures += Game_MainMenuChoices();
-    //numFailures += Game_ValidNames();
+    numFailures += Game_ValidMainMenuChoice();
+    numFailures += Game_ValidNames();
     numFailures += Game_InitaliseBag();
     numFailures += Game_Save();
-    //numFailures += Game_Load();
     numFailures += Game_validatePlacementInput();
 
     std::cout << std::endl;
