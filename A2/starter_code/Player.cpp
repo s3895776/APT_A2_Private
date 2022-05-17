@@ -87,13 +87,8 @@ std::string Player::turnNotSkipped() {
 }
 
 bool Player::skippedTwoTurns() {
-    bool twoOrMoreTurns = false;
 
-    if (turnsSkipped >= 2) {
-        twoOrMoreTurns = true;
-    }
-
-    return twoOrMoreTurns;
+    return (turnsSkipped >= 2);
 }
 
 std::string Player::printScore() {

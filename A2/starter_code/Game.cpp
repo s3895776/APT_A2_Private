@@ -616,10 +616,12 @@ std::string Game::gameInput(std::string firstPlayer) {
                                         // replace all tiles.
                                         // keep calling the players hand size until
                                         // the hand reaches seven. 
-                                        while (players[currentPlayerIndex].sizeOfHand() < MAX_HAND_CAPACITY) {
+                                        while ((players[currentPlayerIndex].sizeOfHand() < MAX_HAND_CAPACITY) && 
+                                        (tileBag.Count() > 0)) {
                                             players[currentPlayerIndex].fillHand(tileBag.DrawTile());
                                         }
-
+                                        // players turn not skipped. 
+                                        players[currentPlayerIndex].turnNotSkipped();
                                     } 
                                     
                                     else {
@@ -661,12 +663,37 @@ std::string Game::gameInput(std::string firstPlayer) {
                                 this->players[currentPlayerIndex].fillHand(frontTile);
                                 // replace action done
                                 inputNotReceived = false;
+                                playerInput.erase(0, pos + delimiter.length());
+
+                                Letter letter = playerInput[0];
+                                // check if player's hand has the letter from player input
+                                if (this->players[currentPlayerIndex].hasLetter(letter)) {
+                                // drop the tile
+                                Tile droppedTile = this->players[currentPlayerIndex].dropTile(letter);
+                                // add the dropped tile back to the end of bag
+                                this->tileBag.AddTile(droppedTile);
+                                
+                                // grab the first tile from bag if the bag is not empty
+                                if (tileBag.Count() > 0) {
+                                    Tile frontTile = this->tileBag.DrawTile();
+                                    // add the new tile to the player's hand
+                                    this->players[currentPlayerIndex].fillHand(frontTile);
+                                }
+
+                                // replace action done
+                                inputNotReceived = false;
+
+                                // player has not skipped turn
+                                players[currentPlayerIndex].turnNotSkipped();
+                        
                             }
+
                             // failed to replace the letter: cannot replace what player doesn't have
                             else {
                                 std::cout << "Invalid Input. Cannot replace what you don't have." << std::endl;
                             }
                         }
+                        
                         // failed to replace the letter: no tile left in bag
                         else {
                             std::cout << "Failed to replace. No tile left in the bag." << std::endl;
@@ -676,6 +703,7 @@ std::string Game::gameInput(std::string firstPlayer) {
                     // pass
                     else if (playerAction == "pass") {
                         inputNotReceived = false;
+                        players[currentPlayerIndex].skippedTurn();
                     }
 
                     // save game
