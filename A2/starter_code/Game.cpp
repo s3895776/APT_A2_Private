@@ -340,7 +340,7 @@ void Game::loadPlayerHand(std::string hand, int playerIndex) {
         int j = 0;
         // append the first tile from the hand so long as the char is not comma
         // keep doing it only if index does not exceed the length of hand string
-        while ((hand[j] != ',') && (j < hand.length())) {
+        while ((hand[j] != ',') && (j < (int)hand.length())) {
             tileString += hand[j];
             ++j;
         }
@@ -353,7 +353,7 @@ void Game::loadPlayerHand(std::string hand, int playerIndex) {
         this->players[playerIndex].fillHand(Tile(letter, value));
 
         // the last tile in hand
-        if (j == hand.length()) {
+        if (j == (int)hand.length()) {
             hand = "";
         }
         // not last tile in hand so accounts for ", " which is index + 2
@@ -390,7 +390,7 @@ void Game::loadTileBag(std::string tileBagState) {
         int j = 0;
         // append the first tile from the state so long as the char is not comma
         // keep doing it only if index does not exceed the length of tileBagState string
-        while ((tileBagState[j] != ',') && (j < tileBagState.length())) {
+        while ((tileBagState[j] != ',') && (j < (int)tileBagState.length())) {
             tileString += tileBagState[j];
             ++j;
         }
@@ -403,7 +403,7 @@ void Game::loadTileBag(std::string tileBagState) {
         this->tileBag.AddTile(tile);
 
         // the last tile in bag
-        if (j == tileBagState.length()) {
+        if (j == (int)tileBagState.length()) {
             tileBagState = "";
         }
         // not last tile in bag so accounts for ", " which is index + 2
