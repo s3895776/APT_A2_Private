@@ -13,13 +13,15 @@ Player::~Player() {
 Player::Player(Player& other):
     hand(other.hand),
     name(other.name),
-    score(other.score)
+    score(other.score),
+    turnsSkipped(other.turnsSkipped)
 {}
 
 Player::Player(const Player& other): 
     hand(other.hand),
     name(other.name),
-    score(other.score)
+    score(other.score),
+    turnsSkipped(other.turnsSkipped)
 {}
 
 bool Player::hasTile(Letter letter){

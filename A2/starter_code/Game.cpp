@@ -299,7 +299,7 @@ std::string Game::loadGame() {
         const int NO_OF_PLAYERS = 2;
         // add players into vector
         for (int i=0; i < NO_OF_PLAYERS; ++i) {
-             Game::AddPlayer(Player());
+            Game::AddPlayer(Player());
         }
         // load name, score and hand of each player
         std::string name, hand, score;
@@ -887,19 +887,22 @@ std::string Game::gameEnd() {
     // Score for <player 2 name>: 000
     // Player <winner player name> won!
     std::cout << "Game over" << std::endl;
-    Player playerHighestScore = players[0];
+    int highestScore = players[0].getScore();
+    std::string winnerName = players[0].getName();
 
     for (Player& player : players) {
         player.printScore();
 
-        if (playerHighestScore.getScore() < player.getScore()) {
-            playerHighestScore = player;
+        if (highestScore < player.getScore()) {
+            highestScore = player.getScore();
+            winnerName = player.getName();
         }
 
     }
 
-    std::cout << "Player " << playerHighestScore.getName() << " won!" 
+    std::cout << "Player " << winnerName << " won!" 
     << std::endl;
+
 
     return "";
 }
