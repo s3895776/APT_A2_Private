@@ -153,10 +153,61 @@ int Board_Test_Empty_Board() {
 
 int Board_checkBoardAdjacency(){
     // Arrange
-    Board board;
+    Board emptyBoard;
+    Board filledBoard;
+    Tile tile = Tile('A', 1);
+
+    std::vector<std::string> projectedCoordinates;
 
     // Act
-    //TODO
+    //TODO: returns if the tile placement is not next to anything
+
+    // 1: empty board, one tile 
+    projectedCoordinates.push_back("A1");
+    // place A1: expect true
+    if (!emptyBoard.checkBoardAdjacency(projectedCoordinates) ) {
+
+    }
+
+    // 2: non-empty board, one tile 
+    filledBoard.placeTile(tile, "A0");
+    // place A1 next to A0: expect true
+    if (!filledBoard.checkBoardAdjacency(projectedCoordinates)) {
+
+    }
+    
+
+    // 3: empty board, invalid placement of several tiles
+    projectedCoordinates.push_back("A3");
+    // place A3 and A1: expect false
+    if (emptyBoard.checkBoardAdjacency(projectedCoordinates)) {
+
+    }
+
+    // 4: empty board, placement valid of several tiles
+    projectedCoordinates.push_back("A2");
+
+    // place A1, A2, A3, empty board, expect true.
+
+    if (!emptyBoard.checkBoardAdjacency(projectedCoordinates)) {
+
+    }
+    // 5: board non-empty, invalid placement
+    projectedCoordinates.empty();
+    projectedCoordinates.push_back("A3");
+    projectedCoordinates.push_back("A2");
+
+    // place A2, A3, expect false.
+
+    if (filledBoard.checkBoardAdjacency(projectedCoordinates)) {
+
+    }
+    // 6: board non-empty, valid placement. 
+    // place A1, A2, A3, expect true.
+    projectedCoordinates.push_back("A1");
+    if (!filledBoard.checkBoardAdjacency(projectedCoordinates)) {
+
+    }
 
     // Assert
     int numFailures = 0;
@@ -173,10 +224,79 @@ int Board_adjacentNotEmpty() {
 
     // Act
     //TODO: checks for adjacent coordinates and boundary coordinates.
+    board.placeTile(tile,"A0");
+    board.placeTile(tile,"A14");
+    board.placeTile(tile,"O0");
+    board.placeTile(tile,"O14");
+    board.placeTile(tile, "G5");
+
 
     // Assert
     int numFailures = 0;
-    numFailures += AssertAndReport("TODO", "", "Game_MainMenuChoices");
+    
+    // check B0, A1, B1
+    // B0 is true
+    if (!board.adjacentNotEmpty(1,0)) {
+        numFailures += 1;
+    }
+    if (!board.adjacentNotEmpty(0,1)) {
+        numFailures += 1;
+    }
+
+    // B1 should be false
+    if (board.adjacentNotEmpty(1,1)) {
+        numFailures += 1;
+    }
+
+    // check B14, A13, B13
+    if (!board.adjacentNotEmpty(1,14)) {
+            numFailures += 1;
+        }
+
+    if (!board.adjacentNotEmpty(0,13)) {
+            numFailures += 1;
+        }
+
+    if (board.adjacentNotEmpty(1,13)) {
+            numFailures += 1;
+        }
+
+    // check O1
+    if (!board.adjacentNotEmpty(14,1)) {
+        numFailures += 1;
+    }
+
+    // check O13
+    if (!board.adjacentNotEmpty(14,13)) {
+        numFailures += 1;
+    }
+
+    // check G6, G4, F5, H5,(true)  F4, H6 (false)
+    // G == 6
+    // F == 5
+    // H == 7 
+    if (!board.adjacentNotEmpty(6,6)) {
+        numFailures += 1;
+    }
+    if (!board.adjacentNotEmpty(6,4)) {
+        numFailures += 1;
+    }
+    if (!board.adjacentNotEmpty(5,5)) {
+        numFailures += 1;
+    }
+    if (!board.adjacentNotEmpty(7,5)) {
+        numFailures += 1;
+    }
+    if (board.adjacentNotEmpty(5,4)) {
+        numFailures += 1;
+    }
+    if (board.adjacentNotEmpty(7,6)) {
+        numFailures += 1;
+    }
+
+    if (numFailures > 0) {
+        AssertAndReport(numFailures, 0, "Board_adjacentNotEmpty()");
+    }
 
     return numFailures;
 }

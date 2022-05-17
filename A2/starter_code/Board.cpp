@@ -490,19 +490,23 @@ bool Board::adjacentNotEmpty(int rowCoordinate, int colCoordinate) {
     bool checkAbove = true;
     bool checkBelow = true;
 
-    if (rowCoordinate == ROW) {
-        checkRight = false;
+    int lastRow = ROW - 1;
+    int lastCol = COLUMN - 1;
+
+    // last row: check below is false
+    if (rowCoordinate == lastRow) {
+        checkBelow = false;
     }
     else if (rowCoordinate == 0) {
-        checkLeft = false;
+        checkAbove = false;
     }
 
-    if (colCoordinate == COLUMN) {
-        checkBelow = false;
+    if (colCoordinate == lastCol) {
+        checkRight = false;
     }
 
     else if (colCoordinate == 0) {
-        checkAbove = false;
+        checkLeft = false;
     }
 
     if (checkAbove) {
@@ -533,5 +537,6 @@ bool Board::adjacentNotEmpty(int rowCoordinate, int colCoordinate) {
             adjacentNotEmpty = true;
         }
     }
+
     return adjacentNotEmpty;
 }
