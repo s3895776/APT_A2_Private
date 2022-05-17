@@ -5,9 +5,16 @@
 #include <algorithm>
 
 Game::Game() {
-    tileBag = LinkedList();
-    // board = new Board();
-    
+    tileBag = LinkedList();  
+
+    std::random_device seed;
+    this->seed = seed();
+
+}
+Game::Game(int seed) {
+    tileBag = LinkedList();  
+
+    this->seed = seed; 
 }
 
 Game::~Game() {
@@ -340,7 +347,7 @@ void Game::loadPlayerHand(std::string hand, int playerIndex) {
         int j = 0;
         // append the first tile from the hand so long as the char is not comma
         // keep doing it only if index does not exceed the length of hand string
-        while ((hand[j] != ',') && (j < hand.length())) {
+        while ((hand[j] != ',') && (j < (int)hand.length())) {
             tileString += hand[j];
             ++j;
         }
@@ -353,7 +360,7 @@ void Game::loadPlayerHand(std::string hand, int playerIndex) {
         this->players[playerIndex].fillHand(Tile(letter, value));
 
         // the last tile in hand
-        if (j == hand.length()) {
+        if (j == (int)hand.length()) {
             hand = "";
         }
         // not last tile in hand so accounts for ", " which is index + 2
@@ -390,7 +397,7 @@ void Game::loadTileBag(std::string tileBagState) {
         int j = 0;
         // append the first tile from the state so long as the char is not comma
         // keep doing it only if index does not exceed the length of tileBagState string
-        while ((tileBagState[j] != ',') && (j < tileBagState.length())) {
+        while ((tileBagState[j] != ',') && (j < (int)tileBagState.length())) {
             tileString += tileBagState[j];
             ++j;
         }
@@ -403,7 +410,7 @@ void Game::loadTileBag(std::string tileBagState) {
         this->tileBag.AddTile(tile);
 
         // the last tile in bag
-        if (j == tileBagState.length()) {
+        if (j == (int)tileBagState.length()) {
             tileBagState = "";
         }
         // not last tile in bag so accounts for ", " which is index + 2
@@ -418,9 +425,7 @@ void Game::InitaliseBag(LinkedList& bag){
     int const num_tiles = 98;
     std::string const filename = "./ScrabbleTiles.txt";
 
-    // Mersenne Twister PRNG
-    std::random_device r;
-    std::mt19937 rng(1);
+    std::mt19937 rng(this->seed);
 
     // Import tiles from file into array
     Tile tiles[num_tiles];
@@ -592,19 +597,18 @@ std::string Game::gameInput(std::string firstPlayer) {
                                     std::cout << players[currentPlayerIndex].getHand();
                                     std::vector<std::string> projectedCoordinates;
                                     projectedCoordinates.push_back(coordinates);
-                                    if (this->placeTiles(currentPlayerIndex, true, projectedCoordinates)) {
+                                    if (this->placeTiles(currentPlayerIndex, projectedCoordinates)) {
 
                                         std::string coordinates = playerInput.substr(11);
                                         // start to placeTiles (starts from lowest recursion)
                                         board.placeTile(tile, coordinates);
+                                        tilesPlaced[board.getRow(coordinates)][board.getCol(coordinates)] = tile;
+                                        // players[currentPlayerIndex].addScore();
                                         inputNotReceived = false;
-                                    }
-                                    else {
+                                    } else {
                                         players[currentPlayerIndex].fillHand(tile);
                                         std::cout << players[currentPlayerIndex].getHand();
-
                                     }
-
                                 }
 
                             }                            
@@ -695,7 +699,7 @@ std::string Game::gameInput(std::string firstPlayer) {
     return "";
 }
 
-bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::string> projectedCoordinates) {
+bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projectedCoordinates) {
     // continue until "Done" is reached - do not accept
     // input that isn't formatted correctly.
 
@@ -726,23 +730,14 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::s
     // it will allow the user to enter sentences as they wish,
     // until playerInput becomes "place Done".
     else if (playerInput == "place Done") {        
-        tilesPlaced = true;
-        // perform check for adjacency here. 
-        // if (prevValid) {
-        //     tilesPlaced = board.checkBoardAdjacency(projectedCoordinates);
-        // }
-
+        // one final check: validates the positions of the tiles on the board.
+        // this can only be determined to be true once
+        // all projectedCoordinates are given, thus it is given here. 
+        tilesPlaced = board.checkBoardAdjacency(projectedCoordinates);
     } 
 
-    // if prevValid was not valid, this triggers. 
-    // essentially no validation is necessary because its already wrong
-    // just waiting for place Done or EOF before recursion can end. 
-    else if (!prevValid) {
-        this->placeTiles(currentPlayerIndex, false, projectedCoordinates);
-    }
-
     else {
-        bool recurse = false;
+        
         if (this->validatePlaceTiles(playerInput)) {
             std::string coordinates = playerInput.substr(11);
 
@@ -754,16 +749,16 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::s
                 if (players[currentPlayerIndex].hasTile(tileLetter)) {
                     // drop the tile before recursing.
                     tileToPlace = players[currentPlayerIndex].dropTile(tileLetter);
-                    // TEST: cheat
-                    std::cout << players[currentPlayerIndex].getHand();
+
+                    // // TEST: cheat knowledge on tiles in the hand. 
+                    // std::cout << players[currentPlayerIndex].getHand();
 
                     // push projectedCoordinates
                     projectedCoordinates.push_back(coordinates);
 
                     // the recursion for correct moves. 
                     // if this is false, do not place tiles. 
-                    recurse = true;
-                    validMove = this->placeTiles(currentPlayerIndex, true, projectedCoordinates);
+                    validMove = this->placeTiles(currentPlayerIndex, projectedCoordinates);
                     if (!validMove) {
                         players[currentPlayerIndex].fillHand(tileToPlace);
                     }
@@ -772,12 +767,6 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::s
 
             }
 
-        }
-
-        // do a pointless recursion (still accept input regardless 
-        // of invalid input) if not recursing already. 
-        if (!recurse) {
-            this->placeTiles(currentPlayerIndex, false, projectedCoordinates);
         }
 
     }
@@ -791,7 +780,6 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::s
         tilesPlaced = true;
     }
     
-
     // TODO: implement player action: placement
     // syntax: place <tile1> at <grid location>
     // need to implement the checks that are necessary.
@@ -868,265 +856,6 @@ bool Game::validatePlaceTiles(std::string placeSentence) {
     return validTilePlacement;
 
 }
-
-// bool Game::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
-//     bool canBePlaced = false;
-//     // separate the projectedCoordinates to expect normal input.
-//     // each cell should have two spaces with the first representing row 
-//     // and the second representing column
-//     // this lets us compare coordinates defined by the board.
-//     std::vector<std::vector<int>> separateCoordinates;
-    
-//     // case where projectedCoordinates is zero is not checked
-
-//     // should also check if the board is empty: 
-//     // if so, no need to check for existent tiles.
-
-//     bool boardIsEmpty = board.boardEmpty();
-
-
-//     if (projectedCoordinates.size() == 1) {
-//         // TODO: if the board is empty, it will be a valid move. 
-//         if (boardIsEmpty) {
-//             canBePlaced = true;
-//         }
-
-//         else {
-//             // TODO: check all adjacent tiles. 
-//             // If at least one is not empty, than it can be placed.
-//             separateCoordinates.push_back(
-//                 this->board.separateCoordinates(projectedCoordinates[0]));
-
-//             // do not check if coordinate is on a boundary. 
-//             // initiate boundary checks. 
-//             // enter the row as first param and the column as second param. 
-//             canBePlaced = this->adjacentNotEmpty(
-//                 separateCoordinates[0][0], separateCoordinates[0][1]);
-//         }
-
-//     }
-
-//     else {
-//         canBePlaced = true;
-//         std::sort(projectedCoordinates.begin(), projectedCoordinates.end());
-        
-//         // TODO: check if there are any duplicate coordinates. 
-//         // since its sorted, can check one element to the next. 
-
-//         for (std::string& coordinateString : projectedCoordinates) {
-//             separateCoordinates.push_back(
-//                 this->board.separateCoordinates(coordinateString));
-//         }
-
-        
-//         // TODO: check if all coordinates belong on the same line. 
-//         // i.e. letter == letter or number == number 
-//         int i = 0;
-//         int projectedSize = projectedCoordinates.size();
-//         bool rowIsSame = false;
-//         bool columnIsSame = false;
-
-//         // coordinates must be the same
-//         if (separateCoordinates[0][0] != separateCoordinates[1][0]) {
-//             columnIsSame = true;
-//         }
-//         // letters must be the same
-//         else {
-//             rowIsSame = true;
-//         }
-
-//         // must check for adjacency. 
-//         // if no tiles are adjacent to at least an existing tile,
-//         // the move is invalid. 
-//         // alternatively, if the board is empty, no need to check 
-//         // for adjacency.  
-
-//         // if notAdjacentToTile is true at end of while loop,
-//         // the board is not empty and tiles are not placed next to 
-//         // a non-empty space, therefore canBePlaced will also be false. 
-//         bool notAdjacentToTile = true;
-
-//         if (boardIsEmpty) {
-//             notAdjacentToTile = false;
-//         }
-
-//         // checks for coordinates belonging on the same line 
-//         // and if two coordinates are the same. 
-//         // checks if the board is empty, if not at least one tile
-//         // must belong next to an existing tile. 
-//         while (i < projectedSize - 1 && canBePlaced) {
-//             int currentRow = separateCoordinates[i][0];
-//             int currentCol = separateCoordinates[i][1];
-//             int nextRow = separateCoordinates[i + 1][0];
-//             int nextCol = separateCoordinates[i + 1][1];
-
-//             // TODO: check if there are any duplicate coordinates. 
-//             // since its sorted, can check one element to the next. 
-//             if (currentRow == nextRow && currentCol == nextCol) {
-//                 // cannot be placed.      
-//                 canBePlaced = false;   
-
-//             } 
-
-//             if (columnIsSame) {
-
-//                 // number is not the same: compare second cell
-//                 if (currentCol != nextCol) {
-//                     // cannot be placed.                
-//                     canBePlaced = false;          
-//                 }
-
-//             }
-
-//             else if (rowIsSame) {
-                
-//                 // letter is not the same: compare first cell. 
-//                 if (currentRow != nextRow) {
-//                     // cannot be placed.                
-//                     canBePlaced = false;          
-//                 }              
-
-//             }
-
-//             if (notAdjacentToTile) {
-//                 // check that adjacent is not empty.
-//                 // if it is, the check no longer occurs.
-//                 // if it isn't, the check continues in
-//                 // the next loop. 
-//                 notAdjacentToTile = this->adjacentNotEmpty(
-//                     currentRow, currentCol);
-//             }
-
-//             i += 1;
-//         }
-        
-//         // based on above spec, if this is true, canBePlaced 
-//         // is false.
-//         if (notAdjacentToTile) {
-//             canBePlaced = false;
-//         }
-
-//         // all tiles are in a straight line. 
-//         // check for emptiness between tiles.
-//         // example: for C11 and C15, check C12 to C14. 
-//         // note that the straight line comparison depends 
-//         // on what line the user places tiles across.
-//         if (canBePlaced) {
-//             // check in between for the column
-//             int i = 0;
-
-//             // use this in place of a row or column.
-//             int numCoordinates = separateCoordinates.size();
-
-//             if (columnIsSame) {
-//                 int columnIndex = 1;
-//                 int columnNum = separateCoordinates[0][columnIndex];
-//                 while ( i < numCoordinates) {
-//                     // whether its a row or column, increment to check 
-//                     // that the space between this and the next coordinate
-//                     // is not empty.
-//                     int rowCheck = separateCoordinates[i][columnIndex] + 1;
-//                     int nextRowCol = separateCoordinates[i + 1][columnIndex];
-                    
-
-//                     while (rowCheck < nextRowCol) {
-//                         // if the cell is empty, the move is invalid. 
-//                         if (board.isEmpty(rowCheck, columnNum)) {
-//                             canBePlaced = false;
-//                         }
-//                         rowCheck += 1;
-//                     }
-
-//                     i += 1;
-//                 }
-//             }
-            
-//             // row is same
-//             else {
-//                 int rowIndex = 0;
-//                 int rowNum = separateCoordinates[0][rowIndex];
-                
-//                 while ( i < numCoordinates) {
-//                     // whether its a row or column, increment to check 
-//                     // that the space between this and the next coordinate
-//                     // is not empty.
-//                     int colCheck = separateCoordinates[i][rowIndex] + 1;
-//                     int nextRowCol = separateCoordinates[i + 1][rowIndex];
-                    
-
-//                     while (colCheck < nextRowCol) {
-//                         // if the cell is empty, the move is invalid. 
-//                         if (board.isEmpty(rowNum, colCheck)) {
-//                             canBePlaced = false;
-//                         }
-
-//                         colCheck += 1;
-//                     }
-
-//                     i += 1;
-//                 }
-
-//             }
-
-//         }
-
-//     }
-//     return canBePlaced;
-// }
-
-// bool Game::adjacentNotEmpty(int rowCoordinate, int colCoordinate) {
-//     // initiate boundary checks. 
-//     bool adjacentNotEmpty = false;
-//     bool checkLeft = true;
-//     bool checkRight = true;
-//     bool checkAbove = true;
-//     bool checkBelow = true;
-
-//     if (rowCoordinate == ROW) {
-//         checkRight = false;
-//     }
-//     else if (rowCoordinate == 0) {
-//         checkLeft = false;
-//     }
-
-//     if (colCoordinate == COLUMN) {
-//         checkBelow = false;
-//     }
-
-//     else if (colCoordinate == 0) {
-//         checkAbove = false;
-//     }
-
-//     if (checkAbove) {
-//         // TODO: check above coordinate
-//         if ( !board.isEmpty( (rowCoordinate), (colCoordinate - 1) ) ) {
-//             adjacentNotEmpty = true;
-//         }
-//     }
-
-//     if (checkBelow) {
-//         // TODO: check below coordinate
-//         if ( !board.isEmpty( (rowCoordinate), (colCoordinate + 1) ) ) {
-//             adjacentNotEmpty = true;
-//         }
-//     }
-
-//     if (checkLeft) {
-//         // checks left coordinate
-//         if ( !board.isEmpty( (rowCoordinate - 1), (colCoordinate) ) ) {
-//             adjacentNotEmpty = true;
-//         }
-//     }
-
-//     if (checkRight) {
-
-//         // checks the right coordinate
-//         if ( !board.isEmpty( (rowCoordinate + 1), (colCoordinate) ) ) {
-//             adjacentNotEmpty = true;
-//         }
-//     }
-//     return adjacentNotEmpty;
-// }
 
 std::string Game::quitGame() {
     return "\nGoodbye\n";

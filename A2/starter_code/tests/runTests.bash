@@ -11,7 +11,7 @@ then
         echo "---------------------------"
         E=${f%.*}
         #echo "test: $f"
-        ./scrabble < $f > "$E.gameout"
+        ./scrabble -seed 1 < $f > "$E.gameout"
         #echo "Writing results to $E.gameout"
 
         differences=`diff -w $E.output $E.gameout`
