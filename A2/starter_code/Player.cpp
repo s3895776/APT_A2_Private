@@ -45,12 +45,10 @@ std::string Player::getHand() {
     return this->hand.ToString();
 }
 
-std::string Player::fillHand(Tile tile) {
+void Player::fillHand(Tile tile) {
     // Fill a tile in the internal LinkedList player hand.
     // just copy the tile and let LinkedList manage pointers to tile
     this->hand.AddTile(tile);
-    
-    return "";
 }
 
 std::string Player::getName() {
