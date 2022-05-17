@@ -657,7 +657,6 @@ std::string Game::gameInput(std::string firstPlayer) {
                         if (this->saveState(playerInput, currPlayerName)) {
                             std::cout << "Game successfully saved" << std::endl;
                         }
-                        inputNotReceived = false;
                     }
                         
                     // TODO: implement function: quit
