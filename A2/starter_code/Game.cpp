@@ -6,6 +6,7 @@
 
 Game::Game() {
     tileBag = LinkedList();
+    turnScore = 0;
     // board = new Board();
     
 }
@@ -490,14 +491,17 @@ std::string Game::gameInput(std::string firstPlayer) {
                                     std::cout << players[currentPlayerIndex].getHand();
                                     std::vector<std::string> projectedCoordinates;
                                     projectedCoordinates.push_back(coordinates);
+                                    turnScore =+ tile.getValue();
                                     if (this->placeTiles(currentPlayerIndex, true, projectedCoordinates)) {
 
                                         std::string coordinates = playerInput.substr(11);
                                         // start to placeTiles (starts from lowest recursion)
                                         board.placeTile(tile, coordinates);
+                                        players[currentPlayerIndex].addScore(turnScore);
                                         inputNotReceived = false;
                                     }
                                     else {
+                                        else turnScore =- tile.getValue();
                                         players[currentPlayerIndex].fillHand(tile);
                                         std::cout << players[currentPlayerIndex].getHand();
 
@@ -604,12 +608,12 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::s
     // note that regardless of syntax or valid board placements, 
     // it will allow the user to enter sentences as they wish,
     // until playerInput becoems "place Done".
-    else if (playerInput == "place Done") {        
+    else if (playerInput == "place Done" || playerInput == "place done" || playerInput == "place DONE") {        
         tilesPlaced = true;
     } 
 
     // if prevValid was not valid, this triggers. 
-    // essentially no validation is necessary because its already wrong
+    // essentially no validation is necessary because its already wrong 
     // just waiting for place Done or EOF before recursion can end. 
     else if (!prevValid) {
         this->placeTiles(currentPlayerIndex, false, projectedCoordinates);
@@ -629,7 +633,7 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::s
                     // drop the tile before recursing.
                     tileToPlace = players[currentPlayerIndex].dropTile(tileLetter);
                     // TEST: cheat
-                    std::cout << players[currentPlayerIndex].getHand();
+                    std::cout << players[currentPlayerIndex].getHand() << std::endl;
 
                     // push projectedCoordinates
                     projectedCoordinates.push_back(coordinates);
@@ -659,6 +663,7 @@ bool Game::placeTiles(int currentPlayerIndex, bool prevValid, std::vector<std::s
     // do a pointless recursion (still accept input regardless 
     // of invalid input)
     else if (!tilesPlaced) {
+        
         this->placeTiles(currentPlayerIndex, false, projectedCoordinates);
     }
 

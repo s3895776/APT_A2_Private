@@ -39,6 +39,14 @@ Column Board::getCol(std::string coordinates){
     Column col = std::stoi(c);
     return col;
 }
+int Board::getScore(){
+    int turnScore = 0;
+    // check if the coordinates are left, right, up or down of the given tile
+    // get the value of the coordinates to the direction
+    // repeat until there is no coordinate to check
+    //return the score
+    return turnScore;
+}
 void Board::placeTile(Tile tile, std::string coordinates){
     /* convert the coordinates into rows and cols */ 
     
