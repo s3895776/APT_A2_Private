@@ -36,8 +36,9 @@ int Game_Save(){
     post >> name;
     post >> score;
     // will only take the first character (won't work for a full hand)
-    // post >> hand;
-    std::getline(post, hand);
+    post >> hand;
+    //std::getline(post, hand);
+    std::cout << hand << std::endl;
 
     numFailures += AssertAndReport(name, "PLAYERONE", "Game_Save_Name");
     numFailures += AssertAndReport(score, 0, "Game_Save_Score");
@@ -46,20 +47,6 @@ int Game_Save(){
     return numFailures;
 }
 
-int Game_Load(){
-    // Arrange
-    Game g;
-    //g.AddPlayer();
-
-    // Act
-    //TODO
-
-    // Assert
-    int numFailures = 0;
-    numFailures += AssertAndReport("TODO", "", "Game_Load");
-
-    return numFailures;
-}
 
 int Game_InitaliseBag(){
     // Arrange
@@ -220,7 +207,6 @@ int Game_RunTests(){
     numFailures += Game_ValidNames();
     numFailures += Game_InitaliseBag();
     numFailures += Game_Save();
-    //numFailures += Game_Load();
     numFailures += Game_validatePlacementInput();
 
     std::cout << std::endl;
