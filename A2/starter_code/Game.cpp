@@ -6,14 +6,14 @@
 
 Game::Game() {
     tileBag = LinkedList();  
-
+    std::vector<std::vector<Tile>> scoreTilesPlaced(15, std::vector<Tile>(15, Tile()));
     std::random_device seed;
     this->seed = seed();
 
 }
 Game::Game(int seed) {
     tileBag = LinkedList();  
-
+    std::vector<std::vector<Tile>> scoreTilesPlaced(15, std::vector<Tile>(15, Tile()));
     this->seed = seed; 
 }
 
@@ -605,13 +605,17 @@ std::string Game::gameInput(std::string firstPlayer) {
                                     Tile tile = players[currentPlayerIndex].dropTile(tileLetter);
                                     std::vector<std::string> projectedCoordinates;
                                     projectedCoordinates.push_back(coordinates);
-
+                                    
+                                   
                                     if (this->placeTiles(currentPlayerIndex, projectedCoordinates)) {
 
                                         // start to placeTiles (starts from lowest recursion)
                                         board.placeTile(tile, coordinates);
-                                        //tilesPlaced[board.getRow(coordinates)][board.getCol(coordinates)] = tile;
-                                        // players[currentPlayerIndex].addScore();
+                                        int row = board.getRow(coordinates);
+                                        int col = board.getCol(coordinates);
+                                        scoreTilesPlaced[row][col] = tile;
+                                        int playerScore = board.getScore(scoreTilesPlaced);
+                                        players[currentPlayerIndex].addScore(playerScore);
                                         inputNotReceived = false;
                                         // replace all tiles.
                                         // keep calling the players hand size until
@@ -628,7 +632,11 @@ std::string Game::gameInput(std::string firstPlayer) {
                                         players[currentPlayerIndex].fillHand(tile);
                                         std::cout << players[currentPlayerIndex].getHand();
                                     }
-
+                                    for (int i = 0; i < ROW; ++i){
+                                        for (int j = 0; j < COLUMN; ++j){
+                                            scoreTilesPlaced[i][j] = Tile();
+                                        }
+                                    }
                                 }
 
                             }                            
@@ -784,7 +792,7 @@ bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projected
                 if (players[currentPlayerIndex].hasTile(tileLetter)) {
                     // drop the tile before recursing.
                     tileToPlace = players[currentPlayerIndex].dropTile(tileLetter);
-
+                    
                     // // TEST: cheat knowledge on tiles in the hand. 
                     // std::cout << players[currentPlayerIndex].getHand();
 
@@ -793,9 +801,12 @@ bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projected
 
                     // the recursion for correct moves. 
                     // if this is false, do not place tiles. 
+                    // add the tile to place to the tiles placed vector, the scores will be tallied at the end of the turn
                     validMove = this->placeTiles(currentPlayerIndex, projectedCoordinates);
                     if (!validMove) {
                         players[currentPlayerIndex].fillHand(tileToPlace);
+                        
+                        
                     }
 
                 }
@@ -811,6 +822,9 @@ bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projected
         std::string coordinates = playerInput.substr(11);
         // Tile tile = players[currentPlayerIndex].dropTile(tileLetter);
         // start to placeTiles (starts from lowest recursion)
+        int row = board.getRow(coordinates);
+        int col = board.getCol(coordinates);
+        scoreTilesPlaced[row][col] = tileToPlace;
         board.placeTile(tileToPlace, coordinates);
         tilesPlaced = true;
     }

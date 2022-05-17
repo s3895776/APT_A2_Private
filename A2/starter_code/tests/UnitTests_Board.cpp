@@ -411,6 +411,143 @@ int Board_adjacentNotEmpty() {
 
     return numFailures;
 }
+int Board_TestGetScore(){
+    int numFailures = 0;
+    Board board;
+    std::vector<std::vector<Tile>> tilesPlaced(15, std::vector<Tile>(15, Tile()));
+    /* BOARD OUTPUT VISUALISATION
+         0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
+       -------------------------------------------------------------
+     A |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+     B |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+     C |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+     D |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+     E |   |   |   |   | S |   |   |   |   |   |   |   |   |   |   |
+     F |   |   |   |   | T |   |   |   |   |   |   |   |   |   |   |
+     G |   |   | B | O | A | R | D |   |   |   |   |   |   |   |   |
+     H |   |   | R |   | R | E |   |   |   |   |   |   |   |   |   |
+     I |   |   | E |   | E | E |   |   |   |   |   |   |   |   |   |
+     J |   |   | E |   |   | D |   |   |   |   |   |   |   |   |   |
+     K |   |   | Z |   |   |   |   |   |   |   |   |   |   |   |   |
+     L |   |   | E | V | E | R |   |   |   |   |   |   |   |   |   |
+     M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+     N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+     O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+    */
+    
+    /* Value Cheat Sheet 
+        Value   Letter
+        1       A, E, I, O, U, L, N, S, T, R
+        2       D, G
+        3       B, C, M, P
+        4       F, H, V, W, Y
+        5       K
+        8       J, X
+        10      Q, Z
+    */
+
+    //Setup Board
+    Tile A = Tile('A',1);
+    Tile B = Tile('B',3);
+    Tile D = Tile('D',2);
+    Tile E = Tile('E',1);
+    Tile R = Tile('R',1);
+    Tile T = Tile('T',1);
+    Tile S = Tile('S',1);
+    Tile O = Tile('O',1);
+    Tile V = Tile('V', 4);
+    Tile Z = Tile('Z',10);
+    //state before turn
+    int score = 0;
+    board.placeTile(A,"G4");
+    board.placeTile(R,"G5");
+    board.placeTile(D,"G6");
+    board.placeTile(O,"G3");
+    board.placeTile(B,"G2");
+    // state during turn
+    // score should equal 4, board.getScore should equal 4
+    
+    board.placeTile(S,"E4");
+    tilesPlaced[board.getRow("E4")][board.getCol("E4")] = S;
+    board.placeTile(T,"F4");
+    tilesPlaced[board.getRow("F4")][board.getCol("F4")] = T;
+    board.placeTile(R,"H4");
+    tilesPlaced[board.getRow("H4")][board.getCol("H4")] = R;
+    score += board.getScore(tilesPlaced);
+    if (score != 4){
+        numFailures += 1;
+    }
+    for (int i = 0; i < ROW; ++i){
+        for (int j = 0; j < COLUMN; ++j){
+            tilesPlaced[i][j] = Tile();
+        }
+    }
+    // score should equal 9, board.getScore should equal 5
+    board.placeTile(E,"I4");
+    tilesPlaced[board.getRow("I4")][board.getCol("I4")] = E;
+    score += board.getScore(tilesPlaced);
+    std::cout << score <<std::endl;
+    if (score != 9){
+        numFailures += 1;
+    }
+    for (int i = 0; i < ROW; ++i){
+        for (int j = 0; j < COLUMN; ++j){
+            tilesPlaced[i][j] = Tile();
+        }
+    }
+    // Score should equal 26, board.getScore should equal 17
+    board.placeTile(R,"H2");
+    tilesPlaced[board.getRow("H2")][board.getCol("H2")] = R;
+    board.placeTile(E,"I2");
+    tilesPlaced[board.getRow("I2")][board.getCol("I2")] = E;
+    board.placeTile(E,"J2");
+    tilesPlaced[board.getRow("J2")][board.getCol("J2")] = E;
+    board.placeTile(Z,"K2");
+    tilesPlaced[board.getRow("K2")][board.getCol("K2")] = Z;
+    board.placeTile(E,"L2");
+    tilesPlaced[board.getRow("L2")][board.getCol("L2")] = E;
+    score += board.getScore(tilesPlaced);
+    std::cout << score <<std::endl;
+    if (score != 26){
+        numFailures += 1;
+    }
+    for (int i = 0; i < ROW; ++i){
+        for (int j = 0; j < COLUMN; ++j){
+            tilesPlaced[i][j] = Tile();
+        }
+    }
+    // score should equal 31
+    board.placeTile(E,"H5");
+    tilesPlaced[board.getRow("H5")][board.getCol("H5")] = E;
+    board.placeTile(E,"I5");
+    tilesPlaced[board.getRow("I5")][board.getCol("I5")] = E;
+    board.placeTile(D,"J5");
+    tilesPlaced[board.getRow("J5")][board.getCol("J5")] = D;
+    score += board.getScore(tilesPlaced);
+    std::cout << score <<std::endl;
+    if (score != 33){
+        numFailures += 1;
+    }
+    for (int i = 0; i < ROW; ++i){
+        for (int j = 0; j < COLUMN; ++j){
+            tilesPlaced[i][j] = Tile();
+        }
+    }
+    board.placeTile(V,"L3");
+    tilesPlaced[board.getRow("L3")][board.getCol("L3")] = V;
+    board.placeTile(E,"L4");
+    tilesPlaced[board.getRow("L4")][board.getCol("L4")] = E;
+    board.placeTile(R,"L5");
+    tilesPlaced[board.getRow("L5")][board.getCol("L5")] = R;
+    score += board.getScore(tilesPlaced);
+    std::cout << score <<std::endl;
+    if (score != 39){
+        numFailures += 1;
+    }
+
+    AssertAndReport(numFailures, 0, "Board_getScore");
+    return numFailures;
+}
 
 int Board_RunTests(){
     int numFailures = 0;
@@ -422,6 +559,7 @@ int Board_RunTests(){
     numFailures += Board_Test_Empty_Board();
     numFailures += Board_adjacentNotEmpty();
     numFailures += Board_checkBoardAdjacency();
+    numFailures += Board_TestGetScore();
 
     //std::cout << "    Board Failures: " << numFailures << "\n\n";
     std::cout << std::endl;
