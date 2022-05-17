@@ -23,7 +23,7 @@ int Game_Save(){
         remove("saves/testSave.txt");
     }
 
-    g.saveState("testSave");
+    g.saveState("testSave", "daniel");
 
     // Assert
     int numFailures = 0;

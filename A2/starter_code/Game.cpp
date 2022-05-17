@@ -216,7 +216,7 @@ std::string Game::displayCredits() {
     • Current board shape: Height, width
     • Board State: All tiles currently placed on the board should appear as a list of tile@position.
  */
-bool Game::saveState(std::string filename) {
+bool Game::saveState(std::string filename, std::string currPlayerName) {
     std::string gameState;
     std::string path = "saves/";
     path.append(filename);
@@ -245,7 +245,7 @@ bool Game::saveState(std::string filename) {
     // save tile bag contents
     file << this->tileBag.ToString() << "\n";
     // save current player name
-    file << this->currPlayerName << "\n";
+    file << currPlayerName << "\n";
     return true;
 }
 
@@ -312,24 +312,23 @@ std::string Game::loadGame() {
         // load current player
         std::string currPlayerName;
         std::getline(fileLoaded, currPlayerName);
-        this->currPlayerName = currPlayerName;
 
         // DEBUG: loaded
-        std::cout << "LOAD START" << std::endl;
-        std::cout << this->players[0].getName() << std::endl;
-        std::cout << this->players[0].getScore() << std::endl;
-        std::cout << this->players[0].getHand() << std::endl; // terminal shows V-4, T-1, E-1, S-1, E-1, Z-10,  --1
+        // std::cout << "LOAD START" << std::endl;
+        // std::cout << this->players[0].getName() << std::endl;
+        // std::cout << this->players[0].getScore() << std::endl;
+        // std::cout << this->players[0].getHand() << std::endl; // terminal shows V-4, T-1, E-1, S-1, E-1, Z-10,  --1
         
-        std::cout << this->players[1].getName() << std::endl;
-        std::cout << this->players[1].getScore() << std::endl;
-        std::cout << this->players[1].getHand() << std::endl;
+        // std::cout << this->players[1].getName() << std::endl;
+        // std::cout << this->players[1].getScore() << std::endl;
+        // std::cout << this->players[1].getHand() << std::endl;
 
-        this->board.displayBoard();
-        std::cout << this->tileBag.ToString() << std::endl;
-        std::cout << this->currPlayerName << std::endl;
-        std::cout << "LOAD END" << std::endl;
+        // this->board.displayBoard();
+        // std::cout << this->tileBag.ToString() << std::endl;
+        // std::cout << this->currPlayerName << std::endl;
+        // std::cout << "LOAD END" << std::endl;
         
-        return this->currPlayerName;
+        return currPlayerName;
     }
 }
 
@@ -639,10 +638,8 @@ std::string Game::gameInput(std::string firstPlayer) {
                     else if (playerAction == "save") {
                         // get filename from input
                         playerInput.erase(0, pos + delimiter.length());
-                        // store current player name before saving
-                        this->currPlayerName = currPlayerName;
                         // save game
-                        if (this->saveState(playerInput)) {
+                        if (this->saveState(playerInput, currPlayerName)) {
                             std::cout << "Game successfully saved" << std::endl;
                         }
                         inputNotReceived = false;

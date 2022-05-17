@@ -42,7 +42,7 @@ class Game {
         /*
          * Save board information 
          */
-        bool saveState(std::string filename);
+        bool saveState(std::string filename, std::string currPlayerName);
 
         /*
          * Load game from a saved file
@@ -96,9 +96,6 @@ class Game {
         Board board;
         // return index of player stored in vector
         int searchPlayer(std::string currentPlayer);
-
-        std::string currPlayerName;
-
         
 };
 
