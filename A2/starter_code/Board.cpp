@@ -519,21 +519,21 @@ bool Board::adjacentNotEmpty(int rowCoordinate, int colCoordinate) {
 
     if (checkAbove) {
         // TODO: check above coordinate
-        if ( !this->isEmpty( (rowCoordinate), (colCoordinate - 1) ) ) {
+        if ( !this->isEmpty( (rowCoordinate - 1), (colCoordinate) ) ) {
             adjacentNotEmpty = true;
         }
     }
 
     if (checkBelow) {
         // TODO: check below coordinate
-        if ( !this->isEmpty( (rowCoordinate), (colCoordinate + 1) ) ) {
+        if ( !this->isEmpty( (rowCoordinate + 1), (colCoordinate ) ) ) {
             adjacentNotEmpty = true;
         }
     }
 
     if (checkLeft) {
         // checks left coordinate
-        if ( !this->isEmpty( (rowCoordinate - 1), (colCoordinate) ) ) {
+        if ( !this->isEmpty( (rowCoordinate), (colCoordinate - 1) ) ) {
             adjacentNotEmpty = true;
         }
     }
@@ -541,7 +541,7 @@ bool Board::adjacentNotEmpty(int rowCoordinate, int colCoordinate) {
     if (checkRight) {
 
         // checks the right coordinate
-        if ( !this->isEmpty( (rowCoordinate + 1), (colCoordinate) ) ) {
+        if ( !this->isEmpty( (rowCoordinate), (colCoordinate + 1) ) ) {
             adjacentNotEmpty = true;
         }
     }
