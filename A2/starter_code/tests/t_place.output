@@ -1,3 +1,4 @@
+
 Menu
 ----
 1. New Game
@@ -10,17 +11,12 @@ Starting a New Game
 
 Enter a name for player 1 (uppercase characters only)
 > 
-Enter a name for player 1 (uppercase characters only)
-> 
 Enter a name for player 2 (uppercase characters only)
 > 
 Let's Play!
-PLAYERONE
-, it's your turn
-Score for PLAYERONE
-: 0
-Score for PLAYERTWO
-: 0
+PLAYERONE, it's your turn
+Score for PLAYERONE: 0
+Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
 A |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -41,16 +37,13 @@ O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
 F-4, D-2, B-3, S-1, O-1, C-3, I-1, G-2
 
-> 
-> 
->
-PLAYERTWO, it's your turn
+> D-2, B-3, S-1, O-1, C-3, I-1, G-2> PLAYERTWO, it's your turn
 Score for PLAYERONE: 0
 Score for PLAYERTWO: 0
-    0   1   2   3   4   5   6   7   8   9  10  11  12  13  14
+    0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
 A |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-B |   |   | F |   |   |   |   |   |   |   |   |   |   |   |   |
+B |   | F |   |   |   |   |   |   |   |   |   |   |   |   |   |
 C |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 D |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 E |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -64,6 +57,8 @@ L |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-Your hand is:
+Your hand is: 
 U-1, L-1, N-1, E-1, A-1, O-1, T-1, N-1
+
+> 
 Goodbye

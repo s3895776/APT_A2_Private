@@ -22,7 +22,7 @@ Enter a name for player 2 (uppercase characters only)
 Let's Play!
 VALID, it's your turn
 Score for VALID: 0
-Score for PLAYER: 0
+Score for PLAYER1: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
 A |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -43,6 +43,5 @@ O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
 F-4, D-2, B-3, S-1, O-1, C-3, I-1, G-2
 
-> Invalid Input
 
 Goodbye
