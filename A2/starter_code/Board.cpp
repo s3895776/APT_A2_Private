@@ -41,6 +41,106 @@ Column Board::getCol(const std::string coordinates){
     Column col = std::stoi(c);
     return col;
 }
+int Board::getScore(std::vector<std::vector<Tile>> openList){
+    int turnScore = 0;
+    for (int i = 0; i < COLUMN; ++i){
+        for (int j = 0; j< ROW; ++j){
+            Row row = j;
+            Column col = i;
+             
+            // add a vertical list, to prevent counting the value of a tile twice
+            std::vector<std::vector<Tile>> vertCloseList;
+            // add a horizontal list, to prevent counting the value of a tile twice
+            std::vector<std::vector<Tile>> horzCloseList;
+            // check if the tiles are in the lists
+            bool checkLeft = true;
+            bool checkRight = true;
+            bool checkAbove = true;
+            bool checkBelow = true;
+
+            int lastRow = ROW - 1;
+            int lastCol = COLUMN - 1;
+
+            //this code doesnt sit right with me
+            Tile curr = board[row][col];
+            if (curr.getLetter() == openList[row][col].getLetter()){
+                turnScore += curr.getValue();
+                openList[row][col] = Tile();
+                vertCloseList[row][col] = curr;
+                horzCloseList[row][col] = curr;
+            }
+            // check the value of the letters below until an empty space is hit or boundary of board
+            while (checkBelow){
+                if (row == lastRow) {
+                    checkBelow = false; 
+                } 
+                if (board[row+1][col].isEmpty()){
+                    checkBelow = false;
+                } else {
+                    if (vertCloseList[row+1][col].isEmpty()){
+                        Tile tile = board[row+1][col];
+                        turnScore += tile.getValue();
+                        vertCloseList[row+1][col] = tile;
+                    }
+                    row += 1;
+                }
+            }
+            // check the value of the letters above until an empty space is hit or boundary of board
+            while (checkAbove){
+                if (row == 0) {
+                    checkAbove = false; 
+                } 
+                if (board[row-1][col].isEmpty()) {
+                    checkAbove = false;
+                } else {
+                    if (vertCloseList[row-1][col].isEmpty()){
+                        Tile tile = board[row-1][col];
+                        turnScore += tile.getValue();
+                        vertCloseList[row-1][col] = tile;
+                    }
+                    row -= 1;
+                } 
+            }
+            // check the value of the letters below until an empty space is hit or boundary of board
+            while (checkRight){
+                if (col == lastCol) {
+                    checkRight = false;
+                } 
+                if (board[row][col+1].isEmpty()) {
+                    checkRight = false;
+                } else {
+                    if (horzCloseList[row][col+1].isEmpty()){
+                        Tile tile = board[row][col+1];
+                        turnScore += tile.getValue();
+                        horzCloseList[row][col+1] = tile;
+                    }
+                    col += 1;
+                }
+            }
+            // check the value of the letters below until an empty space is hit or boundary of board
+            while (checkLeft){
+                if (col == 0) {
+                    checkLeft = false;
+                } if (board[row][col-1].isEmpty()) {
+                    checkLeft = false;
+                } else {
+                    if (horzCloseList[row][col-1].isEmpty()){
+                        Tile tile = board[row][col-1];
+                        turnScore += tile.getValue();
+                        horzCloseList[row][col-1] = tile;
+                    }
+                    col -= 1;
+                }
+            }
+        }
+    }
+    
+    // check if the coordinates are left, right, up or down of the given tile
+    // get the value of the coordinates to the direction
+    // repeat until there is no coordinate to check
+    //return the score
+    return turnScore;
+}
 void Board::placeTile(Tile tile, std::string coordinates){
     /* convert the coordinates into rows and cols */ 
     
