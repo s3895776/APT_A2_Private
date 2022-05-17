@@ -627,24 +627,31 @@ std::string Game::gameInput(std::string firstPlayer) {
                     // question: what order do the Tiles return in if the move
                     // isn't legal?
                     else if (playerAction == "replace") {
-                        playerInput.erase(0, pos + delimiter.length());
-                        Letter letter = playerInput[0];
-                        // check if player's hand has the letter from player input
-                        if (this->players[currentPlayerIndex].hasLetter(letter)) {
-                            // drop the tile
-                            Tile droppedTile = this->players[currentPlayerIndex].dropTile(letter);
-                            // add the dropped tile back to the end of bag
-                            this->tileBag.AddTile(droppedTile);
-                            // grab the first tile from bag
-                            Tile frontTile = this->tileBag.DrawTile();
-                            // add the new tile to the player's hand
-                            this->players[currentPlayerIndex].fillHand(frontTile);
-                            // replace action done
-                            inputNotReceived = false;
+                        // only allow replace if there is at least one tile in the tileBag
+                        if (this->tileBag.Count()) {
+                            playerInput.erase(0, pos + delimiter.length());
+                            Letter letter = playerInput[0];
+                            // check if player's hand has the letter from player input
+                            if (this->players[currentPlayerIndex].hasLetter(letter)) {
+                                // drop the tile
+                                Tile droppedTile = this->players[currentPlayerIndex].dropTile(letter);
+                                // add the dropped tile back to the end of bag
+                                this->tileBag.AddTile(droppedTile);
+                                // grab the first tile from bag
+                                Tile frontTile = this->tileBag.DrawTile();
+                                // add the new tile to the player's hand
+                                this->players[currentPlayerIndex].fillHand(frontTile);
+                                // replace action done
+                                inputNotReceived = false;
+                            }
+                            // failed to replace the letter: cannot replace what player doesn't have
+                            else {
+                                std::cout << "Invalid Input. Cannot replace what you don't have." << std::endl;
+                            }
                         }
-                        // failed to replace the letter
+                        // failed to replace the letter: no tile left in bag
                         else {
-                            std::cout << "Invalid Input. Cannot replace what you don't have." << std::endl;
+                            std::cout << "Failed to replace. No tile left in the bag." << std::endl;
                         }
                     }
 
