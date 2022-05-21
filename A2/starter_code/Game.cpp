@@ -12,6 +12,7 @@ Game::Game() {
     this->seed = seed();
 
 }
+
 Game::Game(int seed) {
     tileBag = LinkedList(); 
     std::vector<std::vector<Tile>> b(ROW, std::vector<Tile>(COLUMN, Tile()));
@@ -42,15 +43,10 @@ std::string Game::run_menu() {
             std::cout << this->displayCredits() << std::endl;
         }
         else if (choice == 4) {
-            firstPlayer = "";
             std::cout << this->quitGame() << std::endl;
             menu = false;
         }
 
-        // This is uncessary considering view_mainMenu() validates input
-        // else {
-        //     std::cout << "wrong choice" << std::endl;
-        // }
     }
 
     return firstPlayer;
@@ -293,7 +289,8 @@ std::string Game::loadGame() {
 
     // file does not exist
     if (fileLoaded.fail()) {
-        return "Failed Load / False";
+        GameMessages::printLoadGameFileDoesNotExist();
+        return "";
     }
     // file successfully read
     else {
@@ -643,17 +640,25 @@ std::string Game::gameInput(std::string firstPlayer) {
                                     }
                                     
                                 }
+                                
+                                else {
+                                    GameMessages::printPlaceTileNotInHand();
+                                }
 
-                            }                            
+                            }                             
 
+                            else {
+                                GameMessages::printPlaceInvalidCoordinate();
+                            }
                         }
-                        if (inputNotReceived) {
-                            std::cout << "Invalid input" << std::endl;
+                        // if (inputNotReceived) {
+                        //     std::cout << "Invalid input" << std::endl;
+                        // }
+                        else {
+                            GameMessages::printPlaceInvalidPlacement();
                         }
-
                     }
-            
-
+                                       
                     // TODO: implement player action: replace
                     // syntax: replace <tile> (only one can be replaced)
                     // syntax: place <tile1> at <grid location>
@@ -684,13 +689,14 @@ std::string Game::gameInput(std::string firstPlayer) {
 
                             // failed to replace the letter: cannot replace what player doesn't have
                             else {
-                                std::cout << "Invalid Input. Cannot replace what you don't have." << std::endl;
+                                GameMessages::printReplaceTileNotInHand();
+
                             }
                         }
                         
                         // failed to replace the letter: no tile left in bag
                         else {
-                            std::cout << "Failed to replace. No tile left in the bag." << std::endl;
+                            GameMessages::printReplaceButBagEmpty();
                         }
                     }
 
@@ -721,7 +727,11 @@ std::string Game::gameInput(std::string firstPlayer) {
                     // TODO: Invalid Input
                     // syntax: any command not shown above
                     else {
-                        std::cout << "Invalid Input" << std::endl;
+                        // perliminary design. If so desired later on,
+                        // make a GameMessage class to detail your fun 
+                        // printing adventures. 
+                        std::cout << "Invalid Input." << std::endl;
+                        GameMessages::printCommandMessages();
                     }
                 }
 
@@ -782,13 +792,21 @@ bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projected
         // this can only be determined to be true once
         // all projectedCoordinates are given, thus it is given here. 
         tilesPlaced = board.checkBoardAdjacency(projectedCoordinates);
+        if ( tilesPlaced ) {
         const int MAX_PLACEMENT_AMOUNT = 7;
-        if (projectedCoordinates.size() == MAX_PLACEMENT_AMOUNT) {
-            // bingo baby
-            std::cout << "BINGO" << std::endl;
-            const int BINGO_SCORE = 50;
-            players[currentPlayerIndex].addScore(BINGO_SCORE);
+            if (projectedCoordinates.size() == MAX_PLACEMENT_AMOUNT) {
+                // bingo baby
+                std::cout << "BINGO" << std::endl;
+                const int BINGO_SCORE = 50;
+                players[currentPlayerIndex].addScore(BINGO_SCORE);
+            }
         }
+
+        else {
+            GameMessages::printPlaceInvalidPlacement();
+        }
+
+        
     } 
 
     else {
@@ -816,15 +834,25 @@ bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projected
                     // add the tile to place to the tiles placed vector, the scores will be tallied at the end of the turn
                     validMove = this->placeTiles(currentPlayerIndex, projectedCoordinates);
                     if (!validMove) {
-                        players[currentPlayerIndex].fillHand(tileToPlace);
-                        
-                        
+                        players[currentPlayerIndex].fillHand(tileToPlace);                        
                     }
 
                 }
 
+                else {
+                    GameMessages::printPlaceTileNotInHand();
+                }
+
+            }
+            
+            else {
+                GameMessages::printPlaceInvalidCoordinate();
             }
 
+        }
+
+        else {
+            GameMessages::printPlaceInvalidPlaceSyntax();
         }
 
     }
@@ -891,14 +919,8 @@ bool Game::validatePlaceTiles(std::string placeSentence) {
         // Don't actually check for correct coordinates, just length.
         // valid coordinates should be checked afterwards.
         if (placeSentence.length() >= 2) {
-            
-            //B10
-            //ROWCOL
-            validTilePlacement = board.validCoordinate(placeSentence);
+            validTilePlacement = true;
         }
-        else {
-            validTilePlacement = false;
-        }  
     }
     return validTilePlacement;
 
@@ -965,9 +987,7 @@ int Game::searchPlayer(std::string currentPlayer) {
 
     }
     catch (int x) {
-        std::string Error = "Fatal error has occured: unable to find ";
-        Error += "first player. Aborting gameInput.";
-        std::cout << Error << std::endl;
+        GameMessages::printStartGameNoFirstPlayer();
     }
 
     return currentPlayerIndex;

@@ -8,6 +8,7 @@
 #include "LinkedList.h"
 #include "Player.h"
 #include "Board.h"
+#include "GameMessages.h"
 class Game {
 
     public:
@@ -84,13 +85,14 @@ class Game {
         bool placeTiles(int currentPlayerIndex, std::vector<std::string> projectedCoordinates);
         void replaceTiles(std::string currentPlayer);
 
-        /* this must be able to validate such that a sentence involving place
+        /* 
+        made public for testing. 
+        this must be able to validate such that a sentence involving place
         is in the following format:
         place A at A00, or 
         place A at A0. Will return false otherwise. Does not need to handle
         place Done. 
         */ 
-        // made public for testing. 
         bool validatePlaceTiles(std::string placeSentence);
 
         /* checks projectedCoordinates to see if they are all valid moves.
@@ -105,6 +107,7 @@ class Game {
             Coordinate parameters must be valid for Board. 
          */
         bool adjacentNotEmpty(int rowCoordinate, int colCoordinate);
+        
 
     private:
         std::vector<Player> players;
