@@ -41,12 +41,14 @@ Column Board::getCol(const std::string coordinates){
     Column col = std::stoi(c);
     return col;
 }
+
 int Board::getScore(std::vector<std::vector<Tile>> openList){
     int turnScore = 0;
     
     // check if the tiles are in the lists
     // add a vertical list, to prevent counting the value of a tile twice
     std::vector<std::vector<Tile>> vertCloseList(rows, std::vector<Tile>(columns, Tile()));
+    
     // add a horizontal list, to prevent counting the value of a tile twice
     std::vector<std::vector<Tile>> horzCloseList(rows, std::vector<Tile>(columns, Tile()));
 
@@ -64,8 +66,8 @@ int Board::getScore(std::vector<std::vector<Tile>> openList){
             bool checkBelow = true;
 
             Tile curr = board[j][i];
-            
-            if (!curr.isEmpty() && (vertCloseList[row][col].isEmpty() || horzCloseList[row][col].isEmpty())){
+
+            if (!curr.isEmpty() && (vertCloseList[row][col].isEmpty() || horzCloseList[row][col].isEmpty()) ){
                
                 if (!vertCloseList[row][col].isEmpty()){
                     checkAbove = false;
@@ -93,14 +95,16 @@ int Board::getScore(std::vector<std::vector<Tile>> openList){
                     if (row == lastRow) {
                         checkBelow = false; 
                     } 
-                    if (board[row+1][col].isEmpty()){
+                    else if (board[row+1][col].isEmpty()){
                         checkBelow = false;
                     } 
+                    else {
                     if (vertCloseList[row+1][col].isEmpty() && checkBelow){
                         Tile tile = board[row+1][col];
                         turnScore += tile.getValue();
                         vertCloseList[row+1][col] = tile;
                         openList[row+1][col] = Tile();
+                    }
                     }
                     ++row;
                 }
@@ -109,14 +113,16 @@ int Board::getScore(std::vector<std::vector<Tile>> openList){
                     if (row == 0) {
                         checkAbove = false; 
                     } 
-                    if (board[row-1][col].isEmpty()){
+                    else if (board[row-1][col].isEmpty()){
                         checkAbove = false;
                     } 
-                    if (vertCloseList[row-1][col].isEmpty() && checkAbove){
-                        Tile tile = board[row-1][col];
-                        turnScore += tile.getValue();
-                        vertCloseList[row-1][col] = tile;
-                        openList[row-1][col] = Tile();
+                    else {
+                        if (vertCloseList[row-1][col].isEmpty()){
+                            Tile tile = board[row-1][col];
+                            turnScore += tile.getValue();
+                            vertCloseList[row-1][col] = tile;
+                            openList[row-1][col] = Tile();
+                        }
                     }
                     --row;
                 }
@@ -127,29 +133,35 @@ int Board::getScore(std::vector<std::vector<Tile>> openList){
                     if (col == lastCol) {
                         checkRight = false;
                     } 
-                    if (board[row][col+1].isEmpty()) {
+                    else if (board[row][col+1].isEmpty()) {
                         checkRight = false;
                     } 
-                    if (horzCloseList[row][col+1].isEmpty() && checkRight){
-                        Tile tile = board[row][col+1];
-                        turnScore += tile.getValue();
-                        horzCloseList[row][col+1] = tile;
-                        openList[row][col+1] = Tile();
+                    else {
+                        if (horzCloseList[row][col+1].isEmpty()) {
+                            Tile tile = board[row][col+1];
+                            turnScore += tile.getValue();
+                            horzCloseList[row][col+1] = tile;
+                            openList[row][col+1] = Tile();
+                        }
                     }
                     ++col;
                 }
+
                 // check the value of the letters below until an empty space is hit or boundary of board
                 while (checkLeft){
                     if (col == 0) {
                         checkLeft = false;
-                    } if (board[row][col-1].isEmpty()) {
+                    } 
+                    else if (board[row][col-1].isEmpty()) {
                         checkLeft = false;
                     } 
-                    if (horzCloseList[row][col-1].isEmpty() && checkLeft){
-                        Tile tile = board[row][col-1];
-                        turnScore += tile.getValue();
-                        horzCloseList[row][col-1] = tile;
-                        openList[row][col-1] = Tile();
+                    else {
+                        if (horzCloseList[row][col-1].isEmpty()){
+                            Tile tile = board[row][col-1];
+                            turnScore += tile.getValue();
+                            horzCloseList[row][col-1] = tile;
+                            openList[row][col-1] = Tile();
+                        }
                     }
                     --col;
                 }

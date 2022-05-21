@@ -38,7 +38,7 @@ int Game_Save(){
     // will only take the first character (won't work for a full hand)
     post >> hand;
     //std::getline(post, hand);
-    std::cout << hand << std::endl;
+    // std::cout << hand << std::endl;
 
     numFailures += AssertAndReport(name, "PLAYERONE", "Game_Save_Name");
     numFailures += AssertAndReport(score, 0, "Game_Save_Score");

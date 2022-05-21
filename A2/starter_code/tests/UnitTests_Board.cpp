@@ -486,7 +486,6 @@ int Board_TestGetScore(){
     board.placeTile(E,"I4");
     tilesPlaced[board.getRow("I4")][board.getCol("I4")] = E;
     score += board.getScore(tilesPlaced);
-    std::cout << score <<std::endl;
     if (score != 9){
         numFailures += 1;
     }

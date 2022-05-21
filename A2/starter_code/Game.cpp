@@ -7,11 +7,6 @@
 Game::Game() {
     tileBag = LinkedList();  
     std::vector<std::vector<Tile>> b(ROW, std::vector<Tile>(COLUMN, Tile()));
-    for (int i = 0; i < ROW; ++i){
-        for (int j = 0; j < COLUMN; ++j){
-            b[i][j] = Tile();
-        }
-    }
     this->scoreTilesPlaced = b;
     std::random_device seed;
     this->seed = seed();
@@ -20,11 +15,6 @@ Game::Game() {
 Game::Game(int seed) {
     tileBag = LinkedList(); 
     std::vector<std::vector<Tile>> b(ROW, std::vector<Tile>(COLUMN, Tile()));
-    for (int i = 0; i < ROW; ++i){
-        for (int j = 0; j < COLUMN; ++j){
-            b[i][j] = Tile();
-        }
-    }
     this->scoreTilesPlaced = b;
     this->seed = seed; 
 }
@@ -620,35 +610,38 @@ std::string Game::gameInput(std::string firstPlayer) {
                                     
                                    
                                     if (this->placeTiles(currentPlayerIndex, projectedCoordinates)) {
-
                                         // start to placeTiles (starts from lowest recursion)
                                         board.placeTile(tile, coordinates);
                                         int row = board.getRow(coordinates);
                                         int col = board.getCol(coordinates);
                                         scoreTilesPlaced[row][col] = tile;
+
                                         int playerScore = board.getScore(scoreTilesPlaced);
+
                                         players[currentPlayerIndex].addScore(playerScore);
                                         inputNotReceived = false;
                                         // replace all tiles.
                                         // keep calling the players hand size until
-                                        // the hand reaches seven. 
+                                        // the hand reaches seven. or there is no more bag. 
                                         while ((players[currentPlayerIndex].sizeOfHand() < MAX_HAND_CAPACITY) && 
                                         (tileBag.Count() > 0)) {
                                             players[currentPlayerIndex].fillHand(tileBag.DrawTile());
                                         }
                                         // players turn not skipped. 
                                         players[currentPlayerIndex].turnNotSkipped();
+
+                                        // reset scoring placed tiles. 
+                                        for (int i = 0; i < ROW; ++i) {
+                                            for (int j = 0; j < COLUMN; ++j){
+                                                scoreTilesPlaced[i][j] = Tile();
+                                            }
+                                        }
                                     } 
                                     
                                     else {
                                         players[currentPlayerIndex].fillHand(tile);
-                                        std::cout << players[currentPlayerIndex].getHand();
                                     }
-                                    for (int i = 0; i < ROW; ++i){
-                                        for (int j = 0; j < COLUMN; ++j){
-                                            scoreTilesPlaced[i][j] = Tile();
-                                        }
-                                    }
+                                    
                                 }
 
                             }                            
@@ -789,6 +782,13 @@ bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projected
         // this can only be determined to be true once
         // all projectedCoordinates are given, thus it is given here. 
         tilesPlaced = board.checkBoardAdjacency(projectedCoordinates);
+        const int MAX_PLACEMENT_AMOUNT = 7;
+        if (projectedCoordinates.size() == MAX_PLACEMENT_AMOUNT) {
+            // bingo baby
+            std::cout << "BINGO" << std::endl;
+            const int BINGO_SCORE = 50;
+            players[currentPlayerIndex].addScore(BINGO_SCORE);
+        }
     } 
 
     else {
