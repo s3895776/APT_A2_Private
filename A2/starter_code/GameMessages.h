@@ -1,6 +1,8 @@
 #ifndef GAME_MESSAGES
 #define GAME_MESSAGES
 
+#include <iostream>
+
 /* Desc:
     create messages for the scrabble game to use. 
     add anything that can be a message
@@ -20,6 +22,13 @@ class GameMessages {
         static void printReplaceTileNotInHand();
         static void printStartGameNoFirstPlayer();
         static void printLoadGameFileDoesNotExist();
+        static void printValidName();
+
+        // for use within other methods.
+        // format is return<message_name>
+        private: 
+        static std::string returnValidLetters();
+        static std::string returnValidCoordinates();
         
 };
 

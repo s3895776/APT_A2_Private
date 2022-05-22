@@ -138,6 +138,7 @@ std::string Game::newGame() {
         // keep asking for player name until it is valid
 
         while (!validName(playerName)) {
+            GameMessages::printValidName();
             if (std::cin.eof()) {
                 std::cout << this->quitGame();
                 return "";
@@ -637,6 +638,7 @@ std::string Game::gameInput(std::string firstPlayer) {
                                     
                                     else {
                                         players[currentPlayerIndex].fillHand(tile);
+                                        GameMessages::printPlaceInvalidPlacement();
                                     }
                                     
                                 }
@@ -655,7 +657,7 @@ std::string Game::gameInput(std::string firstPlayer) {
                         //     std::cout << "Invalid input" << std::endl;
                         // }
                         else {
-                            GameMessages::printPlaceInvalidPlacement();
+                            GameMessages::printPlaceInvalidPlaceSyntax();
                         }
                     }
                                        
@@ -882,8 +884,6 @@ bool Game::validatePlaceTiles(std::string placeSentence) {
     std::string delimiter = " ";
     pos = placeSentence.find(delimiter);
     playerAction = placeSentence.substr(0, pos);
-    // WORKS
-    // TODO: validate
     // source is from stack overflow split string. 
 
     // erase "place"

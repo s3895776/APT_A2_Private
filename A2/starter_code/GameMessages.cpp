@@ -5,6 +5,8 @@ void GameMessages::printCommandMessages() {
     // print all gameInput() commands
     std::cout << "Commands: " << std::endl;
     printValidPlaceSyntax();
+    std::cout << returnValidLetters() << std::endl;
+    std::cout << returnValidCoordinates() << std::endl;
     std::cout << "replace <letter> " << std::endl;
     std::cout << "pass " << std::endl;
     std::cout << "save <savedFile> " << std::endl;
@@ -21,7 +23,7 @@ void GameMessages::printPlaceInvalidPlacement() {
 
 void GameMessages::printPlaceInvalidCoordinate() {
     std::cout << "Invalid coordinates." << std::endl;
-    std::cout << "Coordinate does not exist or ";
+    std::cout << "Coordinate does not exist or";
     std::cout << " coordinate is occupied. " << std::endl;
 
 }
@@ -34,8 +36,6 @@ void GameMessages::printPlaceTileNotInHand() {
 
 void GameMessages::printValidPlaceSyntax() {
     std::cout << "place <letter> at <coordinate>" << std::endl;
-    std::cout << "letter: A-Z, coordinates: A0 to O15";
-    std::cout << " (single digits must be single)" << std::endl;
 }
 
 void GameMessages::printPlaceInvalidPlaceSyntax() {
@@ -59,4 +59,18 @@ void GameMessages::printStartGameNoFirstPlayer() {
 
 void GameMessages::printLoadGameFileDoesNotExist() {
     std::cout << "File was not found. Aborting load." << std::endl;
+}
+
+void GameMessages::printValidName() {
+    std::cout << "Valid name is one sentence and all caps " 
+    << "digits are ok too"
+    << std::endl;
+}
+
+std::string GameMessages::returnValidLetters() {
+    return "letter: A-Z (capitals)";
+}
+
+std::string GameMessages::returnValidCoordinates() {
+    return "coordinates: A0 to O14 (single digits must be single)";
 }
