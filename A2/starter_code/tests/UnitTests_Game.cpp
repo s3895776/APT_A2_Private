@@ -31,8 +31,9 @@ int Game_Save(){
     numFailures += AssertAndReport(post.good(), 1, "Game_Save_CreatesFile");
 
     std::string name, hand;
-    int score;
+    int score, num_players;
 
+    post >> num_players;
     post >> name;
     post >> score;
     // will only take the first character (won't work for a full hand)
@@ -40,6 +41,7 @@ int Game_Save(){
     //std::getline(post, hand);
     // std::cout << hand << std::endl;
 
+    numFailures += AssertAndReport(num_players, 1, "Game_Save_Name");
     numFailures += AssertAndReport(name, "PLAYERONE", "Game_Save_Name");
     numFailures += AssertAndReport(score, 0, "Game_Save_Score");
     numFailures += AssertAndReport(hand, "EMPTY", "Game_Save_Hand");

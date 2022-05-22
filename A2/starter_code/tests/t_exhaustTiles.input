@@ -1,4 +1,5 @@
 1
+2
 PLAYERONE
 PLAYERTWO
 place F at A1
@@ -8,105 +9,112 @@ place S at A4
 place O at A5
 place C at A6
 place I at A7
-place G at A8
 place Done
 pass
-place E at B1
-place E at B2
-place L at B3
-place R at B4
-place M at B5
-place W at B6
-place B at B7
+place T at B1
+place N at B2
+place E at B3
+place E at B4
+place L at B5
+place R at B6
+place M at B7
 place Done
 pass
-place O at C1
-place E at C2
-place G at C3
-place T at C4
-place E at C5
-place S at C6
+place W at C1
+place B at C2
+place O at C3
+place E at C4
+place G at C5
+place T at C6
 place E at C7
 place Done
 pass
-place A at D1
+place S at D1
 place E at D2
-place U at D3
-place R at D4
-place E at D5
+place A at D3
+place E at D4
+place U at D5
 place R at D6
-place X at D7
+place E at D7
 place Done
 pass
-place N at E1
-place L at E2
-place R at E3
-place A at E4
-place A at E5
-place O at E6
-place Y at E7
+place R at E1
+place X at E2
+place N at E3
+place L at E4
+place R at E5
+place A at E6
+place A at E7
 place Done
 pass
-place I at F1
-place A at F2
+place O at F1
+place Y at F2
 place I at F3
-place L at F4
+place A at F4
 place I at F5
-place S at F6
-place E at F7
+place L at F6
+place I at F7
 place Done
 pass
-place P at G1
-place A at G2
-place R at G3
-place I at G4
-place N at G5
-place Z at G6
-place K at G7
+place S at G1
+place E at G2
+place P at G3
+place A at G4
+place R at G5
+place I at G6
+place N at G7
 place Done
 pass
-place P at H1
-place W at H2
-place N at H3
-place U at H4
-place O at H5
-place H at H6
-place T at H7
+place Z at H1
+place K at H2
+place P at H3
+place W at H4
+place N at H5
+place U at H6
+place O at H7
 place Done
 pass
-place V at I1
-place O at I2
-place J at I3
-place I at I4
-place A at I5
-place T at I6
-place O at I7
+place H at I1
+place T at I2
+place V at I3
+place O at I4
+place J at I5
+place I at I6
+place A at I7
 place Done
 pass
-place S at J1
-place D at J2
-place I at J3
-place M at J4
-place E at J5
-place T at J6
-place O at J7
+place T at J1
+place O at J2
+place S at J3
+place D at J4
+place I at J5
+place M at J6
+place E at J7
 place Done
 pass
-place I at K1
-place R at K2
-place T at K3
-place N at K4
-place F at K5
-place G at K6
-place D at K7
+place T at K1
+place O at K2
+place I at K3
+place R at K4
+place T at K5
+place N at K6
+place F at K7
 place Done
 pass
-place H at L1
-place A at L2
-place E at L3
-place D at L4
-place V at L5
-place E at L6
-place C at L7
+place G at L1
+place D at L2
+place H at L3
+place A at L4
+place E at L5
+place D at L6
+place V at L7
 place Done
 pass
+place E at M1
+place C at M2
+place A at M3
+place U at M4
+place Q at M5
+place Y at M6
+place I at M7
+place Done

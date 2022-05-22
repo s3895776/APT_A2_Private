@@ -23,6 +23,7 @@ class GameMessages {
         static void printStartGameNoFirstPlayer();
         static void printLoadGameFileDoesNotExist();
         static void printValidName();
+        static void printValidPlayerCount();
 
         // for use within other methods.
         // format is return<message_name>

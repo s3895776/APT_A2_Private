@@ -120,72 +120,138 @@ std::string Game::newGame() {
     std::cout << std::endl;
     std::cout << "Starting a New Game" << std::endl;
     std::cout << std::endl;
+    std::cin.ignore();
     
     // Initialise players
-    const int NUMBER_OF_PLAYERS = 2;
-    // for each player, add pointer-to-player in players vector
-    for (int i=0; i < NUMBER_OF_PLAYERS; i++) {
-        Game::AddPlayer(Player());
-    }
+    // get the number of players from the player first 
+    bool numberOfPlayersGiven = false;
+    int num_players = 0;
 
-    // 2. Ask for the player names
+    while (!numberOfPlayersGiven) {
+        GameMessages::printValidPlayerCount();
+        // reset on each loop is necessary.
+        num_players = 0;
+        std::string string_num_players;
 
-    // fixed some printing errors with this method
-    // I assume this flushes out std::cin? 
-    std::cin.ignore();
-    for (int i=0; i < NUMBER_OF_PLAYERS; i++) {   
-        std::string playerName;
-        // keep asking for player name until it is valid
+        if (std::cin.eof()) {
+            numberOfPlayersGiven = true;
+        }
 
-        while (!validName(playerName)) {
-            GameMessages::printValidName();
-            if (std::cin.eof()) {
-                std::cout << this->quitGame();
-                return "";
-            }
-            std::cout << "Enter a name for player " << i + 1 << " (uppercase characters only)" << std::endl;
+        else {
             std::cout << "> ";
-            std::getline(std::cin, playerName);
-            // std::cout << playerName << std::endl;
-            std::cout << std::endl;
+            // TODO: choose inputs for making the player move.
+            std::getline(std::cin, string_num_players);
+        }
+
+        // ignore the rest of input
+        if (std::cin.eof() ) {
+            numberOfPlayersGiven = true;
+        }
+
+        else {
+            try {
+                num_players = std::stoi(string_num_players);
+                const int MAX_PLAYERS = 4;
+                const int MIN_PLAYERS = 2;
+                if (num_players < MIN_PLAYERS || num_players > MAX_PLAYERS) {
+                    throw num_players;
+                }
+                numberOfPlayersGiven = true;
+            }
+
+            catch (std::invalid_argument& e) {
+                std::cout << "Invalid number of players" << std::endl;
+            }
+
+            catch (int x) {
+                std::cout << "Invalid number of players" << std::endl;
+            }
 
         }
 
-        // set the player's name
-        this->players[i].setName(playerName);
+
     }
 
-    // DEBUG: print the players names
-    // for (int i=0; i < NUMBER_OF_PLAYERS; i++) { 
-    //     std::cout << players[i].getName() << std::endl;
-    // }
-
-    std::cout << "Let's Play!" << std::endl;
-
-    // 3. Create a new game of Scrabble
-    InitaliseBag(tileBag);
-    // // DEBUG: print the TileBag after initialising.
-    // std::cout<< this->tileBag.ToString() << std::endl;
-
-
-    // Initialise Players hands with tiles from bag
-    const int INITIAL_HAND = 10;
-    int drawnHand = INITIAL_HAND - NUMBER_OF_PLAYERS;
-
-    for (int i=0; i < NUMBER_OF_PLAYERS; i++) { 
-        // number of players correlate to hand size 
-        for (int j=0; j < drawnHand; j++) {  
-            this->players[i].fillHand(tileBag.DrawTile());
+    // bit of a strange assignment here now that I've converted 
+    // the number of players to an integer 
+    std::string firstPlayer = "";
+    if (num_players == 0) {
+        // do nothing 
+    }
+    
+    else {
+        const int NUMBER_OF_PLAYERS = num_players;
+        // for each player, add pointer-to-player in players vector
+        for (int i=0; i < NUMBER_OF_PLAYERS; i++) {
+            Game::AddPlayer(Player());
         }
+
+        // 2. Ask for the player names
+
+        // fixed some printing errors with this method
+        // I assume this flushes out std::cin? 
+        // I believe this will cause an extra line to be ignored if called twice.
+        // I was correct, so I have commented this out for reference.
+        // std::cin.ignore();
+
+        for (int i=0; i < NUMBER_OF_PLAYERS; i++) {   
+            std::string playerName;
+            // keep asking for player name until it is valid
+
+            while (!validName(playerName)) {
+                GameMessages::printValidName();
+                if (std::cin.eof()) {
+                    std::cout << this->quitGame();
+                    return "";
+                }
+                std::cout << "Enter a name for player " << i + 1 << " (uppercase characters only)" << std::endl;
+                std::cout << "> ";
+                std::getline(std::cin, playerName);
+                // std::cout << playerName << std::endl;
+                std::cout << std::endl;
+
+            }
+
+            // set the player's name
+            this->players[i].setName(playerName);
+        }
+
+        // DEBUG: print the players names
+        // for (int i=0; i < NUMBER_OF_PLAYERS; i++) { 
+        //     std::cout << players[i].getName() << std::endl;
+        // }
+
+        std::cout << "Let's Play!" << std::endl;
+
+        // 3. Create a new game of Scrabble
+        InitaliseBag(tileBag);
+        // // DEBUG: print the TileBag after initialising.
+        // std::cout<< this->tileBag.ToString() << std::endl;
+
+
+        // Initialise Players hands with tiles from bag
+        const int INITIAL_HAND = 7;
+        
+        // int drawnHand = INITIAL_HAND - NUMBER_OF_PLAYERS;
+        // uncertain about the rules saying less players == less drawnHand
+        int drawnHand = INITIAL_HAND;
+
+        for (int i=0; i < NUMBER_OF_PLAYERS; i++) { 
+            // number of players correlate to hand size 
+            for (int j=0; j < drawnHand; j++) {  
+                this->players[i].fillHand(tileBag.DrawTile());
+            }
+        }
+
+        // TODO: initialise 2d vector with starting values 
+        board = Board();
+
+        // 4. Proceed with normal gameplay 
+        // Let main call gameInput();
+        firstPlayer = this->players[0].getName();
     }
 
-    // TODO: initialise 2d vector with starting values 
-    board = Board();
-
-    // 4. Proceed with normal gameplay 
-    // Let main call gameInput();
-
-    return this->players[0].getName();
+    return firstPlayer;
 }
 
 std::string Game::displayCredits() {
@@ -239,7 +305,9 @@ bool Game::saveState(std::string filename, std::string currPlayerName) {
     std::ofstream file(path);
     
     // save name, score and hand of each player
+
     int playersSize = this->players.size();
+    file << playersSize << "\n";
     for (int i = 0; i < playersSize; ++i) {
         file << this->players[i].getName() << "\n";
         file << this->players[i].getScore() << "\n";
@@ -295,15 +363,26 @@ std::string Game::loadGame() {
     }
     // file successfully read
     else {
+        std::string string_num_players;
+        std::getline(fileLoaded, string_num_players);
+        int num_players = 0;
         
-        const int NO_OF_PLAYERS = 2;
+        try {
+            num_players = std::stoi(string_num_players);
+        }
+        catch (std::invalid_argument& e) {
+            std::cout << "File read incorrectly" << std::endl;
+            this->gameEnd();
+            return "";
+        }
+        
         // add players into vector
-        for (int i=0; i < NO_OF_PLAYERS; ++i) {
+        for (int i=0; i < num_players; ++i) {
             Game::AddPlayer(Player());
         }
         // load name, score and hand of each player
         std::string name, hand, score;
-        for (int i=0; i < NO_OF_PLAYERS; ++i) {
+        for (int i=0; i < num_players; ++i) {
             std::getline(fileLoaded, name);
             std::getline(fileLoaded, score);
             std::getline(fileLoaded, hand);
@@ -918,8 +997,12 @@ bool Game::validatePlaceTiles(std::string placeSentence) {
     if (continueValidation) {
         // Don't actually check for correct coordinates, just length.
         // valid coordinates should be checked afterwards.
-        if (placeSentence.length() >= 2) {
+        const int COORDINATE_SIZE = 2;
+        if (placeSentence.length() >= COORDINATE_SIZE) {
             validTilePlacement = true;
+        }
+        else {
+            validTilePlacement = false;
         }
     }
     return validTilePlacement;

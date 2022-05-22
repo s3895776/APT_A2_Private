@@ -74,3 +74,7 @@ std::string GameMessages::returnValidLetters() {
 std::string GameMessages::returnValidCoordinates() {
     return "coordinates: A0 to O14 (single digits must be single)";
 }
+
+void GameMessages::printValidPlayerCount() {
+    std::cout << "Enter 2 - 4 for the respective amount of players in game" << std::endl;
+}

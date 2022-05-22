@@ -9,8 +9,11 @@ Menu
 > 
 Starting a New Game
 
+Enter 2 - 4 for the respective amount of players in game
+> Valid name is one sentence and all caps digits are ok too
 Enter a name for player 1 (uppercase characters only)
 > 
+Valid name is one sentence and all caps digits are ok too
 Enter a name for player 2 (uppercase characters only)
 > 
 Let's Play!
@@ -35,14 +38,15 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-F-4, D-2, B-3, S-1, O-1, C-3, I-1, G-2
+F-4, D-2, B-3, S-1, O-1, C-3, I-1
 
-> > > > > > > > > PLAYERTWO, it's your turn
-Score for PLAYERONE: 0
+> > > > > > > > BINGO
+PLAYERTWO, it's your turn
+Score for PLAYERONE: 65
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
 B |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 C |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 D |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -58,14 +62,14 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-U-1, L-1, N-1, E-1, A-1, O-1, T-1, N-1
+G-2, U-1, L-1, N-1, E-1, A-1, O-1
 
 > PLAYERONE, it's your turn
-Score for PLAYERONE: 0
+Score for PLAYERONE: 65
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
 B |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 C |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 D |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -81,15 +85,16 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-E-1, E-1, L-1, R-1, M-3, W-4, B-3
+T-1, N-1, E-1, E-1, L-1, R-1, M-3
 
-> > > > > > > > PLAYERTWO, it's your turn
-Score for PLAYERONE: 0
+> > > > > > > > BINGO
+PLAYERTWO, it's your turn
+Score for PLAYERONE: 128
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
 C |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 D |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 E |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -104,15 +109,15 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-U-1, L-1, N-1, E-1, A-1, O-1, T-1, N-1
+G-2, U-1, L-1, N-1, E-1, A-1, O-1
 
 > PLAYERONE, it's your turn
-Score for PLAYERONE: 0
+Score for PLAYERONE: 128
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
 C |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 D |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 E |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -127,16 +132,17 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-O-1, E-1, G-2, T-1, E-1, S-1, E-1
+W-4, B-3, O-1, E-1, G-2, T-1, E-1
 
-> > > > > > > > PLAYERTWO, it's your turn
-Score for PLAYERONE: 0
+> > > > > > > > BINGO
+PLAYERTWO, it's your turn
+Score for PLAYERONE: 196
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
-C |   | O | E | G | T | E | S | E |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
+C |   | W | B | O | E | G | T | E |   |   |   |   |   |   |   |
 D |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 E |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 F |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -150,16 +156,16 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-U-1, L-1, N-1, E-1, A-1, O-1, T-1, N-1
+G-2, U-1, L-1, N-1, E-1, A-1, O-1
 
 > PLAYERONE, it's your turn
-Score for PLAYERONE: 0
+Score for PLAYERONE: 196
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
-C |   | O | E | G | T | E | S | E |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
+C |   | W | B | O | E | G | T | E |   |   |   |   |   |   |   |
 D |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 E |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 F |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -173,17 +179,18 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-A-1, E-1, U-1, R-1, E-1, R-1, X-8
+S-1, E-1, A-1, E-1, U-1, R-1, E-1
 
-> > > > > > > > PLAYERTWO, it's your turn
-Score for PLAYERONE: 0
+> > > > > > > > BINGO
+PLAYERTWO, it's your turn
+Score for PLAYERONE: 262
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
-C |   | O | E | G | T | E | S | E |   |   |   |   |   |   |   |
-D |   | A | E | U | R | E | R | X |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
+C |   | W | B | O | E | G | T | E |   |   |   |   |   |   |   |
+D |   | S | E | A | E | U | R | E |   |   |   |   |   |   |   |
 E |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 F |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 G |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -196,17 +203,17 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-U-1, L-1, N-1, E-1, A-1, O-1, T-1, N-1
+G-2, U-1, L-1, N-1, E-1, A-1, O-1
 
 > PLAYERONE, it's your turn
-Score for PLAYERONE: 0
+Score for PLAYERONE: 262
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
-C |   | O | E | G | T | E | S | E |   |   |   |   |   |   |   |
-D |   | A | E | U | R | E | R | X |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
+C |   | W | B | O | E | G | T | E |   |   |   |   |   |   |   |
+D |   | S | E | A | E | U | R | E |   |   |   |   |   |   |   |
 E |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 F |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 G |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -219,18 +226,19 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-N-1, L-1, R-1, A-1, A-1, O-1, Y-4
+R-1, X-8, N-1, L-1, R-1, A-1, A-1
 
-> > > > > > > > PLAYERTWO, it's your turn
-Score for PLAYERONE: 0
+> > > > > > > > BINGO
+PLAYERTWO, it's your turn
+Score for PLAYERONE: 336
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
-C |   | O | E | G | T | E | S | E |   |   |   |   |   |   |   |
-D |   | A | E | U | R | E | R | X |   |   |   |   |   |   |   |
-E |   | N | L | R | A | A | O | Y |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
+C |   | W | B | O | E | G | T | E |   |   |   |   |   |   |   |
+D |   | S | E | A | E | U | R | E |   |   |   |   |   |   |   |
+E |   | R | X | N | L | R | A | A |   |   |   |   |   |   |   |
 F |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 G |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 H |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -242,18 +250,18 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-U-1, L-1, N-1, E-1, A-1, O-1, T-1, N-1
+G-2, U-1, L-1, N-1, E-1, A-1, O-1
 
 > PLAYERONE, it's your turn
-Score for PLAYERONE: 0
+Score for PLAYERONE: 336
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
-C |   | O | E | G | T | E | S | E |   |   |   |   |   |   |   |
-D |   | A | E | U | R | E | R | X |   |   |   |   |   |   |   |
-E |   | N | L | R | A | A | O | Y |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
+C |   | W | B | O | E | G | T | E |   |   |   |   |   |   |   |
+D |   | S | E | A | E | U | R | E |   |   |   |   |   |   |   |
+E |   | R | X | N | L | R | A | A |   |   |   |   |   |   |   |
 F |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 G |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 H |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -265,19 +273,20 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-I-1, A-1, I-1, L-1, I-1, S-1, E-1
+O-1, Y-4, I-1, A-1, I-1, L-1, I-1
 
-> > > > > > > > PLAYERTWO, it's your turn
-Score for PLAYERONE: 0
+> > > > > > > > BINGO
+PLAYERTWO, it's your turn
+Score for PLAYERONE: 407
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
-C |   | O | E | G | T | E | S | E |   |   |   |   |   |   |   |
-D |   | A | E | U | R | E | R | X |   |   |   |   |   |   |   |
-E |   | N | L | R | A | A | O | Y |   |   |   |   |   |   |   |
-F |   | I | A | I | L | I | S | E |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
+C |   | W | B | O | E | G | T | E |   |   |   |   |   |   |   |
+D |   | S | E | A | E | U | R | E |   |   |   |   |   |   |   |
+E |   | R | X | N | L | R | A | A |   |   |   |   |   |   |   |
+F |   | O | Y | I | A | I | L | I |   |   |   |   |   |   |   |
 G |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 H |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 I |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -288,19 +297,19 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-U-1, L-1, N-1, E-1, A-1, O-1, T-1, N-1
+G-2, U-1, L-1, N-1, E-1, A-1, O-1
 
 > PLAYERONE, it's your turn
-Score for PLAYERONE: 0
+Score for PLAYERONE: 407
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
-C |   | O | E | G | T | E | S | E |   |   |   |   |   |   |   |
-D |   | A | E | U | R | E | R | X |   |   |   |   |   |   |   |
-E |   | N | L | R | A | A | O | Y |   |   |   |   |   |   |   |
-F |   | I | A | I | L | I | S | E |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
+C |   | W | B | O | E | G | T | E |   |   |   |   |   |   |   |
+D |   | S | E | A | E | U | R | E |   |   |   |   |   |   |   |
+E |   | R | X | N | L | R | A | A |   |   |   |   |   |   |   |
+F |   | O | Y | I | A | I | L | I |   |   |   |   |   |   |   |
 G |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 H |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 I |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -311,20 +320,21 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-P-3, A-1, R-1, I-1, N-1, Z-10, K-5
+S-1, E-1, P-3, A-1, R-1, I-1, N-1
 
-> > > > > > > > PLAYERTWO, it's your turn
-Score for PLAYERONE: 0
+> > > > > > > > BINGO
+PLAYERTWO, it's your turn
+Score for PLAYERONE: 478
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
-C |   | O | E | G | T | E | S | E |   |   |   |   |   |   |   |
-D |   | A | E | U | R | E | R | X |   |   |   |   |   |   |   |
-E |   | N | L | R | A | A | O | Y |   |   |   |   |   |   |   |
-F |   | I | A | I | L | I | S | E |   |   |   |   |   |   |   |
-G |   | P | A | R | I | N | Z | K |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
+C |   | W | B | O | E | G | T | E |   |   |   |   |   |   |   |
+D |   | S | E | A | E | U | R | E |   |   |   |   |   |   |   |
+E |   | R | X | N | L | R | A | A |   |   |   |   |   |   |   |
+F |   | O | Y | I | A | I | L | I |   |   |   |   |   |   |   |
+G |   | S | E | P | A | R | I | N |   |   |   |   |   |   |   |
 H |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 I |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 J |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -334,20 +344,20 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-U-1, L-1, N-1, E-1, A-1, O-1, T-1, N-1
+G-2, U-1, L-1, N-1, E-1, A-1, O-1
 
 > PLAYERONE, it's your turn
-Score for PLAYERONE: 0
+Score for PLAYERONE: 478
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
-C |   | O | E | G | T | E | S | E |   |   |   |   |   |   |   |
-D |   | A | E | U | R | E | R | X |   |   |   |   |   |   |   |
-E |   | N | L | R | A | A | O | Y |   |   |   |   |   |   |   |
-F |   | I | A | I | L | I | S | E |   |   |   |   |   |   |   |
-G |   | P | A | R | I | N | Z | K |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
+C |   | W | B | O | E | G | T | E |   |   |   |   |   |   |   |
+D |   | S | E | A | E | U | R | E |   |   |   |   |   |   |   |
+E |   | R | X | N | L | R | A | A |   |   |   |   |   |   |   |
+F |   | O | Y | I | A | I | L | I |   |   |   |   |   |   |   |
+G |   | S | E | P | A | R | I | N |   |   |   |   |   |   |   |
 H |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 I |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 J |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -357,21 +367,22 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-P-3, W-4, N-1, U-1, O-1, H-4, T-1
+Z-10, K-5, P-3, W-4, N-1, U-1, O-1
 
-> > > > > > > > PLAYERTWO, it's your turn
-Score for PLAYERONE: 0
+> > > > > > > > BINGO
+PLAYERTWO, it's your turn
+Score for PLAYERONE: 566
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
-C |   | O | E | G | T | E | S | E |   |   |   |   |   |   |   |
-D |   | A | E | U | R | E | R | X |   |   |   |   |   |   |   |
-E |   | N | L | R | A | A | O | Y |   |   |   |   |   |   |   |
-F |   | I | A | I | L | I | S | E |   |   |   |   |   |   |   |
-G |   | P | A | R | I | N | Z | K |   |   |   |   |   |   |   |
-H |   | P | W | N | U | O | H | T |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
+C |   | W | B | O | E | G | T | E |   |   |   |   |   |   |   |
+D |   | S | E | A | E | U | R | E |   |   |   |   |   |   |   |
+E |   | R | X | N | L | R | A | A |   |   |   |   |   |   |   |
+F |   | O | Y | I | A | I | L | I |   |   |   |   |   |   |   |
+G |   | S | E | P | A | R | I | N |   |   |   |   |   |   |   |
+H |   | Z | K | P | W | N | U | O |   |   |   |   |   |   |   |
 I |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 J |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 K |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -380,21 +391,21 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-U-1, L-1, N-1, E-1, A-1, O-1, T-1, N-1
+G-2, U-1, L-1, N-1, E-1, A-1, O-1
 
 > PLAYERONE, it's your turn
-Score for PLAYERONE: 0
+Score for PLAYERONE: 566
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
-C |   | O | E | G | T | E | S | E |   |   |   |   |   |   |   |
-D |   | A | E | U | R | E | R | X |   |   |   |   |   |   |   |
-E |   | N | L | R | A | A | O | Y |   |   |   |   |   |   |   |
-F |   | I | A | I | L | I | S | E |   |   |   |   |   |   |   |
-G |   | P | A | R | I | N | Z | K |   |   |   |   |   |   |   |
-H |   | P | W | N | U | O | H | T |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
+C |   | W | B | O | E | G | T | E |   |   |   |   |   |   |   |
+D |   | S | E | A | E | U | R | E |   |   |   |   |   |   |   |
+E |   | R | X | N | L | R | A | A |   |   |   |   |   |   |   |
+F |   | O | Y | I | A | I | L | I |   |   |   |   |   |   |   |
+G |   | S | E | P | A | R | I | N |   |   |   |   |   |   |   |
+H |   | Z | K | P | W | N | U | O |   |   |   |   |   |   |   |
 I |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 J |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 K |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -403,22 +414,23 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-V-4, O-1, J-8, I-1, A-1, T-1, O-1
+H-4, T-1, V-4, O-1, J-8, I-1, A-1
 
-> > > > > > > > PLAYERTWO, it's your turn
-Score for PLAYERONE: 0
+> > > > > > > > BINGO
+PLAYERTWO, it's your turn
+Score for PLAYERONE: 659
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
-C |   | O | E | G | T | E | S | E |   |   |   |   |   |   |   |
-D |   | A | E | U | R | E | R | X |   |   |   |   |   |   |   |
-E |   | N | L | R | A | A | O | Y |   |   |   |   |   |   |   |
-F |   | I | A | I | L | I | S | E |   |   |   |   |   |   |   |
-G |   | P | A | R | I | N | Z | K |   |   |   |   |   |   |   |
-H |   | P | W | N | U | O | H | T |   |   |   |   |   |   |   |
-I |   | V | O | J | I | A | T | O |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
+C |   | W | B | O | E | G | T | E |   |   |   |   |   |   |   |
+D |   | S | E | A | E | U | R | E |   |   |   |   |   |   |   |
+E |   | R | X | N | L | R | A | A |   |   |   |   |   |   |   |
+F |   | O | Y | I | A | I | L | I |   |   |   |   |   |   |   |
+G |   | S | E | P | A | R | I | N |   |   |   |   |   |   |   |
+H |   | Z | K | P | W | N | U | O |   |   |   |   |   |   |   |
+I |   | H | T | V | O | J | I | A |   |   |   |   |   |   |   |
 J |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 K |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 L |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -426,22 +438,22 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-U-1, L-1, N-1, E-1, A-1, O-1, T-1, N-1
+G-2, U-1, L-1, N-1, E-1, A-1, O-1
 
 > PLAYERONE, it's your turn
-Score for PLAYERONE: 0
+Score for PLAYERONE: 659
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
-C |   | O | E | G | T | E | S | E |   |   |   |   |   |   |   |
-D |   | A | E | U | R | E | R | X |   |   |   |   |   |   |   |
-E |   | N | L | R | A | A | O | Y |   |   |   |   |   |   |   |
-F |   | I | A | I | L | I | S | E |   |   |   |   |   |   |   |
-G |   | P | A | R | I | N | Z | K |   |   |   |   |   |   |   |
-H |   | P | W | N | U | O | H | T |   |   |   |   |   |   |   |
-I |   | V | O | J | I | A | T | O |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
+C |   | W | B | O | E | G | T | E |   |   |   |   |   |   |   |
+D |   | S | E | A | E | U | R | E |   |   |   |   |   |   |   |
+E |   | R | X | N | L | R | A | A |   |   |   |   |   |   |   |
+F |   | O | Y | I | A | I | L | I |   |   |   |   |   |   |   |
+G |   | S | E | P | A | R | I | N |   |   |   |   |   |   |   |
+H |   | Z | K | P | W | N | U | O |   |   |   |   |   |   |   |
+I |   | H | T | V | O | J | I | A |   |   |   |   |   |   |   |
 J |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 K |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 L |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
@@ -449,101 +461,106 @@ M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-S-1, D-2, I-1, M-3, E-1, T-1, O-1
+T-1, O-1, S-1, D-2, I-1, M-3, E-1
 
-> > > > > > > > PLAYERTWO, it's your turn
-Score for PLAYERONE: 0
+> > > > > > > > BINGO
+PLAYERTWO, it's your turn
+Score for PLAYERONE: 746
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
-C |   | O | E | G | T | E | S | E |   |   |   |   |   |   |   |
-D |   | A | E | U | R | E | R | X |   |   |   |   |   |   |   |
-E |   | N | L | R | A | A | O | Y |   |   |   |   |   |   |   |
-F |   | I | A | I | L | I | S | E |   |   |   |   |   |   |   |
-G |   | P | A | R | I | N | Z | K |   |   |   |   |   |   |   |
-H |   | P | W | N | U | O | H | T |   |   |   |   |   |   |   |
-I |   | V | O | J | I | A | T | O |   |   |   |   |   |   |   |
-J |   | S | D | I | M | E | T | O |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
+C |   | W | B | O | E | G | T | E |   |   |   |   |   |   |   |
+D |   | S | E | A | E | U | R | E |   |   |   |   |   |   |   |
+E |   | R | X | N | L | R | A | A |   |   |   |   |   |   |   |
+F |   | O | Y | I | A | I | L | I |   |   |   |   |   |   |   |
+G |   | S | E | P | A | R | I | N |   |   |   |   |   |   |   |
+H |   | Z | K | P | W | N | U | O |   |   |   |   |   |   |   |
+I |   | H | T | V | O | J | I | A |   |   |   |   |   |   |   |
+J |   | T | O | S | D | I | M | E |   |   |   |   |   |   |   |
 K |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 L |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-U-1, L-1, N-1, E-1, A-1, O-1, T-1, N-1
+G-2, U-1, L-1, N-1, E-1, A-1, O-1
 
 > PLAYERONE, it's your turn
-Score for PLAYERONE: 0
+Score for PLAYERONE: 746
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
-C |   | O | E | G | T | E | S | E |   |   |   |   |   |   |   |
-D |   | A | E | U | R | E | R | X |   |   |   |   |   |   |   |
-E |   | N | L | R | A | A | O | Y |   |   |   |   |   |   |   |
-F |   | I | A | I | L | I | S | E |   |   |   |   |   |   |   |
-G |   | P | A | R | I | N | Z | K |   |   |   |   |   |   |   |
-H |   | P | W | N | U | O | H | T |   |   |   |   |   |   |   |
-I |   | V | O | J | I | A | T | O |   |   |   |   |   |   |   |
-J |   | S | D | I | M | E | T | O |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
+C |   | W | B | O | E | G | T | E |   |   |   |   |   |   |   |
+D |   | S | E | A | E | U | R | E |   |   |   |   |   |   |   |
+E |   | R | X | N | L | R | A | A |   |   |   |   |   |   |   |
+F |   | O | Y | I | A | I | L | I |   |   |   |   |   |   |   |
+G |   | S | E | P | A | R | I | N |   |   |   |   |   |   |   |
+H |   | Z | K | P | W | N | U | O |   |   |   |   |   |   |   |
+I |   | H | T | V | O | J | I | A |   |   |   |   |   |   |   |
+J |   | T | O | S | D | I | M | E |   |   |   |   |   |   |   |
 K |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 L |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-I-1, R-1, T-1, N-1, F-4, G-2, D-2
+T-1, O-1, I-1, R-1, T-1, N-1, F-4
 
-> > > > > > > > PLAYERTWO, it's your turn
-Score for PLAYERONE: 0
+> > > > > > > > BINGO
+PLAYERTWO, it's your turn
+Score for PLAYERONE: 834
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
-C |   | O | E | G | T | E | S | E |   |   |   |   |   |   |   |
-D |   | A | E | U | R | E | R | X |   |   |   |   |   |   |   |
-E |   | N | L | R | A | A | O | Y |   |   |   |   |   |   |   |
-F |   | I | A | I | L | I | S | E |   |   |   |   |   |   |   |
-G |   | P | A | R | I | N | Z | K |   |   |   |   |   |   |   |
-H |   | P | W | N | U | O | H | T |   |   |   |   |   |   |   |
-I |   | V | O | J | I | A | T | O |   |   |   |   |   |   |   |
-J |   | S | D | I | M | E | T | O |   |   |   |   |   |   |   |
-K |   | I | R | T | N | F | G | D |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
+C |   | W | B | O | E | G | T | E |   |   |   |   |   |   |   |
+D |   | S | E | A | E | U | R | E |   |   |   |   |   |   |   |
+E |   | R | X | N | L | R | A | A |   |   |   |   |   |   |   |
+F |   | O | Y | I | A | I | L | I |   |   |   |   |   |   |   |
+G |   | S | E | P | A | R | I | N |   |   |   |   |   |   |   |
+H |   | Z | K | P | W | N | U | O |   |   |   |   |   |   |   |
+I |   | H | T | V | O | J | I | A |   |   |   |   |   |   |   |
+J |   | T | O | S | D | I | M | E |   |   |   |   |   |   |   |
+K |   | T | O | I | R | T | N | F |   |   |   |   |   |   |   |
 L |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-U-1, L-1, N-1, E-1, A-1, O-1, T-1, N-1
+G-2, U-1, L-1, N-1, E-1, A-1, O-1
 
 > PLAYERONE, it's your turn
-Score for PLAYERONE: 0
+Score for PLAYERONE: 834
 Score for PLAYERTWO: 0
     0   1   2   3   4   5   6   7   8   9  10  11  12  13  14 
   -------------------------------------------------------------
-A |   | F | D | B | S | O | C | I | G |   |   |   |   |   |   |
-B |   | E | E | L | R | M | W | B |   |   |   |   |   |   |   |
-C |   | O | E | G | T | E | S | E |   |   |   |   |   |   |   |
-D |   | A | E | U | R | E | R | X |   |   |   |   |   |   |   |
-E |   | N | L | R | A | A | O | Y |   |   |   |   |   |   |   |
-F |   | I | A | I | L | I | S | E |   |   |   |   |   |   |   |
-G |   | P | A | R | I | N | Z | K |   |   |   |   |   |   |   |
-H |   | P | W | N | U | O | H | T |   |   |   |   |   |   |   |
-I |   | V | O | J | I | A | T | O |   |   |   |   |   |   |   |
-J |   | S | D | I | M | E | T | O |   |   |   |   |   |   |   |
-K |   | I | R | T | N | F | G | D |   |   |   |   |   |   |   |
+A |   | F | D | B | S | O | C | I |   |   |   |   |   |   |   |
+B |   | T | N | E | E | L | R | M |   |   |   |   |   |   |   |
+C |   | W | B | O | E | G | T | E |   |   |   |   |   |   |   |
+D |   | S | E | A | E | U | R | E |   |   |   |   |   |   |   |
+E |   | R | X | N | L | R | A | A |   |   |   |   |   |   |   |
+F |   | O | Y | I | A | I | L | I |   |   |   |   |   |   |   |
+G |   | S | E | P | A | R | I | N |   |   |   |   |   |   |   |
+H |   | Z | K | P | W | N | U | O |   |   |   |   |   |   |   |
+I |   | H | T | V | O | J | I | A |   |   |   |   |   |   |   |
+J |   | T | O | S | D | I | M | E |   |   |   |   |   |   |   |
+K |   | T | O | I | R | T | N | F |   |   |   |   |   |   |   |
 L |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 M |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 N |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 O |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
 Your hand is: 
-H-4, A-1, E-1, D-2, V-4, E-1, C-3
+G-2, D-2, H-4, A-1, E-1, D-2, V-4
 
-> > > > > > Game over
-Score for PLAYERONE: 0
+> > > > > > > > BINGO
+Game over
+Score for PLAYERONE: 929
 Score for PLAYERTWO: 0
 Player PLAYERONE won!
+
+Goodbye
