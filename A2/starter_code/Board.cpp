@@ -38,7 +38,18 @@ Column Board::getCol(const std::string coordinates){
     // this method probably needs to be boolean
     // Column col = coordinates[1] - '0'
     std::string c = coordinates.substr(1);
-    Column col = std::stoi(c);
+
+    // default is negative, which will return false in 
+    // valid and empty method. 
+    Column col = -1;
+
+    try {
+        col = std::stoi(c);
+    }
+    catch (std::invalid_argument& e) {
+        // std::cout << "Column invalid";
+    }
+
     return col;
 }
 
@@ -255,13 +266,15 @@ bool Board::validMove(Row row, Column col) {
 
 bool Board::validAndEmpty(std::string coordinates) {
     bool validAndEmpty = false;
-    Column col = getCol(coordinates);
-    Row row = getRow(coordinates);
+
     if (validCoordinate(coordinates)) {
-        
+        Column col = getCol(coordinates);
+        Row row = getRow(coordinates);
+
         if (isEmpty(row, col) ) {
             validAndEmpty = true;
         }
+
     }
     return validAndEmpty;
 }
