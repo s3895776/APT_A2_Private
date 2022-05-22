@@ -28,12 +28,16 @@ public:
     /* Remove Tile, to be used if move is invalid*/
     std::string removeTile(std::string coordinates);
 
-    /* returns the row and column extracted from the board coordinates provided */
+    /* returns the row  extracted from the board coordinates provided 
+    returns -1 if the row does not exist in the board.*/
     Row getRow(const std::string coordinates);
+    /* returns the column extracted from the board coordinates provided.
+    returns -1 and throws if the coordinate cannot be turned into a int
+    from the substring from index 1 and above.*/
     Column getCol(const std::string coordinates);
 
     /* checks that there is no tile at the specified location 
-    will cause segment fault without correct coordinates.*/
+    will cause errors without correct coordinates.*/
     bool isEmpty(std::string coordinates);
     bool isEmpty(Row row, Column col);
 
@@ -72,8 +76,6 @@ public:
     /* checks projectedCoordinates to see if they are all valid moves.
     only works for when Coordinates are already validated.
     duplicate coordinates will return false.
-    
-
     */
     bool checkBoardAdjacency(std::vector<std::string> projectedCoordinates);
 

@@ -47,7 +47,7 @@ Column Board::getCol(const std::string coordinates){
         col = std::stoi(c);
     }
     catch (std::invalid_argument& e) {
-        // std::cout << "Column invalid";
+        std::cout << "Column invalid" << std::endl;
     }
 
     return col;
@@ -187,17 +187,12 @@ int Board::getScore(std::vector<std::vector<Tile>> openList){
     return turnScore;
 }
 void Board::placeTile(Tile tile, std::string coordinates){
-    /* convert the coordinates into rows and cols */ 
     
-    // TODO: add validation for the string, that its in the right order
-    Column col = getCol(coordinates);
-    Row row = getRow(coordinates);
-
-    // place the tile given conditions
-    // return success
-
-    // TODO: Call validMove to check if the move is valid, if the board is notEmpty
+    // add validation for the string, that its in the right order
     if (validAndEmpty(coordinates)) {
+        /* convert the coordinates into rows and cols */ 
+        Column col = getCol(coordinates);
+        Row row = getRow(coordinates);
         board[row][col] = tile;
     }
     
@@ -289,30 +284,8 @@ bool Board::validAndEmpty( Row row, Column col ) {
     return validAndEmpty;
 }
 
-// std::string Board::removeTile(std::string coordinates){
-//     // TODO: maybe find a better way to do this, or just leave it as it is
-//     // Column col = coordinates[0] - '0';
-   
-//     Column col = getCol(coordinates);
-    
-//     Row row = getRow(coordinates);
-//     board[row][col] = Tile();
-//     // no need to clean up if it ain't a pointer kekw
-//     //do we need a return? cause this could theoretically be a void method
-//     return "in progress";
-// }
-
 std::string Board::displayTile(int row, int col){
     std::string tile = " ";
-    // if (board[row][col] != nullptr) {
-    //     char letter = board[row][col]->letter;
-    //     tile += letter;
-    //     tile += " ";
-    // } else {
-    //     tile = "   ";
-    // }
-
-    // Guan: If i am correct this should equate to 
     
     tile += board[row][col].getLetter();
     tile += " ";
