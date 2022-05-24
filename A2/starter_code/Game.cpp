@@ -633,10 +633,10 @@ std::string Game::gameInput(std::string firstPlayer) {
 
             while (inputNotReceived) {  
                 playerInput = "";
-                // this looks kinda strange to have two eof checks
-                // but it works if EOF is not on a newline. 
-                // i.e. if EOF follows an action, you still want to trigger
+                // If EOF follows an action, you still want to trigger
                 // the action but you don't want to get more input. 
+                // note: this will pass playerInput into the next 
+                // if block and will return true for that if statement. 
                 if (std::cin.eof()) {
                     inputNotReceived = false;
                     gameLoop = false;
@@ -669,7 +669,8 @@ std::string Game::gameInput(std::string firstPlayer) {
                         
                         if (this->validatePlaceTiles(playerInput)) {
                             std::string coordinates = playerInput.substr(11);
-                            // check that the Tiles are adjacent to another coordinate,
+                            // check that the Tiles are adjacent to another 
+                            // coordinate,
                             // or some extremely convulted straight line check. 
 
                             // place V at B10
@@ -680,43 +681,58 @@ std::string Game::gameInput(std::string firstPlayer) {
                                 // check if player has the correct tile.
                                 Letter tileLetter = playerInput[6]; 
 
-                                if (players[currentPlayerIndex].hasTile(tileLetter)) {
+                                if (players[currentPlayerIndex].hasTile(
+                                    tileLetter)) {
                                     Tile tile = players[currentPlayerIndex].dropTile(tileLetter);
                                     std::vector<std::string> projectedCoordinates;
-                                    projectedCoordinates.push_back(coordinates);
+                                    projectedCoordinates.push_back(
+                                        coordinates);
                                     
                                    
-                                    if (this->placeTiles(currentPlayerIndex, projectedCoordinates)) {
-                                        // start to placeTiles (starts from lowest recursion)
+                                    if (this->placeTiles(currentPlayerIndex,
+                                     projectedCoordinates)) {
+                                        // start to placeTiles (starts 
+                                        // from lowest recursion)
                                         board.placeTile(tile, coordinates);
                                         int row = board.getRow(coordinates);
                                         int col = board.getCol(coordinates);
                                         scoreTilesPlaced[row][col] = tile;
 
-                                        int playerScore = board.getScore(scoreTilesPlaced);
+                                        int playerScore = board.getScore(
+                                            scoreTilesPlaced);
 
-                                        players[currentPlayerIndex].addScore(playerScore);
+                                        players[currentPlayerIndex].addScore(
+                                            playerScore);
                                         inputNotReceived = false;
                                         // replace all tiles.
-                                        // keep calling the players hand size until
-                                        // the hand reaches seven. or there is no more bag. 
-                                        while ((players[currentPlayerIndex].sizeOfHand() < MAX_HAND_CAPACITY) && 
-                                        (tileBag.Count() > 0)) {
-                                            players[currentPlayerIndex].fillHand(tileBag.DrawTile());
+                                        // keep calling the players 
+                                        // hand size until
+                                        // the hand reaches seven. 
+                                        // or there is no more tiles in bag. 
+                                        while ( (players[currentPlayerIndex].sizeOfHand()
+                                        < MAX_HAND_CAPACITY) 
+                                        && (tileBag.Count() > 0)) {
+                                            players[currentPlayerIndex].fillHand(
+                                                tileBag.DrawTile());
                                         }
+
                                         // players turn not skipped. 
                                         players[currentPlayerIndex].turnNotSkipped();
 
                                         // reset scoring placed tiles. 
                                         for (int i = 0; i < ROW; ++i) {
-                                            for (int j = 0; j < COLUMN; ++j){
-                                                scoreTilesPlaced[i][j] = Tile();
+
+                                            for (int j = 0; j < COLUMN; ++j) {
+                                                scoreTilesPlaced[i][j] 
+                                                = Tile();
                                             }
                                         }
+
                                     } 
                                     
                                     else {
-                                        players[currentPlayerIndex].fillHand(tile);
+                                        players[currentPlayerIndex].fillHand(
+                                            tile);
                                         GameMessages::printPlaceInvalidPlacement();
                                     }
                                     
@@ -732,34 +748,41 @@ std::string Game::gameInput(std::string firstPlayer) {
                                 GameMessages::printPlaceInvalidCoordinate();
                             }
                         }
-                        // if (inputNotReceived) {
-                        //     std::cout << "Invalid input" << std::endl;
-                        // }
+
                         else {
                             GameMessages::printPlaceInvalidPlaceSyntax();
                         }
+
                     }
                                        
                     // TODO: implement player action: replace
                     // syntax: replace <tile> (only one can be replaced)
                     // syntax: place <tile1> at <grid location>
-                    // question: what order do the Tiles return in if the move
-                    // isn't legal?
                     else if (playerAction == "replace") {
-                        // only allow replace if there is at least one tile in the tileBag
+                        // only allow replace if there is at least one 
+                        // tile in the tileBag
+
                         if (this->tileBag.Count()) {
                             playerInput.erase(0, pos + delimiter.length());
                             Letter letter = playerInput[0];
                             // check if player's hand has the letter from player input
-                            if (this->players[currentPlayerIndex].hasLetter(letter)) {
+
+                            if (this->players[currentPlayerIndex].hasLetter(
+                                letter)) {
                                 // drop the tile
-                                Tile droppedTile = this->players[currentPlayerIndex].dropTile(letter);
+                                Tile droppedTile 
+                                = this->players[currentPlayerIndex].dropTile(letter);
+
                                 // add the dropped tile back to the end of bag
                                 this->tileBag.AddTile(droppedTile);
+
                                 // grab the first tile from bag
-                                Tile frontTile = this->tileBag.DrawTile();
+                                Tile frontTile 
+                                = this->tileBag.DrawTile();
+
                                 // add the new tile to the player's hand
                                 this->players[currentPlayerIndex].fillHand(frontTile);
+
                                 // replace action done
                                 inputNotReceived = false;
                                 playerInput.erase(0, pos + delimiter.length());
@@ -768,7 +791,8 @@ std::string Game::gameInput(std::string firstPlayer) {
                                 players[currentPlayerIndex].turnNotSkipped();
                             }
 
-                            // failed to replace the letter: cannot replace what player doesn't have
+                            // failed to replace the letter: 
+                            // cannot replace what player doesn't have
                             else {
                                 GameMessages::printReplaceTileNotInHand();
 
@@ -779,6 +803,7 @@ std::string Game::gameInput(std::string firstPlayer) {
                         else {
                             GameMessages::printReplaceButBagEmpty();
                         }
+
                     }
 
                     // pass
@@ -793,7 +818,8 @@ std::string Game::gameInput(std::string firstPlayer) {
                         playerInput.erase(0, pos + delimiter.length());
                         // save game
                         if (this->saveState(playerInput, currPlayerName)) {
-                            std::cout << "Game successfully saved" << std::endl;
+                            std::cout << "Game successfully saved" 
+                            << std::endl;
                         }
                     }
                         
@@ -804,13 +830,14 @@ std::string Game::gameInput(std::string firstPlayer) {
                         gameLoop = false;
                     }
 
+                    else if (playerAction == "help") {
+                        GameMessages::printCommandMessages();
+                    }
+
 
                     // TODO: Invalid Input
                     // syntax: any command not shown above
                     else {
-                        // perliminary design. If so desired later on,
-                        // make a GameMessage class to detail your fun 
-                        // printing adventures. 
                         std::cout << "Invalid Input." << std::endl;
                         GameMessages::printCommandMessages();
                     }
@@ -838,7 +865,8 @@ std::string Game::gameInput(std::string firstPlayer) {
     return "";
 }
 
-bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projectedCoordinates) {
+bool Game::placeTiles(int currentPlayerIndex, 
+std::vector<std::string> projectedCoordinates) {
     // continue until "Done" is reached - do not accept
     // input that isn't formatted correctly.
 
@@ -902,7 +930,8 @@ bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projected
 
                 if (players[currentPlayerIndex].hasTile(tileLetter)) {
                     // drop the tile before recursing.
-                    tileToPlace = players[currentPlayerIndex].dropTile(tileLetter);
+                    tileToPlace = players[currentPlayerIndex].dropTile(
+                        tileLetter);
                     
                     // // TEST: cheat knowledge on tiles in the hand. 
                     // std::cout << players[currentPlayerIndex].getHand();
@@ -913,9 +942,10 @@ bool Game::placeTiles(int currentPlayerIndex, std::vector<std::string> projected
                     // the recursion for correct moves. 
                     // if this is false, do not place tiles. 
                     // add the tile to place to the tiles placed vector, the scores will be tallied at the end of the turn
-                    validMove = this->placeTiles(currentPlayerIndex, projectedCoordinates);
+                    validMove = this->placeTiles(currentPlayerIndex, 
+                    projectedCoordinates);
                     if (!validMove) {
-                        players[currentPlayerIndex].fillHand(tileToPlace);                        
+                        players[currentPlayerIndex].fillHand(tileToPlace);                    
                     }
 
                 }
@@ -1052,7 +1082,7 @@ int Game::searchPlayer(std::string currentPlayer) {
 
         while (i < NUMBER_OF_PLAYERS) {
 
-            if ((this->players[i].getName() == currentPlayer) &
+            if ((this->players[i].getName() == currentPlayer) &&
             (currentPlayerIndex == -1) ) {
                 currentPlayerIndex = i;
             }

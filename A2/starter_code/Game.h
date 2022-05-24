@@ -14,11 +14,19 @@ class Game {
     public:
 
         /*
-         * Constructor, destructor, copy constructor
+         * Constructor
          */
         Game();
         Game(int seed);
+
+        /*
+        Destructor
+        */
         ~Game();
+
+        /*
+        Copy constructor
+        */
         Game(Game& other);
 
         /*
@@ -51,8 +59,11 @@ class Game {
          */
         std::string loadGame();       
 
+        /* method to load player hand into game */
         void loadPlayerHand(std::string hand, int playerIndex);
+        /* method to load tile bag into the game */
         void loadTileBag(std::string tileBagState);
+        /* method to load board into the game */
         void loadBoard(std::string boardState);
 
         /* Wait for player input and call player methods in this state. 
@@ -65,7 +76,8 @@ class Game {
         std::string quitGame();
 
         /*
-         * Check if name contains all uppercase characters and at least one characer long
+         * Check if name contains all uppercase characters 
+         and at least one characer long
          */
         bool validName(std::string name);
 
@@ -79,11 +91,13 @@ class Game {
         void AddPlayer(Player player);
 
         /* recursive case: only activates once gameInput() validates 
-        one sentence.  prevValid indicates that the previous recursion must be valid.
-        If not, the case is automatically false.
+        one sentence.  
+        passes a vector of coordinates to check if the final placement 
+        is correct. Uses the currentPlayerIndex to call the methods of
+        the internal player.
         */
-        bool placeTiles(int currentPlayerIndex, std::vector<std::string> projectedCoordinates);
-        void replaceTiles(std::string currentPlayer);
+        bool placeTiles(int currentPlayerIndex, 
+        std::vector<std::string> projectedCoordinates);
 
         /* 
         made public for testing. 
@@ -97,29 +111,39 @@ class Game {
 
         /* checks projectedCoordinates to see if they are all valid moves.
         only works for when Coordinates are already validated.
-        Does not check the emptiness of coordinates in projected coordinates.
-
+        Does not check the emptiness of coordinates within
+        projected coordinates.
         */
         bool checkBoardAdjacency(std::vector<std::string> projectedCoordinates);
 
-        /* Return boolean that tells if the current tile is adjacent
+        /* Return boolean that is true if the current tile is adjacent
             to a non-empty tile
             Coordinate parameters must be valid for Board. 
-         */
+        */
         bool adjacentNotEmpty(int rowCoordinate, int colCoordinate);
         
 
     private:
+        /* Stores a variable number of players.*/
         std::vector<Player> players;
 
+        /* Stores a variable amount of tiles */
         LinkedList tileBag;
+
+        /* store the seed to use within the random generator for tileBag.*/
         int seed;
 
         /* Display the end of the game information */
         std::string gameEnd();
+        /* Stores the board ADT to use in Game */
         Board board;
+
         // return index of player stored in vector
         int searchPlayer(std::string currentPlayer);
+
+        /* stores a 2D vector of tiles which is used to score tiles 
+        by using a board method. 
+        */
         std::vector<std::vector<Tile>> scoreTilesPlaced;
         
 };
