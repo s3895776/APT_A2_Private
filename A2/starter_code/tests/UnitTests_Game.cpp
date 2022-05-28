@@ -201,7 +201,6 @@ int Game_validatePlacementInput() {
     return numFailures;
 }
 
-
 int Game_RunTests(){
     int numFailures = 0;
 

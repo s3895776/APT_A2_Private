@@ -67,6 +67,7 @@ int Board::getScore(std::vector<std::vector<Tile>> openList){
     int lastCol = COLUMN - 1;
 
     for (int i = 0; i < COLUMN; ++i){
+
         for (int j = 0; j< ROW; ++j){
             Row row = j;
             Column col = i;
@@ -84,17 +85,21 @@ int Board::getScore(std::vector<std::vector<Tile>> openList){
                     checkAbove = false;
                     checkBelow = false;
                 }
+
                 if (!horzCloseList[row][col].isEmpty()){
                     checkLeft = false;
                     checkRight = false;
                 }
+
                 if (curr.getLetter() == openList[row][col].getLetter()){
                     turnScore += curr.getValue();
                     openList[row][col] = Tile();
                     vertCloseList[row][col] = curr;
                     horzCloseList[row][col] = curr;
                    
-                } else {
+                } 
+                
+                else {
                     checkAbove = false;
                     checkBelow = false;
                     checkLeft = false;
@@ -119,65 +124,88 @@ int Board::getScore(std::vector<std::vector<Tile>> openList){
                     }
                     ++row;
                 }
+                
                 // check the value of the letters above until an empty space is hit or boundary of board
                 while (checkAbove){
+
                     if (row == 0) {
                         checkAbove = false; 
                     } 
+
                     else if (board[row-1][col].isEmpty()){
                         checkAbove = false;
                     } 
+
                     else {
+
                         if (vertCloseList[row-1][col].isEmpty()){
                             Tile tile = board[row-1][col];
                             turnScore += tile.getValue();
                             vertCloseList[row-1][col] = tile;
                             openList[row-1][col] = Tile();
                         }
+
                     }
+
                     --row;
                 }
+               
                 row = j;
                 col = i;
+
                 // check the value of the letters below until an empty space is hit or boundary of board
                 while (checkRight){
                     if (col == lastCol) {
                         checkRight = false;
                     } 
+
                     else if (board[row][col+1].isEmpty()) {
                         checkRight = false;
                     } 
+
                     else {
+
                         if (horzCloseList[row][col+1].isEmpty()) {
                             Tile tile = board[row][col+1];
                             turnScore += tile.getValue();
                             horzCloseList[row][col+1] = tile;
                             openList[row][col+1] = Tile();
                         }
+
                     }
+
                     ++col;
                 }
 
                 // check the value of the letters below until an empty space is hit or boundary of board
                 while (checkLeft){
+
                     if (col == 0) {
                         checkLeft = false;
                     } 
+
                     else if (board[row][col-1].isEmpty()) {
                         checkLeft = false;
                     } 
+
                     else {
+
                         if (horzCloseList[row][col-1].isEmpty()){
                             Tile tile = board[row][col-1];
                             turnScore += tile.getValue();
                             horzCloseList[row][col-1] = tile;
                             openList[row][col-1] = Tile();
                         }
+
                     }
+
                     --col;
                 }
+            
             }
+        
         }
+    
     }
     
     // check if the coordinates are left, right, up or down of the given tile
@@ -186,6 +214,7 @@ int Board::getScore(std::vector<std::vector<Tile>> openList){
     //return the score
     return turnScore;
 }
+
 void Board::placeTile(Tile tile, std::string coordinates){
     
     // add validation for the string, that its in the right order
@@ -201,13 +230,13 @@ void Board::placeTile(Tile tile, std::string coordinates){
 bool Board::isEmpty(std::string coordinates) {
     Row row = getRow(coordinates);
     Column col = getCol(coordinates);
-    bool empty = false;
+    // bool empty = false;
     
-    if (board[row][col].isEmpty()){
-        empty = true;
-    }
+    // if (board[row][col].isEmpty()){
+    //     empty = true;
+    // }
     
-    return empty;
+    return board[row][col].isEmpty();
 }
 
 bool Board::validCoordinate(const std::string coordinates) {
@@ -241,11 +270,11 @@ bool Board::validCoordinate(const std::string coordinates) {
 }
 
 bool Board::isEmpty(Row row, Column col){
-    bool empty = false;
-    if (board[row][col].isEmpty()){
-        empty = true;
-    }
-    return empty;
+    // bool empty = false;
+    // if (board[row][col].isEmpty()){
+    //     empty = true;
+    // }
+    return board[row][col].isEmpty();
 }
 
 bool Board::validMove(Row row, Column col) {
@@ -448,8 +477,6 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
                 this->separateCoordinates(coordinateString));
         }
 
-
-        
         // TODO: check if all coordinates belong on the same line. 
         // i.e. row == row or column == column 
         int i = 0;
@@ -475,7 +502,6 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
         // the move is invalid. 
         // alternatively, if the board is empty, no need to check 
         // for adjacency.  
-
         // if notAdjacentToTile is true at end of while loop,
         // the board is not empty and tiles are not placed next to 
         // a non-empty space, therefore canBePlaced will also be false. 
@@ -584,6 +610,7 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
 
                     i += 1;
                 }
+            
             }
             
             // row is same
@@ -618,9 +645,9 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
         }
 
     }
+
     return canBePlaced;
 }
-
 
 bool Board::adjacentNotEmpty(int rowCoordinate, int colCoordinate) {
     // initiate boundary checks. 
@@ -679,4 +706,8 @@ bool Board::adjacentNotEmpty(int rowCoordinate, int colCoordinate) {
     }
 
     return adjacentNotEmpty;
+}
+
+int Board::getTileScore(Row row, Column col) {
+    return this->board[row][col].getValue();
 }

@@ -7,7 +7,7 @@
 Game::Game() {
     tileBag = LinkedList();  
     std::vector<std::vector<Tile>> b(ROW, std::vector<Tile>(COLUMN, Tile()));
-    this->scoreTilesPlaced = b;
+    // this->scoreTilesPlaced = b;
     std::random_device seed;
     this->seed = seed();
 
@@ -16,7 +16,7 @@ Game::Game() {
 Game::Game(int seed) {
     tileBag = LinkedList(); 
     std::vector<std::vector<Tile>> b(ROW, std::vector<Tile>(COLUMN, Tile()));
-    this->scoreTilesPlaced = b;
+    // this->scoreTilesPlaced = b;
     this->seed = seed; 
 }
 
@@ -694,12 +694,14 @@ std::string Game::gameInput(std::string firstPlayer) {
                                         // start to placeTiles (starts 
                                         // from lowest recursion)
                                         board.placeTile(tile, coordinates);
-                                        int row = board.getRow(coordinates);
-                                        int col = board.getCol(coordinates);
-                                        scoreTilesPlaced[row][col] = tile;
+                                        // int row = board.getRow(coordinates);
+                                        // int col = board.getCol(coordinates);
+                                        // scoreTilesPlaced[row][col] = tile;
 
-                                        int playerScore = board.getScore(
-                                            scoreTilesPlaced);
+                                        // int playerScore = board.getScore(
+                                        //     scoreTilesPlaced);
+
+                                        int playerScore = this->getScore(sortedCoordinates);
 
                                         players[currentPlayerIndex].addScore(
                                             playerScore);
@@ -719,14 +721,14 @@ std::string Game::gameInput(std::string firstPlayer) {
                                         // players turn not skipped. 
                                         players[currentPlayerIndex].turnNotSkipped();
 
-                                        // reset scoring placed tiles. 
-                                        for (int i = 0; i < ROW; ++i) {
+                                        // // reset scoring placed tiles. 
+                                        // for (int i = 0; i < ROW; ++i) {
 
-                                            for (int j = 0; j < COLUMN; ++j) {
-                                                scoreTilesPlaced[i][j] 
-                                                = Tile();
-                                            }
-                                        }
+                                        //     for (int j = 0; j < COLUMN; ++j) {
+                                        //         scoreTilesPlaced[i][j] 
+                                        //         = Tile();
+                                        //     }
+                                        // }
 
                                     } 
                                     
@@ -902,19 +904,22 @@ std::vector<std::string> projectedCoordinates) {
         // all projectedCoordinates are given, thus it is given here. 
         tilesPlaced = board.checkBoardAdjacency(projectedCoordinates);
         if ( tilesPlaced ) {
-        const int MAX_PLACEMENT_AMOUNT = 7;
+            const int MAX_PLACEMENT_AMOUNT = 7;
             if (projectedCoordinates.size() == MAX_PLACEMENT_AMOUNT) {
                 // bingo baby
                 std::cout << "BINGO" << std::endl;
                 const int BINGO_SCORE = 50;
                 players[currentPlayerIndex].addScore(BINGO_SCORE);
+
+            this->sortedCoordinates = projectedCoordinates;
+            // if this works fine, sorted coordinates should be sorted 
+            // for the getScore to function properly. 
+            // alternatively, use the projected coordinates 
+            // and find the left most or right most based on that. 
+            std::sort( sortedCoordinates.begin(), sortedCoordinates.end());
+
             }
         }
-
-        else {
-            GameMessages::printPlaceInvalidPlacement();
-        }
-
         
     } 
 
@@ -975,9 +980,9 @@ std::vector<std::string> projectedCoordinates) {
         // start to placeTiles (starts from lowest recursion)
         
         board.placeTile(tileToPlace, coordinates);
-        int row = board.getRow(coordinates);
-        int col = board.getCol(coordinates);
-        scoreTilesPlaced[row][col] = tileToPlace;
+        // int row = board.getRow(coordinates);
+        // int col = board.getCol(coordinates);
+        // scoreTilesPlaced[row][col] = tileToPlace;
         tilesPlaced = true;
     }
     
@@ -1104,4 +1109,193 @@ int Game::searchPlayer(std::string currentPlayer) {
     }
 
     return currentPlayerIndex;
+}
+
+int Game::getScore(std::vector<std::string> sortedCoordinates) {
+    // determine if the tiles are placed left to right
+    // or top to bottom: just check the first and second element
+    // which applies for all elements if the contract is met. 
+
+    std::vector<std::vector<int>> separatedCoordinates;
+
+    for (std::string& coordinateString : sortedCoordinates) {
+        separatedCoordinates.push_back(
+            board.separateCoordinates(coordinateString));
+    }
+
+    bool rowIsSame = false;
+    const int ROW_INDEX = 0;
+    const int COLUMN_INDEX = 1;
+
+    // if the size is one, doesn't really matter which way you calculate
+    if (sortedCoordinates.size() == 1) {
+        rowIsSame = true;
+    }
+
+    else {
+        // compare the rows of the first and second coordinate 
+        if (separatedCoordinates[0][ROW_INDEX] == separatedCoordinates[1][ROW_INDEX]) {
+            rowIsSame = true;
+        }
+
+    } 
+    
+    
+
+    // score from top to bottom/left to right excluding the coordinates given 
+    // in the sorted coordinates. Just iterate through separatedCoordinates 
+    // individually and score appropriately. If scoring top to bottom, 
+    // the sorted coordinates are from left to right.
+
+    const int FIRST_COL = 0;
+    const int FIRST_ROW = 0;
+    const int LAST_ROW = ROW - 1;
+    const int LAST_COL = COLUMN - 1;
+
+    int totalScore = 0;
+    if (rowIsSame) {
+
+        // care not to change coordinates OR big trouble.
+        for (const std::vector<int>& coordinates :separatedCoordinates) {
+            
+            std::vector<int> currentCoordinate = coordinates;   
+             
+            // start with the top layer
+            while (currentCoordinate[ROW_INDEX] != FIRST_ROW
+            && !board.isEmpty(currentCoordinate[ROW_INDEX],
+             currentCoordinate[COLUMN_INDEX] ) ) {
+                currentCoordinate[ROW_INDEX] -= 1;
+                // add the value of the coordinate above. 
+                // If empty, zero is added.
+                // will not seg fault since currentCoordinate column is 
+                // not equal to FIRST_COL
+                totalScore += board.getTileScore(currentCoordinate[ROW_INDEX],
+                currentCoordinate[COLUMN_INDEX]);
+            }
+
+            // reset the coordinate.
+            currentCoordinate = coordinates;
+
+            // bottom layer.
+            while (currentCoordinate[ROW_INDEX] != LAST_ROW
+            && !board.isEmpty(currentCoordinate[ROW_INDEX],
+             currentCoordinate[COLUMN_INDEX] )) {
+                currentCoordinate[ROW_INDEX] += 1;
+
+                totalScore += board.getTileScore(currentCoordinate[ROW_INDEX],
+                currentCoordinate[COLUMN_INDEX]);
+            }
+        }
+            
+        // then starting from the left most/ top most coordinate from inline, score
+        // from left to right / top to bottom until hitting a dead end. If scoring
+        // from left to right, the sorted coordinates are from left to right. 
+
+        // get the left most coordinate along the same row as the 
+        // sorted coordinates.
+        // the first coordinate of the separatedCoordinates will be used.
+        std::vector<int> currentCoordinate = separatedCoordinates[0];   
+
+        // from left to right
+        while (currentCoordinate[COLUMN_INDEX] != FIRST_COL
+            && !board.isEmpty(currentCoordinate[ROW_INDEX],
+             currentCoordinate[COLUMN_INDEX] ) ) {
+                currentCoordinate[COLUMN_INDEX] -= 1;
+        }       
+        
+        // this is justifiable given that the occupied coordinate is not 
+        // empty, which is when the occupied coordinate is at the edge.
+        // if empty, go back to non-empty space.  
+        if (board.isEmpty(currentCoordinate[ROW_INDEX],
+             currentCoordinate[COLUMN_INDEX]) ) {
+                 currentCoordinate[COLUMN_INDEX] += 1;
+        }
+
+        // while the currentCoordinate has not reached an empty tile or 
+        // end_col, count some tiles.
+        while (currentCoordinate[COLUMN_INDEX] != LAST_COL
+            && !board.isEmpty(currentCoordinate[ROW_INDEX],
+             currentCoordinate[COLUMN_INDEX] ) ) {
+                totalScore += board.getTileScore(
+                    currentCoordinate[ROW_INDEX],
+                     currentCoordinate[COLUMN_INDEX]);
+                currentCoordinate[COLUMN_INDEX] += 1;
+        }       
+
+    }
+
+    // score left to right
+    else {
+
+        // care not to change coordinates OR big trouble.
+        // actually just const it 
+        for (const std::vector<int>& coordinates :separatedCoordinates) {
+            
+            std::vector<int> currentCoordinate = coordinates;   
+             
+            // start with the left layer
+            while (currentCoordinate[COLUMN_INDEX] != LAST_COL
+            && !board.isEmpty(currentCoordinate[ROW_INDEX],
+             currentCoordinate[COLUMN_INDEX] ) ) {
+                currentCoordinate[COLUMN_INDEX] -= 1;
+                // add the value of the coordinate to the left. 
+                // If empty, zero is added.
+                // will not seg fault since currentCoordinate column is 
+                // not equal to FIRST_COL
+                totalScore += board.getTileScore(currentCoordinate[ROW_INDEX],
+                currentCoordinate[COLUMN_INDEX]);
+            }
+            
+            // reset the coordinate 
+            currentCoordinate = coordinates;
+
+            // right layer.
+            while (currentCoordinate[COLUMN_INDEX] != LAST_COL
+            && !board.isEmpty(currentCoordinate[ROW_INDEX],
+             currentCoordinate[COLUMN_INDEX] )) {
+                currentCoordinate[COLUMN_INDEX] += 1;
+
+                totalScore += board.getTileScore(currentCoordinate[ROW_INDEX],
+                currentCoordinate[COLUMN_INDEX]);
+            }
+        }
+
+            
+        // then starting from the left most/ top most coordinate from inline, score
+        // from left to right / top to bottom until hitting a dead end. If scoring
+        // from left to right, the sorted coordinates are from left to right. 
+
+        // get top most coordinate along the same column as the 
+        // sorted coordinates.
+        // the first coordinate of the separatedCoordinates will be used.
+        std::vector<int> currentCoordinate = separatedCoordinates[0];   
+
+        // well you need the boundary case where the edges are non-empty 
+        while (currentCoordinate[ROW_INDEX] != FIRST_ROW
+            && !board.isEmpty(currentCoordinate[ROW_INDEX],
+             currentCoordinate[COLUMN_INDEX] ) ) {
+                currentCoordinate[ROW_INDEX] -= 1;
+        }       
+
+        // this is justifiable given that the occupied coordinate is not 
+        // empty, only during boundary cases though.
+        // if empty, go back to non-empty space.  
+        if (board.isEmpty(currentCoordinate[ROW_INDEX],
+             currentCoordinate[COLUMN_INDEX]) ) {
+                 currentCoordinate[ROW_INDEX] += 1;
+        }
+
+        // while the currentCoordinate has not reached an empty tile or 
+        // end_col, count some tiles.
+        while (currentCoordinate[ROW_INDEX] != LAST_ROW
+            && !board.isEmpty(currentCoordinate[ROW_INDEX],
+             currentCoordinate[COLUMN_INDEX] ) ) {
+                totalScore += board.getTileScore(
+                    currentCoordinate[ROW_INDEX],
+                     currentCoordinate[COLUMN_INDEX]);
+                currentCoordinate[ROW_INDEX] += 1;
+        }      
+
+    }
+    return totalScore;
 }

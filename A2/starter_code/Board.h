@@ -37,6 +37,7 @@ public:
     Column getCol(const std::string coordinates);
 
     /* checks that there is no tile at the specified location 
+    returns true if it is.
     will cause errors without correct coordinates.*/
     bool isEmpty(std::string coordinates);
     bool isEmpty(Row row, Column col);
@@ -53,7 +54,14 @@ public:
     std::string displayTile(int row, int col);
     /* Prints the rows of the board */
     std::string printRow(int row, std::string colLetter);
+
+    /* get the score using the board information. */
     int getScore(std::vector<std::vector<Tile>> openList);
+
+    /* get the score of a singular valid tile*/
+    int getTileScore(Row row, Column col);
+
+
     /* Displays the board as a 2D grid */
     void displayBoard();
     

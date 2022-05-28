@@ -121,6 +121,12 @@ class Game {
             Coordinate parameters must be valid for Board. 
         */
         bool adjacentNotEmpty(int rowCoordinate, int colCoordinate);
+
+        /* get the score using the first left most tile or the top most tile.
+        when scored the following conditions are met: 
+        the coordinates are all placed left to right or top to bottom
+        the tiles have been placed in the board. */
+        int getScore(std::vector<std::string> sortedCoordinates);
         
 
     private:
@@ -141,10 +147,15 @@ class Game {
         // return index of player stored in vector
         int searchPlayer(std::string currentPlayer);
 
-        /* stores a 2D vector of tiles which is used to score tiles 
-        by using a board method. 
-        */
-        std::vector<std::vector<Tile>> scoreTilesPlaced;
+        // /* stores a 2D vector of tiles which is used to score tiles 
+        // by using a board method. 
+        // */
+        // No longer in use for my implementation.
+        // std::vector<std::vector<Tile>> scoreTilesPlaced;
+
+        /* Stores a list of sorted coordinates which is used to score 
+        based on the coordinates */
+        std::vector<std::string> sortedCoordinates;
         
 };
 
