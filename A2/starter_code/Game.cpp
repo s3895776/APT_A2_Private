@@ -910,15 +910,14 @@ std::vector<std::string> projectedCoordinates) {
                 std::cout << "BINGO" << std::endl;
                 const int BINGO_SCORE = 50;
                 players[currentPlayerIndex].addScore(BINGO_SCORE);
-
+            }            
+            
             this->sortedCoordinates = projectedCoordinates;
             // if this works fine, sorted coordinates should be sorted 
             // for the getScore to function properly. 
             // alternatively, use the projected coordinates 
             // and find the left most or right most based on that. 
             std::sort( sortedCoordinates.begin(), sortedCoordinates.end());
-
-            }
         }
         
     } 
