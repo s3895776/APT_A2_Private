@@ -1257,6 +1257,7 @@ int Game::getScore(std::vector<std::string> sortedCoordinates) {
                 totalScore += board.getTileScore(currentCoordinate[ROW_INDEX],
                 currentCoordinate[COLUMN_INDEX]);
             }
+            
         }
 
             
