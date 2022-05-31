@@ -563,6 +563,20 @@ bool Board::checkBoardAdjacency(std::vector<std::string> projectedCoordinates) {
             }
 
             i += 1;
+
+            if (i == projectedSize - 1) {
+
+                if (notAdjacentToTile) {
+                    // check that adjacent is not empty.
+                    // if it is, the check no longer occurs.
+                    // if it isn't, the check continues in
+                    // the next loop. 
+                    // the NOT indicates that if the adjacent is 
+                    // not empty, notAdjacentToTile is false.
+                    notAdjacentToTile = !this->adjacentNotEmpty(
+                        currentRow, currentCol); 
+                }
+            }
         }
         
         // based on above spec, if this is true, canBePlaced 
