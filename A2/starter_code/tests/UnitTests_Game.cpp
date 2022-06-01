@@ -111,14 +111,14 @@ int Game_ValidNames(){
     if ( !g.validName("ABC") ) {
         numFailures += AssertAndReport("ABC returns true", "returned false", "Game_validName");
     }
-    if ( !g.validName("U $") ) {
-        numFailures += AssertAndReport("U $ returns true", "returned false", "Game_validName");
+    if ( g.validName("U $") ) {
+        numFailures += AssertAndReport("U $ returns false", "returned true", "Game_validName");
     }
-    if ( !g.validName("1") ) {
-        numFailures += AssertAndReport("1 returns true", "returned false", "Game_validName");
+    if ( g.validName("1") ) {
+        numFailures += AssertAndReport("1 returns false", "returned true", "Game_validName");
     }
-    if ( !g.validName("$") ) {
-        numFailures += AssertAndReport("$ returns true", "returned false", "Game_validName");
+    if ( g.validName("$") ) {
+        numFailures += AssertAndReport("$ returns false", "returned true", "Game_validName");
     }
     if ( g.validName("abc") ) {
         numFailures += AssertAndReport("abc returns false", "returned true", "Game_validName");

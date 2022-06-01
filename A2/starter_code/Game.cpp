@@ -108,7 +108,7 @@ bool Game::validName(std::string name) {
     }
     // check if there is lowercase character
     for (char& c: name) {
-        if (islower(c)) {
+        if (!isupper(c)) {
             validName = false;
         }
     }
@@ -460,12 +460,13 @@ void Game::loadPlayerHand(std::string hand, int playerIndex) {
 // Helper method for loading: load board state
 void Game::loadBoard(std::string boardState) {
     std::string delimiter = " ";
-    size_t pos = boardState.find(delimiter);
     std::string tileCoordinate;
     // extract each tile and coordinate with delimiter
     while (boardState != "") {
-        // extract each tile and itss coordinate
+        // extract each tile and its coordinate
+        size_t pos = boardState.find(delimiter);
         tileCoordinate = boardState.substr(0, pos);
+
         // extract letter and value from each tileString
         char letter = tileCoordinate[0];
         std::string coordinate = tileCoordinate.substr(2);
